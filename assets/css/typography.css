@@ -1,222 +1,279 @@
 /*
- * Shared readability layer.
- * Keep display values and icons page-specific; raise only supporting interface text.
+ * Shared typography layer.
+ * Restores the template baseline and defines role-based readability tiers.
  */
 :root {
-  --type-body: 0.9375rem;
-  --type-control: 0.875rem;
-  --type-support: 0.875rem;
-  --type-meta: 0.875rem;
+  --type-intro: 0.9375rem;
+  --type-copy: 0.8125rem;
+  --type-compact: 0.6875rem;
+  --type-micro: 0.625rem;
+  --type-control: 0.75rem;
+  --type-table: 0.6875rem;
+  --type-welcome: 0.8125rem;
 }
 
 body {
-  font-size: var(--type-body);
+  font-size: var(--type-copy);
 }
 
-body p,
-body li,
-body label,
-body button,
-body input,
-body select,
-body textarea {
-  font-size: max(var(--type-control), 1em) !important;
+/* Important introductory and explanatory paragraphs. */
+body [class*="-subtitle"],
+body .db-hero-sub,
+body .terms-content p,
+body .terms-content li {
+  font-size: var(--type-intro);
 }
 
-body p,
-body li {
-  font-size: max(var(--type-body), 1em) !important;
+/* Ordinary descriptions and long-form supporting copy. */
+body [class*="-section-copy"] p,
+body [class*="-section-head"] p,
+body [class*="-overview-head"] p,
+body [class*="-panel-head"] p,
+body [class*="-position-head"] p,
+body [class*="-control-copy"] p,
+body .gs-description,
+body .gl-goal-objective,
+body .sv-plan-purpose,
+body .bd-allocation-purpose,
+body .gl-confirm-copy,
+body .sv-confirm-copy,
+body .bd-confirm-copy,
+body .mf-confirm-copy,
+body .ws-confirm-copy,
+body .db-confirm-message,
+body .terms-notice,
+body .terms-dependency,
+body .db-note-view,
+body [class*="-task-title"],
+body [class*="-meeting-title"],
+body [class*="-milestone-title"],
+body [class*="-list-title"] {
+  font-size: var(--type-copy);
 }
 
-body small,
-body .text-xs,
-body [class~="text-[10px]"],
-body [class~="text-[11px]"],
-body [class~="text-[12px]"],
-body [class~="sm:text-xs"],
-body [class~="md:text-xs"] {
-  font-size: var(--type-meta) !important;
+body [class*="-empty"] p,
+body [class*="-table-empty"] p {
+  font-size: var(--type-copy);
 }
 
-body .text-sm,
-body [class~="text-[13px]"],
-body [class~="sm:text-sm"],
-body [class~="md:text-sm"] {
-  font-size: var(--type-support) !important;
+/* Compact labels, metadata, notes and secondary figures. */
+body [class*="-stat-label"],
+body [class*="-stat-note"],
+body [class*="-balance-note"],
+body [class*="-overview-label"],
+body [class*="-overview-note"],
+body [class*="-details-note"],
+body [class*="-position-label"],
+body [class*="-position-note"],
+body [class*="-position-caption"],
+body [class*="-plan-meta"],
+body [class*="-allocation-meta"],
+body [class*="-allocation-footnote"],
+body [class*="-movement-note"],
+body [class*="-chart-meta"],
+body [class*="-footnote"],
+body [class*="-limit-note"],
+body [class*="-section-caption"],
+body [class*="-field-hint"],
+body [class*="-goal-meta"],
+body [class*="-goal-type"],
+body [class*="-deadline"],
+body [class*="-plan-goal-link"],
+body [class*="-activity-amount"],
+body [class*="-movement-summary-amount"],
+body [class*="-task-meta"],
+body [class*="-meeting-meta"],
+body [class*="-meeting-time"],
+body [class*="-milestone-meta"],
+body [class*="-project-meta"],
+body [class*="-list-meta"],
+body [class*="-list-amount"],
+body [class*="-work-line"],
+body [class*="-day-context"],
+body [class*="-chart-legend"],
+body [class*="-funding-empty-copy"] strong,
+body [class*="-history-empty"],
+body [class*="-inline-empty"],
+body [class*="-milestone-empty"],
+body [class*="-mini-empty"],
+body [class*="-activity-empty"],
+body [class*="-generation-note"],
+body [class*="-entry-hint"],
+body [class*="-form-note"],
+body [class*="-source-note"],
+body [class*="-funds-note"],
+body [class*="-insight-copy"] small,
+body [class*="-insight-copy"] strong,
+body .mf-money-title p,
+body .ws-overview-label,
+body .ws-overview-note,
+body [class*="-insight-copy"] > span,
+body [class*="-milestone-copy"] strong,
+body [class*="-milestone-head"] span,
+body .gl-milestone-copy small,
+body .gl-milestone-value,
+body .mf-card-kicker,
+body .ri-control-label,
+body .bd-month-control-label,
+body .db-health-note,
+body .db-summary-note,
+body .db-hero-note,
+body .db-section-caption,
+body .db-notes-status,
+body .db-top-task,
+body .gs-hint,
+body .gs-field-error,
+body .gl-breadcrumb,
+body .sv-breadcrumb,
+body .bd-breadcrumb,
+body .mf-breadcrumb,
+body .ri-breadcrumb,
+body .ws-breadcrumb,
+body .db-breadcrumb {
+  font-size: var(--type-compact);
 }
 
-body p,
-body li {
-  font-size: var(--type-body) !important;
+body small {
+  font-size: var(--type-compact);
 }
 
-body p[class~="text-xs"],
-body p[class~="text-[10px]"],
-body p[class~="text-[11px]"],
-body p[class~="text-[12px]"],
-body p[class~="sm:text-xs"],
-body p[class~="md:text-xs"],
-body li[class~="text-xs"],
-body li[class~="text-[10px]"],
-body li[class~="text-[11px]"],
-body li[class~="text-[12px]"],
-body li[class~="sm:text-xs"],
-body li[class~="md:text-xs"] {
-  font-size: var(--type-body) !important;
+/* Small uppercase labels stay legible without competing with headings. */
+body [class*="-eyebrow"],
+body [class*="-section-kicker"],
+body [class*="-subhead"],
+body .ws-details-kicker,
+body .gl-storage-chip,
+body .sv-storage-chip,
+body .bd-storage-chip,
+body .mf-storage-chip,
+body .ri-storage-chip,
+body .ws-storage-chip,
+body .db-storage-chip,
+body .terms-eyebrow,
+body .terms-meta span {
+  font-size: var(--type-micro);
 }
 
-body nav a,
-body .nav-item,
-body .btn-primary,
-body .btn-secondary,
-body .form-label,
-body .form-input,
-body .select-custom,
-body table th,
+body [class*="-milestone-head"] h3 {
+  font-size: var(--type-compact);
+}
+
+/* Controls: readable but compact, and smaller than introductory copy. */
+body [class*="-btn"],
+body .gl-goal-link,
+body .gl-segment,
+body .mf-tab,
+body .db-note-edit,
+body .db-note-save,
+body [class*="-details-actions"] [class*="-btn"] {
+  font-size: var(--type-control);
+}
+
+body [class*="-btn-sm"],
+body [class*="-btn-small"] {
+  font-size: var(--type-compact);
+}
+
+body [class*="-filter-chip"],
+body [class*="-search"] input,
+body [class*="-sort"] select,
+body .ri-select-field select,
+body .db-input,
+body .db-select,
+body .db-textarea {
+  font-size: var(--type-compact);
+}
+
+body [class*="-field"] input,
+body [class*="-field"] select,
+body [class*="-field"] textarea {
+  font-size: var(--type-control);
+}
+
+body [class*="-field"] label,
+body [class*="-date-field"] span,
+body [class*="-form"] label,
+body .mf-type-option,
+body .gs-label {
+  font-size: var(--type-compact);
+}
+
+body table th {
+  font-size: var(--type-micro);
+}
+
 body table td {
-  font-size: var(--type-control) !important;
+  font-size: var(--type-table);
 }
 
 body .global-bottom-nav .bottom-nav-item {
-  font-size: 0.68rem !important;
+  font-size: 0.68rem;
 }
 
 body #header-welcome {
-  font-size: 0.8125rem !important;
-}
-
-body p[class~="text-[10px]"][class~="md:text-sm"] {
-  font-size: 0.8125rem !important;
+  font-size: var(--type-welcome);
 }
 
 body .terms-content .terms-toc a,
-body .terms-meta span,
 body .terms-meta strong,
 body .terms-footer p {
-  font-size: var(--type-meta) !important;
+  font-size: var(--type-micro);
 }
 
-body .terms-content p,
-body .terms-content li {
-  font-size: var(--type-body) !important;
-}
-
-/* Secondary metric copy stays smaller than values without becoming tiny. */
-body .db-stat-label,
-body .db-stat-note,
-body .db-health-label,
-body .db-health-note,
-body .db-list-meta,
-body .db-goal-meta,
-body .db-task-meta,
-body .db-meeting-meta,
-body .db-project-meta,
-body .db-milestone-meta,
-body .db-summary-note,
-body .db-section-caption,
-body .ri-stat-label,
-body .ri-stat-note,
-body .ri-section-kicker,
-body .ri-section-copy p,
-body .ri-section-caption,
-body .sv-position-label,
-body .sv-position-note,
-body .sv-overview-note,
-body .sv-stat-label,
-body .sv-stat-note,
-body .sv-plan-meta,
-body .sv-movement-note,
-body .sv-chart-meta,
-body .sv-details-note {
-  font-size: 0.75rem !important;
+@media (max-width: 1024px) {
+  :root {
+    --type-intro: 0.9rem;
+    --type-copy: 0.8125rem;
+    --type-compact: 0.65625rem;
+    --type-micro: 0.59375rem;
+    --type-control: 0.71875rem;
+    --type-table: 0.65625rem;
+    --type-welcome: 0.75rem;
+  }
 }
 
 @media (max-width: 640px) {
-  body {
-    font-size: 0.875rem;
-  }
-
-  body p,
-  body li,
-  body .terms-content p,
-  body .terms-content li {
-    font-size: 0.875rem !important;
-  }
-
-  body button,
-  body input,
-  body select,
-  body textarea,
-  body .form-label,
-  body .form-input,
-  body .select-custom {
-    font-size: 0.8125rem !important;
-  }
-
-  body small,
-  body .text-xs,
-  body [class~="text-[10px]"],
-  body [class~="text-[11px]"],
-  body [class~="text-[12px]"],
-  body [class~="sm:text-xs"],
-  body [class~="md:text-xs"] {
-    font-size: 0.75rem !important;
+  :root {
+    --type-intro: 0.875rem;
+    --type-copy: 0.78125rem;
+    --type-compact: 0.625rem;
+    --type-micro: 0.5625rem;
+    --type-control: 0.6875rem;
+    --type-table: 0.625rem;
+    --type-welcome: 0.75rem;
   }
 
   body .global-bottom-nav .bottom-nav-item {
-    font-size: 0.61rem !important;
+    font-size: 0.61rem;
   }
+}
 
-  body small,
-  body .text-xs,
-  body [class~="text-[10px]"],
-  body [class~="text-[11px]"],
-  body [class~="text-[12px]"],
-  body [class~="sm:text-xs"],
-  body [class~="md:text-xs"] {
-    font-size: 0.8125rem !important;
-  }
+/* Authentication pages keep their own approved compact scale. */
+body.auth-page,
+body.auth-page [class*="-field"] label,
+body.auth-page .auth-control input,
+body.auth-page .auth-submit,
+body.auth-page .auth-google,
+body.auth-page .auth-status,
+body.auth-page .auth-footer,
+body.auth-page .auth-divider {
+  font-size: 0.875rem;
+}
 
-  body #header-welcome {
-    font-size: 0.75rem !important;
-  }
+body.auth-page label {
+  font-size: 0.875rem;
+}
 
-  body p[class~="text-[10px]"][class~="md:text-sm"] {
-    font-size: 0.75rem !important;
-  }
+body.auth-page .auth-terms {
+  font-size: 0.8rem;
+}
 
-  body .db-stat-label,
-  body .db-stat-note,
-  body .db-health-label,
-  body .db-health-note,
-  body .db-list-meta,
-  body .db-goal-meta,
-  body .db-task-meta,
-  body .db-meeting-meta,
-  body .db-project-meta,
-  body .db-milestone-meta,
-  body .db-summary-note,
-  body .db-section-caption,
-  body .ri-stat-label,
-  body .ri-stat-note,
-  body .ri-section-kicker,
-  body .ri-section-copy p,
-  body .ri-section-caption,
-  body .sv-position-label,
-  body .sv-position-note,
-  body .sv-overview-note,
-  body .sv-stat-label,
-  body .sv-stat-note,
-  body .sv-plan-meta,
-  body .sv-movement-note,
-  body .sv-chart-meta,
-  body .sv-details-note {
-    font-size: 0.6875rem !important;
-  }
+body.auth-page small {
+  font-size: 0.75rem;
 }
 
 @media (min-width: 640px) {
   body .global-bottom-nav .bottom-nav-item {
-    font-size: 0.72rem !important;
+    font-size: 0.72rem;
   }
 }

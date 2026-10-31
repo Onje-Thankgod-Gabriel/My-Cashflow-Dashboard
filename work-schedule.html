@@ -269,7 +269,7 @@
                 </span>
                 <span class="ws-overview-tag is-warning">Upcoming</span>
               </div>
-              <p class="ws-overview-label">Next confirmed shift</p>
+              <p class="ws-overview-label">Next shift</p>
               <strong class="ws-overview-value" id="ws-next-shift-value">No confirmed shift</strong>
               <p class="ws-overview-note" id="ws-next-shift-note">Add a schedule entry to confirm a shift.</p>
             </article>
@@ -349,14 +349,61 @@
           </div>
         </section>
 
+        <section class="ws-surface ws-generation-section" aria-labelledby="ws-generation-title">
+          <div class="ws-panel-head">
+            <div>
+              <span class="ws-section-kicker">Automation</span>
+              <h2 id="ws-generation-title">Automatic schedule generation</h2>
+              <p>Fill the selected month from your configured continuous rotation. Nothing is saved until you review and confirm the preview.</p>
+            </div>
+            <span class="ws-rotation-badge is-off" id="ws-generation-state">Setup required</span>
+          </div>
+
+          <div class="ws-generation-card" id="ws-generation-card" hidden>
+            <div class="ws-generation-card-copy">
+              <span class="ws-generation-card-icon">
+                <i data-lucide="calendar-sync" class="w-5 h-5"></i>
+              </span>
+              <div>
+                <strong>Complete this month's schedule</strong>
+                <p id="ws-generation-card-note">Your configured rotation can fill the remaining dates in this month.</p>
+              </div>
+            </div>
+            <button type="button" class="ws-btn ws-btn-primary" id="ws-generate-open">
+              <i data-lucide="sparkles" class="w-4 h-4"></i>
+              <span>Preview generation</span>
+            </button>
+          </div>
+
+          <div class="ws-generation-empty" id="ws-generation-empty" hidden>
+            <span class="ws-generation-card-icon">
+              <i data-lucide="settings-2" class="w-5 h-5"></i>
+            </span>
+            <div>
+              <strong>Configure your rotation first</strong>
+              <p>Automatic generation needs your own reference date, cycle position and shift block. Complete the schedule configuration below to unlock it.</p>
+            </div>
+            <button type="button" class="ws-btn ws-btn-ghost" data-ws-open-setup>
+              <i data-lucide="arrow-down" class="w-4 h-4"></i>
+              <span>Go to configuration</span>
+            </button>
+          </div>
+
+          <div class="ws-generation-note">
+            <i data-lucide="info" class="w-4 h-4"></i>
+            <span id="ws-generation-note-copy">
+              Configure your rotation reference date before automatic generation can calculate a schedule.
+            </span>
+          </div>
+        </section>
+
         <section class="ws-surface ws-rotation" aria-labelledby="ws-rotation-title">
           <div class="ws-panel-head">
             <div>
-              <span class="ws-section-kicker">Rotation</span>
+              <span class="ws-section-kicker">Configuration</span>
               <h2 id="ws-rotation-title">Work rotation settings</h2>
-              <p>The confirmed pattern is three working days, then two days off.</p>
+              <p>Your rotation is calculated continuously from your own reference date. A new month never restarts the cycle.</p>
             </div>
-            <span class="ws-rotation-badge" id="ws-generation-state">Future generation off</span>
           </div>
 
           <div class="ws-rotation-summary">
@@ -399,42 +446,19 @@
                 <strong id="ws-cycle-off">2</strong>
               </div>
               <div class="ws-cycle-item is-wide">
-                <span>Stored rotation anchor</span>
-                <strong id="ws-anchor-value">Afternoon · 1 Nov 2026</strong>
-                <small id="ws-anchor-note">Stored configuration only. It is not used to generate future shifts.</small>
+                <span>Rotation reference</span>
+                <strong id="ws-anchor-value">Not configured</strong>
+                <small id="ws-anchor-note">Set a reference date, its cycle position and shift to enable automatic schedule generation.</small>
               </div>
             </div>
           </div>
 
-          <div class="ws-joining-note">
+          <div class="ws-config-state is-setup" id="ws-config-state">
             <span class="ws-joining-icon"><i data-lucide="calendar-check" class="w-4 h-4"></i></span>
             <div>
-              <strong>Confirmed joining arrangement</strong>
-              <p>1–2 November 2026: Afternoon shift. 3–4 November 2026: Days off. These dates are saved as confirmed entries.</p>
+              <strong id="ws-config-state-title">Rotation setup needed</strong>
+              <p id="ws-config-state-copy">Add your reference date, its position in the work/off cycle and its shift block before generating a schedule.</p>
             </div>
-          </div>
-
-          <div class="ws-generation-card" id="ws-generation-card" hidden>
-            <div class="ws-generation-card-copy">
-              <span class="ws-generation-card-icon">
-                <i data-lucide="calendar-sync" class="w-5 h-5"></i>
-              </span>
-              <div>
-                <strong>Complete this month's schedule</strong>
-                <p id="ws-generation-card-note">Your first five-day cycle can fill the remaining dates in this month.</p>
-              </div>
-            </div>
-            <button type="button" class="ws-btn ws-btn-primary" id="ws-generate-open">
-              <i data-lucide="sparkles" class="w-4 h-4"></i>
-              <span>Complete This Month's Schedule</span>
-            </button>
-          </div>
-
-          <div class="ws-generation-note">
-            <i data-lucide="info" class="w-4 h-4"></i>
-            <span id="ws-generation-note-copy">
-              Enter five consecutive dates in the calendar (three working days and two days off) to unlock monthly completion. Nothing is generated until you preview and confirm it.
-            </span>
           </div>
 
           <form id="ws-rotation-form" class="ws-form ws-settings-form" novalidate>
@@ -472,17 +496,28 @@
                 </select>
               </div>
               <div class="ws-field">
-                <label for="ws-anchor-date">Rotation anchor date</label>
+                <label for="ws-anchor-date">Reference date</label>
                 <input type="date" id="ws-anchor-date" class="form-input" />
               </div>
               <div class="ws-field">
-                <label for="ws-anchor-shift">Rotation anchor shift</label>
+                <label for="ws-anchor-position">Position in the cycle</label>
+                <select id="ws-anchor-position" class="form-select">
+                  <option value="0">Working day 1</option>
+                  <option value="1">Working day 2</option>
+                  <option value="2">Working day 3</option>
+                  <option value="3">Off day 1</option>
+                  <option value="4">Off day 2</option>
+                </select>
+              </div>
+              <div class="ws-field">
+                <label for="ws-anchor-shift" id="ws-anchor-shift-label">Shift block for this cycle</label>
                 <select id="ws-anchor-shift" class="form-select">
                   <option value="">Not set</option>
                   <option value="morning">Morning</option>
                   <option value="afternoon">Afternoon</option>
                   <option value="night">Night</option>
                 </select>
+                <small class="ws-field-hint" id="ws-anchor-shift-hint">Choose the shift assigned to the working block that contains this reference date.</small>
               </div>
               <div class="ws-field">
                 <label for="ws-time-morning-start">Morning start</label>
@@ -513,7 +548,7 @@
             <div id="ws-rotation-error" class="ws-form-error" role="alert"></div>
 
             <div class="ws-form-actions">
-              <p class="ws-form-note">Saving settings does not create or change future schedule entries.</p>
+              <p class="ws-form-note">Saving settings never rewrites saved records. Existing manual entries stay authoritative until you choose to edit them.</p>
               <button type="submit" class="ws-btn ws-btn-primary" id="ws-rotation-submit">
                 <i data-lucide="check" class="w-4 h-4"></i>
                 <span>Save rotation settings</span>
@@ -643,7 +678,7 @@
         <div class="ws-modal-header">
           <div>
             <h3 id="ws-generate-title">Complete this month</h3>
-            <p id="ws-generate-subtitle">Review every proposed date before applying the five-day cycle.</p>
+            <p id="ws-generate-subtitle">Review every date in the month before applying the continuous rotation.</p>
           </div>
           <button type="button" class="ws-icon-btn" data-ws-close="ws-generate-modal" aria-label="Close schedule preview">
             <i data-lucide="x" class="w-5 h-5"></i>
@@ -658,8 +693,10 @@
               <tr>
                 <th scope="col">Date</th>
                 <th scope="col">Day</th>
+                <th scope="col">Status</th>
                 <th scope="col">Shift</th>
                 <th scope="col">Start–end</th>
+                <th scope="col">Source</th>
                 <th scope="col">Action</th>
               </tr>
             </thead>

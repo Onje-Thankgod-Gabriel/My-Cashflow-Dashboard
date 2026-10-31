@@ -49,14 +49,25 @@
     night: { start: "19:00", end: "07:00" }
   };
   var WEEKDAYS = ["Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"];
-  var JOINING_RECORDS = [
+  var PROFILE_ID = "local";
+  /* Initial data for the current local profile only. It is not a fallback
+     configuration for other profiles; those must complete the setup form. */
+  var INITIAL_PROFILE_RECORDS = [
+    {
+      date: "2026-10-31",
+      shiftType: "afternoon",
+      status: "working",
+      startTime: "13:00",
+      endTime: "19:00",
+      notes: "Initial confirmed schedule."
+    },
     {
       date: "2026-11-01",
       shiftType: "afternoon",
       status: "working",
       startTime: "13:00",
       endTime: "19:00",
-      notes: "Confirmed joining schedule."
+      notes: "Initial confirmed schedule."
     },
     {
       date: "2026-11-02",
@@ -64,7 +75,7 @@
       status: "working",
       startTime: "13:00",
       endTime: "19:00",
-      notes: "Confirmed joining schedule."
+      notes: "Initial confirmed schedule."
     },
     {
       date: "2026-11-03",
@@ -72,7 +83,7 @@
       status: "off",
       startTime: "",
       endTime: "",
-      notes: "Confirmed joining schedule: day off."
+      notes: "Initial confirmed schedule: day off."
     },
     {
       date: "2026-11-04",
@@ -80,9 +91,29 @@
       status: "off",
       startTime: "",
       endTime: "",
-      notes: "Confirmed joining schedule: day off."
+      notes: "Initial confirmed schedule: day off."
     }
   ];
+  var INITIAL_PROFILE_CONFIG = {
+    rotation: {
+      configured: true,
+      workingDaysPerCycle: 3,
+      offDaysPerCycle: 2,
+      shiftSequence: ["morning", "afternoon", "night"],
+      shiftTimes: {
+        morning: { start: "07:00", end: "13:00" },
+        afternoon: { start: "13:00", end: "19:00" },
+        night: { start: "19:00", end: "07:00" }
+      }
+    },
+    anchor: {
+      date: "2026-10-31",
+      shiftType: "afternoon",
+      cyclePosition: 0,
+      startTime: "13:00",
+      endTime: "19:00"
+    }
+  };
 
   var state = {
     view: "month",
@@ -375,167 +406,115 @@
     return Math.round((end.getTime() - start.getTime()) / DAY_MS);
   }
 
-  function validateCycle(records) {
-    var working = records.filter(function (record) {
-      return !isOffRecord(record);
-    });
-    var off = records.filter(isOffRecord);
-    if (working.length !== 3 || off.length !== 2) {
-      return {
-        valid: false,
-        reason:
-          "This five-day block has " +
-          working.length +
-          " working day" +
-          (working.length === 1 ? "" : "s") +
-          " and " +
-          off.length +
-          " day" +
-          (off.length === 1 ? "" : "s") +
-          " off. The cycle must contain exactly 3 working days and 2 days off."
-      };
-    }
-    for (var index = 0; index < working.length; index += 1) {
-      var times = recordTimes(working[index]);
-      if (
-        !/^([01]\d|2[0-3]):[0-5]\d$/.test(times.start) ||
-        !/^([01]\d|2[0-3]):[0-5]\d$/.test(times.end) ||
-        times.start === times.end
-      ) {
-        return {
-          valid: false,
-          reason:
-            "Each working day in the first cycle needs valid start and end times that are not the same."
-        };
-      }
-    }
-    return { valid: true, reason: "" };
+  function rotationPositionLabel(position, working, off) {
+    var work = Number(working) || 3;
+    var rest = Number(off) || 2;
+    var index = Number(position) || 0;
+    if (index < work) return "Working day " + (index + 1) + " of " + work;
+    return "Off day " + (index - work + 1) + " of " + rest;
   }
 
-  function cyclePattern(records) {
-    return records.map(function (record) {
-      if (isOffRecord(record)) {
-        return {
-          shiftType: "off",
-          status: "off",
-          startTime: "",
-          endTime: "",
-          team: record.team || "",
-          notes: ""
-        };
-      }
-      var times = recordTimes(record);
-      return {
-        shiftType: record.shiftType,
-        status: "working",
-        startTime: times.start,
-        endTime: times.end,
-        team: record.team || "",
-        notes: ""
-      };
-    });
-  }
-
-  function findFirstCycle(monthKey) {
-    var map = recordsByDate(
-      getRecords().filter(function (record) {
-        return monthKeyOf(record.date) === monthKey && !isGeneratedRecord(record);
-      })
-    );
-    var dates = Object.keys(map).sort();
-    var runs = [];
-    var run = [];
-
-    dates.forEach(function (date) {
-      var previous = run[run.length - 1];
-      if (previous && addDays(previous, 1) !== date) {
-        if (run.length) runs.push(run);
-        run = [];
-      }
-      run.push(date);
-    });
-    if (run.length) runs.push(run);
-
-    var anchorDate = data.getWorkScheduleConfig().anchor.date || "";
-    var invalid = null;
-
-    for (var runIndex = 0; runIndex < runs.length; runIndex += 1) {
-      var current = runs[runIndex];
-      if (current.length < 5) continue;
-      var starts = [];
-      var anchorIndex = current.indexOf(anchorDate);
-      if (anchorIndex >= 0 && anchorIndex + 4 < current.length) {
-        starts.push(current[anchorIndex]);
-      }
-      for (var index = 0; index + 4 < current.length; index += 1) {
-        var candidateStart = current[index];
-        if (starts.indexOf(candidateStart) === -1) starts.push(candidateStart);
-      }
-      for (var startIndex = 0; startIndex < starts.length; startIndex += 1) {
-        var start = starts[startIndex];
-        var windowRecords = [];
-        for (var offset = 0; offset < 5; offset += 1) {
-          windowRecords.push(map[addDays(start, offset)]);
-        }
-        var result = validateCycle(windowRecords);
-        if (result.valid) {
-          return {
-            valid: true,
-            start: start,
-            records: windowRecords,
-            pattern: cyclePattern(windowRecords),
-            reason: ""
-          };
-        }
-        if (!invalid) invalid = { start: start, reason: result.reason };
-      }
+  function normalizeRotationConfig(config) {
+    var source = config || data.getWorkScheduleConfig() || {};
+    var rotation = source.rotation || {};
+    var anchor = source.anchor || {};
+    var working = Math.max(1, parseInt(rotation.workingDaysPerCycle, 10) || 3);
+    var off = Math.max(1, parseInt(rotation.offDaysPerCycle, 10) || 2);
+    var cycleLength = working + off;
+    var sequence =
+      Array.isArray(rotation.shiftSequence) && rotation.shiftSequence.length
+        ? rotation.shiftSequence.filter(function (type) {
+            return ["morning", "afternoon", "night"].indexOf(type) !== -1;
+          })
+        : ["morning", "afternoon", "night"];
+    if (!sequence.length) sequence = ["morning", "afternoon", "night"];
+    var position = Number(anchor.cyclePosition);
+    if (!Number.isInteger(position) || position < 0 || position >= cycleLength) {
+      position = 0;
     }
-
-    if (invalid) {
-      return {
-        valid: false,
-        start: invalid.start,
-        records: [],
-        pattern: [],
-        reason: invalid.reason
-      };
-    }
+    var anchorDate = data.isDateOnly(anchor.date) ? anchor.date : "";
+    var anchorShift =
+      sequence.indexOf(anchor.shiftType) !== -1 ? anchor.shiftType : "";
     return {
-      valid: false,
-      start: "",
-      records: [],
-      pattern: [],
-      reason: ""
+      valid: Boolean(rotation.configured) && Boolean(anchorDate) && Boolean(anchorShift),
+      configured: Boolean(rotation.configured),
+      working: working,
+      off: off,
+      cycleLength: cycleLength,
+      sequence: sequence,
+      times: shiftTimesFromConfig(source),
+      anchorDate: anchorDate,
+      anchorShift: anchorShift,
+      anchorPosition: position
     };
   }
 
-  function buildGenerationPlan(monthKey, cycle) {
+  function calculateRotation(value, config) {
+    var settings = config || normalizeRotationConfig();
+    if (!settings.valid || !data.isDateOnly(value)) return null;
+    var offset = dayOffset(settings.anchorDate, value);
+    var total = settings.anchorPosition + offset;
+    var cycleIndex = Math.floor(total / settings.cycleLength);
+    var position =
+      ((total % settings.cycleLength) + settings.cycleLength) %
+      settings.cycleLength;
+    var anchorIndex = settings.sequence.indexOf(settings.anchorShift);
+    /* A working reference names its own block. An off-day reference names
+       the next working block, so step back one cycle to anchor the calculation. */
+    if (settings.anchorPosition >= settings.working) anchorIndex -= 1;
+    var shiftIndex =
+      ((anchorIndex + cycleIndex) % settings.sequence.length +
+        settings.sequence.length) %
+      settings.sequence.length;
+    var shiftType = settings.sequence[shiftIndex];
+    var times = settings.times[shiftType] || DEFAULT_TIMES[shiftType];
+    if (position < settings.working) {
+      return {
+        date: value,
+        status: "working",
+        shiftType: shiftType,
+        startTime: times.start,
+        endTime: times.end,
+        position: position,
+        cycleIndex: cycleIndex,
+        source: "calculated"
+      };
+    }
+    return {
+      date: value,
+      status: "off",
+      shiftType: "off",
+      startTime: "",
+      endTime: "",
+      position: position,
+      cycleIndex: cycleIndex,
+      source: "calculated"
+    };
+  }
+
+  function buildGenerationPlan(monthKey, config) {
+    var settings = config || normalizeRotationConfig();
     var map = recordsByDate(getRecords());
-    var dates = daysInRange(cycle.start, endOfMonth(monthKey + "-01"));
+    var rows = [];
     var actions = [];
     var conflicts = [];
     var preserved = 0;
 
-    dates.forEach(function (date) {
-      var offset = dayOffset(cycle.start, date);
-      var slot = ((offset % 5) + 5) % 5;
-      var template = cycle.pattern[slot];
-      var proposed = {
-        date: date,
-        shiftType: template.shiftType,
-        status: template.status,
-        startTime: template.startTime,
-        endTime: template.endTime,
-        team: template.team,
-        notes: template.notes,
-        source: "generated"
-      };
+    monthDays(monthKey).forEach(function (date) {
+      var proposed = calculateRotation(date, settings);
+      if (!proposed) return;
+      proposed.team = "";
+      proposed.notes = "";
+      proposed.source = "generated";
       var existing = map[date] || null;
+      var type = "create";
 
       if (existing && !isGeneratedRecord(existing)) {
         if (sameSchedule(existing, proposed)) {
+          type = "preserved";
           preserved += 1;
         } else {
+          type = "conflict";
           conflicts.push({
             date: date,
             existing: existing,
@@ -543,55 +522,67 @@
             type: "conflict"
           });
         }
-        return;
-      }
-
-      if (existing && isGeneratedRecord(existing)) {
-        if (sameSchedule(existing, proposed)) return;
+      } else if (existing) {
+        if (sameSchedule(existing, proposed)) {
+          type = "existing";
+        } else {
+          type = "update";
+          actions.push({
+            date: date,
+            existing: existing,
+            proposed: proposed,
+            type: "update"
+          });
+        }
+      } else {
         actions.push({
           date: date,
-          existing: existing,
+          existing: null,
           proposed: proposed,
-          type: "update"
+          type: "create"
         });
-        return;
       }
 
-      actions.push({
+      rows.push({
         date: date,
-        existing: null,
+        existing: existing,
         proposed: proposed,
-        type: "create"
+        type: type
       });
     });
 
     return {
       monthKey: monthKey,
-      cycle: cycle,
+      config: settings,
+      rows: rows,
       actions: actions,
       conflicts: conflicts,
       preserved: preserved
     };
   }
 
-  function updateGenerationNote(cycle) {
+  function updateGenerationNote(plan) {
     var note = byId("ws-generation-note-copy");
     if (!note) return;
-    if (cycle.valid && cycle.start) {
+    if (!plan) {
       note.textContent =
-        "Your first five-day cycle starts on " +
-        formatFullDate(cycle.start) +
-        ". Preview the remaining dates before anything is written.";
-    } else if (cycle.reason) {
+        "Configure your rotation reference date before automatic generation can calculate a schedule.";
+      return;
+    }
+    if (plan.actions.length) {
       note.textContent =
-        "The five consecutive dates starting " +
-        formatFullDate(cycle.start) +
-        " cannot be used yet. " +
-        cycle.reason;
+        "The rotation is calculated continuously from your reference date and does not restart with a new month. Review every date before anything is written.";
     } else {
       note.textContent =
-        "Enter five consecutive dates in the calendar (three working days and two days off) to unlock monthly completion. If the first cycle starts later than your joining dates, set the rotation anchor to its first date. Nothing is generated until you preview and confirm it.";
+        "This month already has every calculated date. Manual entries and manual overrides remain untouched.";
     }
+  }
+
+  function conflictForDate(value, config, record) {
+    if (!record || isGeneratedRecord(record)) return null;
+    var proposed = calculateRotation(value, config);
+    if (!proposed) return null;
+    return sameSchedule(record, proposed) ? null : proposed;
   }
 
   function setText(id, value) {
@@ -638,29 +629,192 @@
     return times[shiftType] || DEFAULT_TIMES.morning;
   }
 
-  /* ---------- Initial confirmed schedule ---------- */
+  function refreshAnchorPositionOptions(selected) {
+    var select = byId("ws-anchor-position");
+    if (!select) return;
+    var working = Math.max(1, Number(byId("ws-rotation-workdays").value) || 3);
+    var off = Math.max(1, Number(byId("ws-rotation-offdays").value) || 2);
+    var current =
+      selected === undefined || selected === null
+        ? Number(select.value)
+        : Number(selected);
+    if (!Number.isInteger(current) || current < 0 || current >= working + off) {
+      current = 0;
+    }
+    select.innerHTML = "";
+    for (var index = 0; index < working + off; index += 1) {
+      var option = document.createElement("option");
+      option.value = String(index);
+      option.textContent = rotationPositionLabel(index, working, off);
+      select.appendChild(option);
+    }
+    select.value = String(current);
+  }
 
-  function seedInitialSchedule() {
-    var settings = data.getSettings();
-    var preferences = settings.preferences || {};
-    if (preferences.workScheduleInitialized) return;
+  function updateAnchorShiftGuidance() {
+    var positionField = byId("ws-anchor-position");
+    var workdays = byId("ws-rotation-workdays");
+    var label = byId("ws-anchor-shift-label");
+    var hint = byId("ws-anchor-shift-hint");
+    if (!positionField || !workdays || !label || !hint) return;
+    var working = Math.max(1, Number(workdays.value) || 3);
+    var isOff = Number(positionField.value) >= working;
+    label.textContent = isOff
+      ? "Shift block for the next working block"
+      : "Shift block for this cycle";
+    hint.textContent = isOff
+      ? "Choose the shift that starts when this off period ends."
+      : "Choose the shift assigned to the working block that contains this reference date.";
+  }
 
-    var records = getRecords();
-    if (!records.length) {
-      JOINING_RECORDS.forEach(function (record) {
-        data.addWorkScheduleRecord(
-          Object.assign({}, record, {
-            team: settings.workTeam || ""
-          })
-        );
+  /* ---------- Initial schedule and configuration ---------- */
+
+  function addInitialRecords(settings) {
+    var map = recordsByDate(getRecords());
+    INITIAL_PROFILE_RECORDS.forEach(function (record) {
+      if (map[record.date]) return;
+      data.addWorkScheduleRecord(
+        Object.assign({}, record, {
+          team: settings.workTeam || ""
+        })
+      );
+    });
+  }
+
+  function applyInitialProfileConfig(settings) {
+    addInitialRecords(settings);
+    data.updateWorkScheduleConfig(INITIAL_PROFILE_CONFIG);
+  }
+
+  function hasLegacyInitialSchedule(records) {
+    var map = recordsByDate(records);
+    function isAfternoonWorking(record) {
+      return (
+        record &&
+        record.status === "working" &&
+        record.shiftType === "afternoon"
+      );
+    }
+    function isOff(record) {
+      return record && isOffRecord(record);
+    }
+    return (
+      !map["2026-10-31"] &&
+      isAfternoonWorking(map["2026-11-01"]) &&
+      isAfternoonWorking(map["2026-11-02"]) &&
+      isOff(map["2026-11-03"]) &&
+      isOff(map["2026-11-04"])
+    );
+  }
+
+  function deriveConfigFromRecords(records) {
+    var manual = records
+      .filter(function (record) {
+        return !isGeneratedRecord(record);
+      })
+      .sort(function (a, b) {
+        return a.date.localeCompare(b.date);
       });
+    var map = recordsByDate(manual);
+    for (var index = 0; index < manual.length; index += 1) {
+      var start = manual[index].date;
+      var windowRecords = [];
+      var complete = true;
+      for (var offset = 0; offset < 5; offset += 1) {
+        var record = map[addDays(start, offset)];
+        if (!record) {
+          complete = false;
+          break;
+        }
+        windowRecords.push(record);
+      }
+      if (!complete) continue;
+      var validPattern =
+        !isOffRecord(windowRecords[0]) &&
+        !isOffRecord(windowRecords[1]) &&
+        !isOffRecord(windowRecords[2]) &&
+        isOffRecord(windowRecords[3]) &&
+        isOffRecord(windowRecords[4]);
+      if (!validPattern) continue;
+      var shiftType = windowRecords[0].shiftType;
+      if (["morning", "afternoon", "night"].indexOf(shiftType) === -1) continue;
+      var times = recordTimes(windowRecords[0]);
+      return {
+        rotation: {
+          configured: true,
+          workingDaysPerCycle: 3,
+          offDaysPerCycle: 2,
+          shiftSequence: ["morning", "afternoon", "night"],
+          shiftTimes: shiftTimesFromConfig(data.getWorkScheduleConfig())
+        },
+        anchor: {
+          date: start,
+          shiftType: shiftType,
+          cyclePosition: 0,
+          startTime: times.start,
+          endTime: times.end
+        }
+      };
     }
 
-    data.updateSettings({
-      preferences: Object.assign({}, preferences, {
-        workScheduleInitialized: true
-      })
-    });
+    var legacy = data.getWorkScheduleConfig();
+    var anchor = legacy.anchor || {};
+    if (
+      data.isDateOnly(anchor.date) &&
+      ["morning", "afternoon", "night"].indexOf(anchor.shiftType) !== -1
+    ) {
+      return {
+        rotation: Object.assign({ configured: true }, legacy.rotation || {}),
+        anchor: {
+          date: anchor.date,
+          shiftType: anchor.shiftType,
+          cyclePosition: 0,
+          startTime: anchor.startTime || "",
+          endTime: anchor.endTime || ""
+        }
+      };
+    }
+
+    return null;
+  }
+
+  function ensureScheduleConfiguration() {
+    var settings = data.getSettings();
+    var preferences = settings.preferences || {};
+    var config = data.getWorkScheduleConfig();
+    var records = getRecords();
+    var initialized = Boolean(preferences.workScheduleInitialized);
+
+    if (config.rotation && config.rotation.configured) {
+      if (!initialized) {
+        data.updateSettings({
+          preferences: Object.assign({}, preferences, {
+            workScheduleInitialized: true
+          })
+        });
+      }
+      return;
+    }
+
+    if (!initialized) {
+      applyInitialProfileConfig(settings);
+      data.updateSettings({
+        preferences: Object.assign({}, preferences, {
+          workScheduleInitialized: true
+        })
+      });
+      return;
+    }
+
+    if (hasLegacyInitialSchedule(records)) {
+      applyInitialProfileConfig(settings);
+      return;
+    }
+
+    var derived = deriveConfigFromRecords(records);
+    if (derived) {
+      data.updateWorkScheduleConfig(derived);
+    }
   }
 
   /* ---------- Shell ---------- */
@@ -716,7 +870,9 @@
     var todayValue = today();
     var records = getRecords();
     var map = recordsByDate(records);
+    var config = normalizeRotationConfig();
     var todayRecord = map[todayValue] || null;
+    var todayCalculated = calculateRotation(todayValue, config);
     var upcoming = records
       .filter(function (record) {
         return record.status === "working" && record.date >= todayValue;
@@ -725,6 +881,16 @@
         return a.date.localeCompare(b.date);
       });
     var nextShift = upcoming[0] || null;
+    var nextCalculated = null;
+    if (!nextShift && config.valid) {
+      for (var offset = 0; offset <= 90; offset += 1) {
+        var candidate = calculateRotation(addDays(todayValue, offset), config);
+        if (candidate && candidate.status === "working") {
+          nextCalculated = candidate;
+          break;
+        }
+      }
+    }
     var upcomingOff = records
       .filter(function (record) {
         return record.status === "off" && record.date >= todayValue;
@@ -750,6 +916,16 @@
           : recordRange(todayRecord) + "."
       );
       setIconTone("ws-today-icon", todayMeta.tone);
+    } else if (todayCalculated) {
+      var todayExpected = recordMeta(todayCalculated);
+      setText("ws-today-value", todayExpected.label);
+      setText(
+        "ws-today-note",
+        todayCalculated.status === "off"
+          ? "Expected day off from your rotation."
+          : recordRange(todayCalculated) + " · expected from your rotation."
+      );
+      setIconTone("ws-today-icon", todayExpected.tone);
     } else {
       setText("ws-today-value", "No schedule recorded");
       setText("ws-today-note", "Today has not been confirmed yet.");
@@ -764,6 +940,17 @@
       );
       setText("ws-next-shift-note", formatFullDate(nextShift.date) + " · " + recordRange(nextShift) + ".");
       setIconTone("ws-next-shift-icon", nextMeta.tone);
+    } else if (nextCalculated) {
+      var expectedMeta = recordMeta(nextCalculated);
+      setText(
+        "ws-next-shift-value",
+        expectedMeta.label + " · " + formatDate(nextCalculated.date, { month: "short", day: "numeric" })
+      );
+      setText(
+        "ws-next-shift-note",
+        formatFullDate(nextCalculated.date) + " · " + recordRange(nextCalculated) + " · expected from your rotation."
+      );
+      setIconTone("ws-next-shift-icon", expectedMeta.tone);
     } else {
       setText("ws-next-shift-value", "No confirmed shift");
       setText("ws-next-shift-note", "Add a schedule entry to confirm a shift.");
@@ -835,11 +1022,16 @@
     return classes.join(" ");
   }
 
+  function calendarConflictClass(value, record, config) {
+    return conflictForDate(value, config, record) ? " is-conflict" : "";
+  }
+
   function renderMonthView() {
     var first = startOfMonth(state.periodDate);
     var gridStart = startOfWeek(first);
     var days = daysInRange(gridStart, addDays(gridStart, 41));
     var map = recordsByDate(getRecords());
+    var config = normalizeRotationConfig();
     var html = '<div class="ws-month">';
 
     html += '<div class="ws-weekday-row">';
@@ -857,6 +1049,7 @@
       html +=
         '<button type="button" class="' +
         calendarButtonClass(value, record) +
+        calendarConflictClass(value, record, config) +
         '" data-ws-date="' +
         value +
         '" aria-label="' +
@@ -892,6 +1085,7 @@
     var start = startOfWeek(state.periodDate);
     var days = daysInRange(start, addDays(start, 6));
     var map = recordsByDate(getRecords());
+    var config = normalizeRotationConfig();
     var html = '<div class="ws-week-view">';
     days.forEach(function (value) {
       var record = map[value] || null;
@@ -901,6 +1095,7 @@
       html +=
         '<button type="button" class="' +
         calendarButtonClass(value, record, "ws-week-day") +
+        calendarConflictClass(value, record, config) +
         '" data-ws-date="' +
         value +
         '" aria-label="' +
@@ -944,6 +1139,7 @@
     var range = periodRange();
     var days = daysInRange(range.from, range.to);
     var map = recordsByDate(getRecords());
+    var config = normalizeRotationConfig();
     var html = '<div class="ws-list-view">';
     days.forEach(function (value) {
       var record = map[value] || null;
@@ -953,6 +1149,7 @@
       html +=
         '<button type="button" class="ws-list-row ' +
         calendarButtonClass(value, record).replace(/ws-day\s?/g, "") +
+        calendarConflictClass(value, record, config) +
         '" data-ws-date="' +
         value +
         '" aria-label="' +
@@ -1032,6 +1229,9 @@
     var container = byId("ws-details-panel");
     if (!container) return;
     var record = getRecordForDate(state.selectedDate);
+    var config = normalizeRotationConfig();
+    var calculated = calculateRotation(state.selectedDate, config);
+    var conflict = record ? conflictForDate(state.selectedDate, config, record) : null;
     var html = '<div class="ws-details-inner">';
     html +=
       '<span class="ws-details-kicker">Selected date</span>';
@@ -1046,11 +1246,17 @@
       var meta = recordMeta(record);
       html +=
         '<span class="ws-status-pill is-' +
-        meta.tone +
+        (conflict ? "warning" : meta.tone) +
         '">' +
-        iconMarkup(meta.icon, "w-3 h-3") +
+        iconMarkup(conflict ? "alert-triangle" : meta.icon, "w-3 h-3") +
         "<span>" +
-        escapeHtml(record.status === "off" ? "Confirmed off" : "Confirmed") +
+        escapeHtml(
+          conflict
+            ? "Conflict"
+            : record.status === "off"
+            ? "Confirmed off"
+            : "Confirmed"
+        ) +
         "</span></span>";
       html += "</div>";
       html +=
@@ -1068,7 +1274,7 @@
       html += detailRow(
         "Entry type",
         isGeneratedRecord(record)
-          ? "Generated from the first five-day cycle"
+          ? "Generated from the configured rotation"
           : "Manual entry"
       );
       html += detailRow("Team / department", record.team);
@@ -1076,6 +1282,17 @@
       html += detailRow("Supervisor", settings.supervisor);
       html += detailRow("Notes", record.notes);
       html += "</dl>";
+      if (conflict) {
+        var conflictMeta = recordMeta(conflict);
+        html +=
+          '<div class="ws-details-warning">' +
+          iconMarkup("alert-triangle", "w-4 h-4") +
+          "<p>This manual entry differs from the calculated rotation (" +
+          escapeHtml(conflictMeta.label) +
+          " · " +
+          escapeHtml(recordRange(conflict)) +
+          "). It has been kept as entered and will not be overwritten.</p></div>";
+      }
       html += '<div class="ws-details-actions">';
       html +=
         '<button type="button" class="ws-btn ws-btn-primary" data-ws-action="edit">' +
@@ -1086,12 +1303,41 @@
         iconMarkup("trash-2", "w-4 h-4") +
         "<span>Delete</span></button>";
       html += "</div>";
+    } else if (calculated) {
+      var expectedMeta = recordMeta(calculated);
+      html +=
+        '<span class="ws-status-pill is-' +
+        expectedMeta.tone +
+        '">' +
+        iconMarkup("calendar-sync", "w-3 h-3") +
+        "<span>Expected</span></span>";
+      html += "</div>";
+      html +=
+        '<div class="ws-details-shift is-' +
+        expectedMeta.tone +
+        '"><span class="ws-details-shift-icon">' +
+        iconMarkup(expectedMeta.icon, "w-5 h-5") +
+        "</span><div><strong>" +
+        escapeHtml(expectedMeta.label) +
+        "</strong><small>" +
+        escapeHtml(calculated.status === "off" ? "No working hours" : recordRange(calculated)) +
+        "</small></div></div>";
+      html +=
+        '<div class="ws-details-empty"><span class="ws-details-empty-icon">' +
+        iconMarkup("calendar-plus", "w-5 h-5") +
+        "</span><strong>Not saved yet</strong><p>Your configured rotation expects " +
+        escapeHtml(expectedMeta.label) +
+        " on this date, but no schedule entry has been saved. Add it manually or generate the month.</p></div>";
+      html +=
+        '<div class="ws-details-actions"><button type="button" class="ws-btn ws-btn-primary" data-ws-action="add">' +
+        iconMarkup("plus", "w-4 h-4") +
+        "<span>Add entry for this date</span></button></div>";
     } else {
       html += "</div>";
       html +=
         '<div class="ws-details-empty"><span class="ws-details-empty-icon">' +
         iconMarkup("calendar-plus", "w-5 h-5") +
-        "</span><strong>Unconfirmed date</strong><p>No schedule entry has been saved for this date. It stays unassigned until you add one.</p></div>";
+        "</span><strong>Unconfirmed date</strong><p>No schedule entry has been saved for this date, and no rotation is configured yet.</p></div>";
       html +=
         '<div class="ws-details-actions"><button type="button" class="ws-btn ws-btn-primary" data-ws-action="add">' +
         iconMarkup("plus", "w-4 h-4") +
@@ -1108,7 +1354,8 @@
     var config = data.getWorkScheduleConfig();
     var rotation = config.rotation || {};
     var anchor = config.anchor || {};
-    var times = shiftTimesFromConfig(config);
+    var normalized = normalizeRotationConfig(config);
+    var times = normalized.times;
     var anchorMeta = shiftMeta(anchor.shiftType);
 
     setText(
@@ -1123,37 +1370,74 @@
       "ws-shift-night-time",
       timeRange(times.night.start, times.night.end)
     );
-    setText("ws-cycle-working", String(rotation.workingDaysPerCycle || 0));
-    setText("ws-cycle-off", String(rotation.offDaysPerCycle || 0));
+    setText("ws-cycle-working", String(normalized.working));
+    setText("ws-cycle-off", String(normalized.off));
     setText(
       "ws-anchor-value",
-      anchor.date && anchor.shiftType
-        ? anchorMeta.label + " · " + formatDate(anchor.date)
-        : "Not set"
+      normalized.valid
+        ? anchorMeta.label +
+            " · " +
+            rotationPositionLabel(
+              normalized.anchorPosition,
+              normalized.working,
+              normalized.off
+            ) +
+            " · " +
+            formatDate(normalized.anchorDate)
+        : "Not configured"
     );
     setText(
       "ws-anchor-note",
-      anchor.date && anchor.shiftType
-        ? "The first complete five-day cycle that includes this date is used for monthly completion."
-        : "No rotation anchor is stored. The first complete five-day cycle in the month is used."
+      normalized.valid
+        ? "Used as the continuous calculation reference. Changing it affects future calculations only."
+        : "Set a reference date, its cycle position and shift to enable automatic schedule generation."
+    );
+
+    var configState = byId("ws-config-state");
+    if (configState) {
+      configState.classList.toggle("is-ready", normalized.valid);
+      configState.classList.toggle("is-setup", !normalized.valid);
+    }
+    setText(
+      "ws-config-state-title",
+      normalized.valid ? "Rotation configured" : "Rotation setup needed"
+    );
+    setText(
+      "ws-config-state-copy",
+      normalized.valid
+        ? "Your " +
+            normalized.working +
+            "-day work / " +
+            normalized.off +
+            "-day off cycle and " +
+            normalized.sequence
+              .map(function (type) {
+                return shiftMeta(type).label;
+              })
+              .join(" → ") +
+            " shift rotation are calculated continuously from your reference date."
+        : "Add your reference date, its position in the work/off cycle and its shift block before generating a schedule."
     );
 
     var workdays = byId("ws-rotation-workdays");
     var offdays = byId("ws-rotation-offdays");
     var anchorDate = byId("ws-anchor-date");
     var anchorShift = byId("ws-anchor-shift");
-    if (workdays) workdays.value = rotation.workingDaysPerCycle || 3;
-    if (offdays) offdays.value = rotation.offDaysPerCycle || 2;
+    var anchorPosition = byId("ws-anchor-position");
+    if (workdays) workdays.value = normalized.working;
+    if (offdays) offdays.value = normalized.off;
     if (anchorDate) anchorDate.value = anchor.date || "";
     if (anchorShift) anchorShift.value = anchor.shiftType || "";
+    refreshAnchorPositionOptions(normalized.anchorPosition);
+    if (anchorPosition) anchorPosition.value = String(normalized.anchorPosition);
+    updateAnchorShiftGuidance();
 
-    var sequence =
-      Array.isArray(rotation.shiftSequence) && rotation.shiftSequence.length
-        ? rotation.shiftSequence
-        : ["morning", "afternoon", "night"];
     [1, 2, 3].forEach(function (index) {
       var select = byId("ws-sequence-" + index);
-      if (select) select.value = sequence[index - 1] || sequence[0] || "morning";
+      if (select) {
+        select.value =
+          normalized.sequence[index - 1] || normalized.sequence[0] || "morning";
+      }
     });
 
     ["morning", "afternoon", "night"].forEach(function (type) {
@@ -1166,28 +1450,33 @@
 
   function renderGenerationSuggestion() {
     var card = byId("ws-generation-card");
+    var empty = byId("ws-generation-empty");
     var note = byId("ws-generation-card-note");
     var badge = byId("ws-generation-state");
+    var button = byId("ws-generate-open");
     var monthKey = monthKeyOf(state.periodDate);
-    var cycle = findFirstCycle(monthKey);
-    updateGenerationNote(cycle);
+    var config = normalizeRotationConfig();
+    state.generationPlan = null;
 
-    if (!card) return;
-    if (!cycle.valid) {
-      card.hidden = true;
-      state.generationPlan = null;
+    if (!config.valid) {
+      if (card) card.hidden = true;
+      if (empty) empty.hidden = false;
+      updateGenerationNote(null);
       if (badge) {
-        badge.textContent = "Future generation off";
+        badge.textContent = "Setup required";
         badge.classList.remove("is-complete");
         badge.classList.add("is-off");
       }
       return;
     }
 
-    var plan = buildGenerationPlan(monthKey, cycle);
+    if (empty) empty.hidden = true;
+    var plan = buildGenerationPlan(monthKey, config);
     state.generationPlan = plan;
+    updateGenerationNote(plan);
+    if (card) card.hidden = false;
+
     if (!plan.actions.length) {
-      card.hidden = true;
       if (badge) {
         badge.textContent = plan.conflicts.length
           ? "Month complete · overrides kept"
@@ -1195,25 +1484,57 @@
         badge.classList.remove("is-off");
         badge.classList.add("is-complete");
       }
+      if (button) {
+        button.disabled = true;
+        button.innerHTML =
+          iconMarkup("check", "w-4 h-4") +
+          "<span>No missing dates</span>";
+      }
+      if (note) {
+        note.textContent =
+          formatMonth(state.periodDate) +
+          " already has every calculated date. " +
+          (plan.conflicts.length
+            ? plan.conflicts.length +
+              " manual entr" +
+              (plan.conflicts.length === 1 ? "y differs" : "ies differ") +
+              " from the rotation and " +
+              (plan.conflicts.length === 1 ? "was" : "were") +
+              " preserved."
+            : "Manual entries stay exactly as entered.");
+      }
       return;
     }
 
-    card.hidden = false;
     if (badge) {
-      badge.textContent = "Ready to complete";
+      badge.textContent = "Ready to generate";
       badge.classList.remove("is-off", "is-complete");
+    }
+    if (button) {
+      button.disabled = false;
+      button.innerHTML =
+        iconMarkup("sparkles", "w-4 h-4") +
+        "<span>Preview " +
+        plan.actions.length +
+        " date" +
+        (plan.actions.length === 1 ? "" : "s") +
+        "</span>";
     }
     if (note) {
       note.textContent =
-        "Your first five-day cycle starts " +
-        formatDate(cycle.start, { month: "short", day: "numeric" }) +
-        ". It can fill " +
+        formatMonth(state.periodDate) +
+        " can fill " +
         plan.actions.length +
         " remaining date" +
         (plan.actions.length === 1 ? "" : "s") +
-        " in " +
-        formatMonth(state.periodDate) +
-        ". Manual entries stay exactly as entered.";
+        " from your configured rotation. " +
+        (plan.conflicts.length
+          ? plan.conflicts.length +
+            " manual entr" +
+            (plan.conflicts.length === 1 ? "y will" : "ies will") +
+            " be preserved and flagged. "
+          : "") +
+        "Nothing is written until you confirm the preview.";
     }
   }
 
@@ -1222,19 +1543,25 @@
     var meta = recordMeta(proposed);
     var date = parseDateKey(item.date);
     var dayName = date ? WEEKDAYS[date.getDay()] : "";
-    var shiftText =
-      proposed.status === "off"
-        ? "Day off"
-        : meta.label;
+    var shiftText = proposed.status === "off" ? "Day off" : meta.label;
     var timesText =
-      proposed.status === "off" ? "No working hours" : timeRange(proposed.startTime, proposed.endTime);
-    var actionText = item.type === "create" ? "New" : "Update generated";
-    if (item.type === "conflict") {
-      var existingMeta = recordMeta(item.existing);
-      actionText = "Manual kept · currently " + existingMeta.label;
-    }
+      proposed.status === "off"
+        ? "No working hours"
+        : timeRange(proposed.startTime, proposed.endTime);
+    var statusText = proposed.status === "off" ? "Off" : "Work";
+    var sourceText = item.existing
+      ? isGeneratedRecord(item.existing)
+        ? "Generated"
+        : "Manual"
+      : "New";
+    var actionText = "Create generated";
+    if (item.type === "update") actionText = "Update generated";
+    if (item.type === "conflict") actionText = "Keep manual · conflict";
+    if (item.type === "preserved") actionText = "Keep manual · matches";
+    if (item.type === "existing") actionText = "Already generated";
     return (
-      '<tr class="ws-generate-row' +
+      '<tr class="ws-generate-row is-' +
+      item.type +
       (item.type === "conflict" ? " is-conflict" : "") +
       '">' +
       "<td><strong>" +
@@ -1242,6 +1569,9 @@
       "</strong></td>" +
       "<td>" +
       escapeHtml(dayName) +
+      "</td>" +
+      "<td>" +
+      escapeHtml(statusText) +
       "</td>" +
       '<td><span class="ws-generate-shift is-' +
       meta.tone +
@@ -1253,6 +1583,9 @@
       "<td>" +
       escapeHtml(timesText) +
       "</td>" +
+      "<td>" +
+      escapeHtml(sourceText) +
+      "</td>" +
       '<td class="ws-generate-action">' +
       escapeHtml(actionText) +
       "</td></tr>"
@@ -1261,36 +1594,25 @@
 
   function openGenerationPreview() {
     var monthKey = monthKeyOf(state.periodDate);
-    var cycle = findFirstCycle(monthKey);
-    if (!cycle.valid) {
+    var config = normalizeRotationConfig();
+    if (!config.valid) {
       renderGenerationSuggestion();
       return;
     }
-    var plan = buildGenerationPlan(monthKey, cycle);
+    var plan = buildGenerationPlan(monthKey, config);
     state.generationPlan = plan;
-    if (!plan.actions.length) {
-      renderGenerationSuggestion();
-      return;
-    }
 
-    var rows = plan.actions
-      .concat(plan.conflicts)
-      .sort(function (a, b) {
-        return a.date.localeCompare(b.date);
-      })
-      .map(generationRow)
-      .join("");
-
+    var rows = plan.rows.map(generationRow).join("");
     setText("ws-generate-title", "Complete " + formatMonth(state.periodDate));
     setText(
       "ws-generate-subtitle",
-      "Review every proposed date before applying the five-day cycle."
+      "Review every date in the month before applying the continuous rotation."
     );
     var summary = byId("ws-generate-summary");
     if (summary) {
       summary.innerHTML =
-        '<div class="ws-generate-summary-item"><span>Cycle start</span><strong>' +
-        escapeHtml(formatDate(cycle.start, { month: "short", day: "numeric", year: "numeric" })) +
+        '<div class="ws-generate-summary-item"><span>Reference</span><strong>' +
+        escapeHtml(formatDate(config.anchorDate, { month: "short", day: "numeric", year: "numeric" })) +
         "</strong></div>" +
         '<div class="ws-generate-summary-item"><span>New entries</span><strong>' +
         plan.actions.filter(function (item) {
@@ -1311,14 +1633,15 @@
     setFormError("ws-generate-error", "");
     var confirm = byId("ws-generate-confirm");
     if (confirm) {
-      confirm.disabled = false;
-      confirm.innerHTML =
-        iconMarkup("check", "w-4 h-4") +
-        "<span>Apply " +
-        plan.actions.length +
-        " date" +
-        (plan.actions.length === 1 ? "" : "s") +
-        "</span>";
+      confirm.disabled = !plan.actions.length;
+      confirm.innerHTML = plan.actions.length
+        ? iconMarkup("check", "w-4 h-4") +
+          "<span>Apply " +
+          plan.actions.length +
+          " date" +
+          (plan.actions.length === 1 ? "" : "s") +
+          "</span>"
+        : iconMarkup("check", "w-4 h-4") + "<span>Nothing to apply</span>";
     }
     showModal("ws-generate-modal");
     refreshIcons();
@@ -1326,7 +1649,7 @@
 
   function applyGeneration() {
     var plan = state.generationPlan;
-    if (!plan) return;
+    if (!plan || !plan.actions.length) return;
     var confirm = byId("ws-generate-confirm");
     if (confirm) confirm.disabled = true;
     setFormError("ws-generate-error", "");
@@ -1424,34 +1747,47 @@
 
     var anchorDate = byId("ws-anchor-date").value;
     var anchorShift = byId("ws-anchor-shift").value;
-    if (anchorDate && !data.isDateOnly(anchorDate)) {
-      setFormError("ws-rotation-error", "Choose a valid rotation anchor date.");
+    var anchorPosition = Number(byId("ws-anchor-position").value);
+    if (!data.isDateOnly(anchorDate)) {
+      setFormError("ws-rotation-error", "Choose a valid rotation reference date.");
       return;
     }
-    if ((anchorDate && !anchorShift) || (!anchorDate && anchorShift)) {
-      setFormError("ws-rotation-error", "Set both the rotation anchor date and anchor shift, or clear both.");
+    if (sequence.indexOf(anchorShift) === -1) {
+      setFormError("ws-rotation-error", "Choose the shift block that applies to the reference cycle.");
+      return;
+    }
+    if (
+      !Number.isInteger(anchorPosition) ||
+      anchorPosition < 0 ||
+      anchorPosition >= workdays + offdays
+    ) {
+      setFormError("ws-rotation-error", "Choose the reference date's position in the work/off cycle.");
       return;
     }
 
     try {
       data.updateWorkScheduleConfig({
         rotation: {
+          configured: true,
           workingDaysPerCycle: workdays,
           offDaysPerCycle: offdays,
           shiftSequence: sequence,
           shiftTimes: times
         },
         anchor: {
-          date: anchorDate || "",
-          shiftType: anchorShift || "",
-          startTime: anchorShift ? times[anchorShift].start : "",
-          endTime: anchorShift ? times[anchorShift].end : ""
+          date: anchorDate,
+          shiftType: anchorShift,
+          cyclePosition: anchorPosition,
+          startTime: times[anchorShift].start,
+          endTime: times[anchorShift].end
         }
       });
+      state.periodDate = anchorDate;
+      state.selectedDate = anchorDate;
       renderAll();
       showToast(
-        "Rotation settings saved",
-        "The stored rotation was updated without creating future schedule entries.",
+        "Schedule configuration saved",
+        "The continuous rotation was updated. Existing records were not changed; regenerate a month to apply it.",
         "success"
       );
     } catch (error) {
@@ -1899,11 +2235,34 @@
     var generateOpen = byId("ws-generate-open");
     if (generateOpen) generateOpen.addEventListener("click", openGenerationPreview);
 
+    document.addEventListener("click", function (event) {
+      if (!event.target.closest("[data-ws-open-setup]")) return;
+      var form = byId("ws-rotation-form");
+      if (form) form.scrollIntoView({ behavior: "smooth", block: "center" });
+      var dateField = byId("ws-anchor-date");
+      if (dateField) dateField.focus({ preventScroll: true });
+    });
+
     var generateConfirm = byId("ws-generate-confirm");
     if (generateConfirm) generateConfirm.addEventListener("click", applyGeneration);
 
     var rotationForm = byId("ws-rotation-form");
     if (rotationForm) rotationForm.addEventListener("submit", saveRotation);
+
+    ["ws-rotation-workdays", "ws-rotation-offdays"].forEach(function (id) {
+      var field = byId(id);
+      if (field) {
+        field.addEventListener("change", function () {
+          refreshAnchorPositionOptions();
+          updateAnchorShiftGuidance();
+        });
+      }
+    });
+
+    var anchorPositionField = byId("ws-anchor-position");
+    if (anchorPositionField) {
+      anchorPositionField.addEventListener("change", updateAnchorShiftGuidance);
+    }
 
     var entryForm = byId("ws-entry-form");
     if (entryForm) entryForm.addEventListener("submit", submitEntry);
@@ -1961,7 +2320,7 @@
   }
 
   function init() {
-    seedInitialSchedule();
+    ensureScheduleConfiguration();
     bindEvents();
     renderAll();
   }

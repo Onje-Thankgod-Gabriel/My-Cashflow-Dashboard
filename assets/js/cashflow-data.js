@@ -265,17 +265,25 @@
       dailyPlans: [],
       projects: [],
       workSchedule: {
+        profileId: "local",
         records: [],
         rotation: {
+          configured: false,
           workingDaysPerCycle: 3,
           offDaysPerCycle: 2,
-          shiftSequence: ["morning", "afternoon", "night"]
+          shiftSequence: ["morning", "afternoon", "night"],
+          shiftTimes: {
+            morning: { start: "07:00", end: "13:00" },
+            afternoon: { start: "13:00", end: "19:00" },
+            night: { start: "19:00", end: "07:00" }
+          }
         },
         anchor: {
-          date: INITIAL_FINANCIAL_DATE,
-          shiftType: "afternoon",
-          startTime: "13:00",
-          endTime: "19:00"
+          date: "",
+          shiftType: "",
+          cyclePosition: 0,
+          startTime: "",
+          endTime: ""
         }
       },
       settings: {
@@ -325,16 +333,40 @@
     normalized.workSchedule.records = Array.isArray(incomingWork.records)
       ? incomingWork.records
       : [];
+    normalized.workSchedule.profileId =
+      typeof incomingWork.profileId === "string" && incomingWork.profileId
+        ? incomingWork.profileId
+        : "local";
+    var incomingRotation = isPlainObject(incomingWork.rotation)
+      ? incomingWork.rotation
+      : {};
     normalized.workSchedule.rotation = Object.assign(
       {},
       defaults.workSchedule.rotation,
-      isPlainObject(incomingWork.rotation) ? incomingWork.rotation : {}
+      incomingRotation
     );
+    normalized.workSchedule.rotation.shiftTimes = Object.assign(
+      {},
+      defaults.workSchedule.rotation.shiftTimes,
+      isPlainObject(incomingRotation.shiftTimes)
+        ? incomingRotation.shiftTimes
+        : {}
+    );
+    normalized.workSchedule.rotation.shiftSequence =
+      Array.isArray(incomingRotation.shiftSequence) &&
+      incomingRotation.shiftSequence.length
+        ? incomingRotation.shiftSequence
+        : defaults.workSchedule.rotation.shiftSequence.slice();
     normalized.workSchedule.anchor = Object.assign(
       {},
       defaults.workSchedule.anchor,
       isPlainObject(incomingWork.anchor) ? incomingWork.anchor : {}
     );
+    normalized.workSchedule.anchor.cyclePosition = Number.isInteger(
+      normalized.workSchedule.anchor.cyclePosition
+    )
+      ? normalized.workSchedule.anchor.cyclePosition
+      : 0;
     normalized.settings = Object.assign(
       {},
       defaults.settings,
@@ -2055,7 +2087,15 @@
     assert(isPlainObject(patch), "Work schedule config update must be an object.");
     return mutate(function (draft) {
       if (isPlainObject(patch.rotation)) {
-        Object.assign(draft.workSchedule.rotation, deepClone(patch.rotation));
+        var rotationPatch = deepClone(patch.rotation);
+        if (isPlainObject(rotationPatch.shiftTimes)) {
+          rotationPatch.shiftTimes = Object.assign(
+            {},
+            draft.workSchedule.rotation.shiftTimes,
+            rotationPatch.shiftTimes
+          );
+        }
+        Object.assign(draft.workSchedule.rotation, rotationPatch);
       }
       if (isPlainObject(patch.anchor)) {
         Object.assign(draft.workSchedule.anchor, deepClone(patch.anchor));
