@@ -1,0 +1,543 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
+    <title>Gabsweb CashFlow · Reports &amp; Insights</title>
+    <link rel="icon" href="assets/images/fav.png" />
+    <script src="https://unpkg.com/lucide@1.64.0/dist/umd/lucide.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet" />
+    <script src="assets/js/theme-loader.js"></script>
+    <link href="assets/css/index.css" rel="stylesheet" />
+    <link href="assets/css/insights.css" rel="stylesheet" />
+    <link href="assets/css/notifications.css" rel="stylesheet" />
+    <link href="assets/css/typography.css" rel="stylesheet" />
+  </head>
+  <body id="root-body" data-page="Reports &amp; Insights" class="bg-bg text-text">
+    <!-- Desktop Sidebar -->
+    <aside id="sidebar" class="sidebar w-64 sm:w-72 h-screen fixed top-0 left-0 z-[110] bg-bg border-r border-border flex flex-col max-xl:left-[-100%] max-xl:invisible max-xl:opacity-0">
+      <div class="p-3 sm:p-6 border-b border-border flex-shrink-0">
+        <div class="flex justify-between">
+          <a href="./index.html" class="flex items-center gap-3 mb-3 sm:mb-6 cursor-pointer">
+            <div class="flex items-center justify-center">
+              <img src="assets/images/gabsweb-cashflow-logo.png" alt="Gabsweb CashFlow Logo" class="brand-logo w-10 h-10 sm:w-12 sm:h-12 rounded-2xl" />
+            </div>
+            <div>
+              <h1 class="text-sm font-bold text-text">Gabsweb CashFlow</h1>
+              <p class="text-xs text-muted font-medium">Smart Finance</p>
+            </div>
+          </a>
+
+          <button id="close-sidebar" class="p-2 rounded-xl hover:bg-bgbg block xl:hidden transition-transform duration-300">
+            <i data-lucide="x" class="w-5 h-5 text-text"></i>
+          </button>
+        </div>
+
+        <div class="content-box glass p-4 border-border border rounded-2xl">
+          <div class="flex items-center justify-between mb-2">
+            <span class="text-[10px] sm:text-xs font-semibold text-muted uppercase tracking-wider">Total Balance</span>
+            <div class="live-dot"></div>
+          </div>
+          <h5 id="sidebar-total-balance" class="text-xl sm:text-2xl font-bold text-gradient mb-1">₦0.00</h5>
+          <p id="sidebar-balance-note" class="text-[10px] sm:text-xs text-muted whitespace-nowrap opacity-80 flex gap-2 mt-1">Loading finances…</p>
+        </div>
+      </div>
+
+        <nav class="flex-1 overflow-y-auto p-2 sm:p-4 custom-scrollbar">
+    <div class="space-y-1">
+      <a href="./index.html" class="nav-item">
+        <i data-lucide="layout-dashboard" class="w-5 h-5"></i>
+        <span>Dashboard</span>
+      </a>
+      <a href="./planner.html" class="nav-item">
+        <i data-lucide="calendar-check" class="w-5 h-5"></i>
+        <span>Planner</span>
+      </a>
+      <a href="./transaction.html" class="nav-item">
+        <i data-lucide="arrow-right-left" class="w-5 h-5"></i>
+        <span>My Finances</span>
+      </a>
+      <a href="./budgets.html" class="nav-item">
+        <i data-lucide="wallet-cards" class="w-5 h-5"></i>
+        <span>Budget &amp; Money Allocation</span>
+      </a>
+      <a href="./savings.html" class="nav-item">
+        <i data-lucide="coins" class="w-5 h-5"></i>
+        <span>Savings</span>
+      </a>
+      <a href="./goals.html" class="nav-item">
+        <i data-lucide="target" class="w-5 h-5"></i>
+        <span>Goals &amp; Planned Purchases</span>
+      </a>
+      <a href="./work-schedule.html" class="nav-item">
+        <i data-lucide="calendar-clock" class="w-5 h-5"></i>
+        <span>Work Schedule</span>
+      </a>
+      <a href="./insights.html" class="nav-item">
+        <i data-lucide="bar-chart-3" class="w-5 h-5"></i>
+        <span>Reports &amp; Insights</span>
+      </a>
+    </div>
+
+    <div class="mt-6 pt-6 border-t border-border space-y-1">
+      <a href="./settings.html" class="nav-item">
+        <i data-lucide="settings" class="w-5 h-5"></i>
+        <span>Settings</span>
+      </a>
+
+    </div>
+  </nav>
+
+      <div class="p-4 border-t border-border flex-shrink-0 relative">
+        <div id="user-button" class="flex items-center gap-3 rounded-2xl hover:bg-opacity-50 cursor-pointer">
+          <div class="w-10 h-10 sm:w-12 sm:h-12 border-2 border-blue-700 rounded-full flex items-center justify-center text-text font-bold">
+            <img class="w-8 h-8 md:w-10 md:h-10 rounded-full flex justify-center items-center object-cover" src="assets/images/profiles/emma.jpg" alt="Profile image" />
+          </div>
+          <div class="flex-1 min-w-0">
+            <h2 id="sidebar-user-name" class="text-sm font-semibold text-text truncate">Your profile</h2>
+            <p class="text-xs text-muted truncate">Personal account</p>
+          </div>
+          <i data-lucide="chevron-down" class="w-4 h-4 text-muted transition-transform duration-200" id="dropdown-arrow"></i>
+        </div>
+
+        <div id="user-dropdown" class="absolute left-2 bottom-full mb-2 w-full max-w-[300px] md:max-w-[200px] bg-bg border border-border rounded-xl shadow-lg hidden z-500">
+          <ul class="py-2">
+            <li>
+              <a href="./settings.html" class="block px-4 py-2 text-sm text-text hover:bg-bg">Profile</a>
+            </li>
+            <li>
+              <a href="./login.html" type="button" id="logOut" class="block px-4 py-2 text-sm cursor-progress text-text hover:bg-bg">Logout</a>
+            </li>
+          </ul>
+        </div>
+      </div>
+    </aside>
+
+    <script>
+      const currentPage2 = window.location.pathname.split("/").pop() || "index.html";
+      const navItems = document.querySelectorAll(".nav-item");
+
+      navItems.forEach((link) => {
+        const href = link.getAttribute("href");
+        if (!href) return;
+        const fileName = href.split("/").pop();
+        if (fileName === currentPage2) {
+          link.classList.add("active");
+        } else {
+          link.classList.remove("active");
+        }
+      });
+
+      const currentFile = window.location.pathname.split("/").pop();
+      const activeLink = document.querySelector(`.nav-item[href*="${currentFile}"], .bottom-nav-item[href*="${currentFile}"]`);
+      const pageTitleEl = document.getElementById("page-title");
+
+      if (activeLink && pageTitleEl) {
+        const titleText = activeLink.querySelector("span")?.textContent.trim();
+        pageTitleEl.textContent = titleText || "Dashboard";
+      } else if (pageTitleEl) {
+        pageTitleEl.textContent = "Dashboard";
+      }
+
+      const userBtn = document.getElementById("user-button");
+      const userDropdown = document.getElementById("user-dropdown");
+      const dropdownArrow = document.getElementById("dropdown-arrow");
+
+      userBtn.addEventListener("click", (e) => {
+        e.stopPropagation();
+        userDropdown.classList.toggle("hidden");
+        dropdownArrow.classList.toggle("rotate-180");
+      });
+
+      document.addEventListener("click", () => {
+        if (!userDropdown.classList.contains("hidden")) {
+          userDropdown.classList.add("hidden");
+          dropdownArrow.classList.remove("rotate-180");
+        }
+      });
+
+      const logOut = document.getElementById("logOut");
+      if (logOut) {
+        logOut.addEventListener("click", function () {
+          localStorage.removeItem("auth");
+          window.location.href = "/login.html";
+        });
+      }
+    </script>
+
+    <!-- Main Content -->
+    <div id="main-div" class="ml-0 xl:ml-72 transition-all duration-300">
+      <div id="overlay" class="hidden fixed inset-0 backdrop-blur-sm z-50"></div>
+
+      <!-- Header -->
+      <header class="sticky top-0 glass border-b border-border px-6 py-4 flex items-center justify-between z-30">
+        <div class="flex items-center gap-4">
+          <div>
+            <h2 id="page-title" class="text-sm md:text-xl font-bold text-text">Reports &amp; Insights</h2>
+            <p id="ri-header-subtitle" class="text-[10px] md:text-sm text-muted">Financial reporting workspace</p>
+          </div>
+        </div>
+
+        <div class="flex items-center gap-2 md:gap-3">
+          <button id="theme-toggle" class="p-1 md:p-2.5 rounded-xl hover:bg-bg transition-colors text-text cursor-pointer" aria-label="Toggle theme">
+            <svg class="moon" xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="currentColor" viewBox="0 0 256 256">
+              <path d="M120,40V16a8,8,0,0,1,16,0V40a8,8,0,0,1-16,0Zm72,88a64,64,0,1,1-64-64A64.07,64.07,0,0,1,192,128Zm-16,0a48,48,0,1,0-48,48A48.05,48.05,0,0,0,176,128ZM58.34,69.66A8,8,0,0,0,69.66,58.34l-16-16A8,8,0,0,0,42.34,53.66Zm0,116.68-16,16a8,8,0,0,0,11.32,11.32l16-16a8,8,0,0,0-11.32-11.32ZM192,72a8,8,0,0,0,5.66-2.34l16-16a8,8,0,0,0-11.32-11.32l-16,16A8,8,0,0,0,192,72Zm5.66,114.34a8,8,0,0,0-11.32,11.32l16,16a8,8,0,0,0,11.32-11.32ZM48,128a8,8,0,0,0-8-8H16a8,8,0,0,0,0,16H40A8,8,0,0,0,48,128Zm80,80a8,8,0,0,0-8,8v24a8,8,0,0,0,16,0V216A8,8,0,0,0,128,208Zm112-88H216a8,8,0,0,0,0,16h24a8,8,0,0,0,0-16Z"></path>
+            </svg>
+            <svg class="sun" xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="currentColor" viewBox="0 0 256 256">
+              <path d="M233.54,142.23a8,8,0,0,0-8-2,88.08,88.08,0,0,1-109.8-109.8,8,8,0,0,0-10-10,104.84,104.84,0,0,0-52.91,37A104,104,0,0,0,136,224a103.09,103.09,0,0,0,62.52-20.88,104.84,104.84,0,0,0,37-52.91A8,8,0,0,0,233.54,142.23ZM188.9,190.34A88,88,0,0,1,65.66,67.11a89,89,0,0,1,31.4-26A106,106,0,0,0,96,56,104.11,104.11,0,0,0,200,160a106,106,0,0,0,14.92-1.06A89,89,0,0,1,188.9,190.34Z"></path>
+            </svg>
+          </button>
+
+          <div>
+            <div class="relative" id="notification-wrapper">
+              <button id="notification-btn" class="relative p-1 md:p-2.5 rounded-xl hover:bg-bg transition-colors cursor-pointer" aria-label="Notifications">
+                <i data-lucide="bell" class="w-5 h-5 text-text"></i>
+              </button>
+
+              <div id="notification-dropdown" class="hidden app-notification opacity-0 translate-y-2 transition-all duration-200 ease-out">
+          <div class="app-notification-head">
+            <span class="app-notification-title">Notifications</span>
+          </div>
+          <div id="notification-list" class="app-notification-list custom-scrollbar">
+            <div class="app-notification-empty">
+              <span class="app-notification-empty-icon"><i data-lucide="bell" class="w-4 h-4"></i></span>
+              <p>No new notifications</p>
+              <small>Notifications from your CashFlow activity will appear here.</small>
+            </div>
+          </div>
+        </div>
+            </div>
+          </div>
+        </div>
+      </header>
+
+      <script>
+        document.addEventListener("DOMContentLoaded", () => {
+          const headerTitle = document.getElementById("page-title");
+          const currentPage = document.body.getAttribute("data-page");
+          if (headerTitle && currentPage) {
+            headerTitle.textContent = currentPage;
+          }
+        });
+
+</script>
+
+      <!-- Main Content Area -->
+      <main id="main-content" class="ri-page px-3 pt-3 max-xl:mb-20 xl:mb-4">
+        <div class="ri-breadcrumb">
+          <a href="./index.html">Home</a>
+          <span>/</span>
+          <span aria-current="page">Reports &amp; Insights</span>
+          <span id="ri-storage-chip" class="ri-storage-chip" role="status">
+            <span class="ri-storage-dot" aria-hidden="true"></span>
+            <span id="ri-storage-label">Saved locally</span>
+          </span>
+        </div>
+
+        <header class="ri-page-header">
+          <div class="ri-heading">
+            <span class="ri-eyebrow">
+              <i data-lucide="bar-chart-3" class="w-4 h-4"></i>
+              Financial reporting
+            </span>
+            <h1 class="ri-title">Reports &amp; Insights</h1>
+            <p class="ri-subtitle">
+              Understand where your money comes from, where it goes, and how your plans,
+              savings and spending compare over time.
+            </p>
+          </div>
+        </header>
+
+        <section class="ri-controls-card" aria-label="Reporting period controls">
+          <div class="ri-controls-head">
+            <div class="ri-control-copy">
+              <span class="ri-control-label">Reporting period</span>
+              <strong id="ri-range-label">—</strong>
+              <p id="ri-compare-label">Compared with —</p>
+            </div>
+            <div class="ri-control-actions">
+              <button type="button" id="ri-export-btn" class="ri-btn ri-btn-ghost">
+                <i data-lucide="download" class="w-4 h-4"></i>
+                <span>Export CSV</span>
+              </button>
+              <button type="button" id="ri-reset-btn" class="ri-btn ri-btn-ghost">
+                <i data-lucide="rotate-ccw" class="w-4 h-4"></i>
+                <span>Reset</span>
+              </button>
+            </div>
+          </div>
+
+          <div class="ri-controls-grid">
+            <div class="ri-preset-group" id="ri-preset-group" role="group" aria-label="Reporting period presets">
+              <button type="button" class="ri-preset-btn" data-preset="this-month">This Month</button>
+              <button type="button" class="ri-preset-btn" data-preset="last-month">Last Month</button>
+              <button type="button" class="ri-preset-btn" data-preset="last-3-months">Last 3 Months</button>
+              <button type="button" class="ri-preset-btn" data-preset="this-year">This Year</button>
+              <button type="button" class="ri-preset-btn" data-preset="custom">Custom</button>
+            </div>
+
+            <div class="ri-custom-range">
+              <label class="ri-date-field">
+                <span>From</span>
+                <input type="date" id="ri-date-from" />
+              </label>
+              <label class="ri-date-field">
+                <span>To</span>
+                <input type="date" id="ri-date-to" />
+              </label>
+              <button type="button" id="ri-apply-range" class="ri-btn ri-btn-primary">Apply</button>
+            </div>
+          </div>
+        </section>
+
+        <section class="ri-section" aria-labelledby="ri-overview-title">
+          <div class="ri-section-head">
+            <div class="ri-section-copy">
+              <span class="ri-section-kicker">Period totals</span>
+              <h2 id="ri-overview-title">Financial overview</h2>
+              <p>Actual income and expenses only. Transfers and savings movements are not counted as income or expenses.</p>
+            </div>
+          </div>
+          <div id="ri-overview-grid" class="ri-stat-grid"></div>
+        </section>
+
+        <section class="ri-section" aria-labelledby="ri-analysis-title">
+          <div class="ri-section-head">
+            <div class="ri-section-copy">
+              <span class="ri-section-kicker">Movement over time</span>
+              <h2 id="ri-analysis-title">Income &amp; expense analysis</h2>
+              <p>Actual income, expenses and net income across the selected reporting period.</p>
+            </div>
+            <span id="ri-analysis-caption" class="ri-section-caption">—</span>
+          </div>
+          <article class="ri-panel ri-panel-chart">
+            <div class="ri-panel-head">
+              <div>
+                <h3>Cash flow over time</h3>
+                <p id="ri-analysis-note">Income and expenses are shown in the same buckets as the selected period.</p>
+              </div>
+              <div class="ri-chart-legend" aria-hidden="true">
+                <span><i class="ri-dot is-income"></i>Income</span>
+                <span><i class="ri-dot is-expense"></i>Expenses</span>
+                <span><i class="ri-dot is-net"></i>Net income</span>
+              </div>
+            </div>
+            <div class="ri-chart-wrap ri-chart-wrap-main">
+              <canvas id="ri-cashflow-chart"></canvas>
+              <div id="ri-cashflow-empty" class="ri-chart-empty" hidden>
+                <i data-lucide="bar-chart-3"></i>
+                <strong>No income or expenses in this period</strong>
+                <p>Add transactions in My Finances or choose another reporting period.</p>
+              </div>
+            </div>
+          </article>
+        </section>
+
+        <section class="ri-section" aria-labelledby="ri-category-title">
+          <div class="ri-section-head">
+            <div class="ri-section-copy">
+              <span class="ri-section-kicker">Category breakdown</span>
+              <h2 id="ri-category-title">Where the money moves</h2>
+              <p>Income sources and expense categories with their share of the relevant period total.</p>
+            </div>
+          </div>
+
+          <div class="ri-category-grid">
+            <article class="ri-panel">
+              <div class="ri-panel-head">
+                <div>
+                  <h3>Expense distribution</h3>
+                  <p>Share of actual expenses in this period.</p>
+                </div>
+                <span class="ri-panel-icon"><i data-lucide="pie-chart" class="w-4 h-4"></i></span>
+              </div>
+              <div class="ri-chart-wrap ri-chart-wrap-doughnut">
+                <canvas id="ri-expense-category-chart"></canvas>
+                <div class="ri-doughnut-center">
+                  <strong id="ri-doughnut-total">₦0.00</strong>
+                  <span>Total expenses</span>
+                </div>
+                <div id="ri-expense-category-empty" class="ri-chart-empty" hidden>
+                  <i data-lucide="pie-chart"></i>
+                  <strong>No expense categories yet</strong>
+                  <p>Expense categories will appear here once expenses are recorded.</p>
+                </div>
+              </div>
+            </article>
+
+            <article class="ri-panel">
+              <div class="ri-panel-head">
+                <div>
+                  <h3>Expense categories</h3>
+                  <p>Actual amounts, share and previous-period comparison.</p>
+                </div>
+                <label class="ri-select-field">
+                  <span>Focus</span>
+                  <select id="ri-category-focus" aria-label="Filter expense categories">
+                    <option value="all">All categories</option>
+                  </select>
+                </label>
+              </div>
+              <div id="ri-expense-category-table" class="ri-table-wrap"></div>
+            </article>
+
+            <article class="ri-panel">
+              <div class="ri-panel-head">
+                <div>
+                  <h3>Income sources</h3>
+                  <p>Actual income amounts and share of period income.</p>
+                </div>
+                <span class="ri-panel-icon is-income"><i data-lucide="trending-up" class="w-4 h-4"></i></span>
+              </div>
+              <div id="ri-income-category-table" class="ri-table-wrap"></div>
+            </article>
+          </div>
+        </section>
+
+        <section class="ri-section" aria-labelledby="ri-allocation-title">
+          <div class="ri-section-head">
+            <div class="ri-section-copy">
+              <span class="ri-section-kicker">Plans versus actual</span>
+              <h2 id="ri-allocation-title">Budget &amp; allocation performance</h2>
+              <p>Planned allocations are plans. Actual allocation spending comes only from expenses explicitly linked to an allocation.</p>
+            </div>
+          </div>
+
+          <div id="ri-allocation-stats" class="ri-mini-stat-grid"></div>
+
+          <article class="ri-panel ri-panel-table">
+            <div class="ri-panel-head">
+              <div>
+                <h3>Allocation performance</h3>
+                <p id="ri-allocation-caption">—</p>
+              </div>
+            </div>
+            <div id="ri-allocation-table" class="ri-table-wrap"></div>
+            <p id="ri-allocation-note" class="ri-limit-note"></p>
+          </article>
+        </section>
+
+        <section class="ri-section" aria-labelledby="ri-savings-title">
+          <div class="ri-section-head">
+            <div class="ri-section-copy">
+              <span class="ri-section-kicker">Set aside</span>
+              <h2 id="ri-savings-title">Savings analysis</h2>
+              <p>Savings contributions and withdrawals change plan balances only. They are not counted as income or expenses.</p>
+            </div>
+          </div>
+
+          <div id="ri-savings-stats" class="ri-mini-stat-grid"></div>
+
+          <div class="ri-two-col">
+            <article class="ri-panel">
+              <div class="ri-panel-head">
+                <div>
+                  <h3>Savings plans</h3>
+                  <p>Progress uses each plan's saved balance and target amount.</p>
+                </div>
+                <span class="ri-panel-icon is-savings"><i data-lucide="coins" class="w-4 h-4"></i></span>
+              </div>
+              <div id="ri-savings-plans" class="ri-plan-list"></div>
+            </article>
+
+            <article class="ri-panel">
+              <div class="ri-panel-head">
+                <div>
+                  <h3>Savings activity</h3>
+                  <p>Contributions and withdrawals recorded in this period.</p>
+                </div>
+              </div>
+              <div id="ri-savings-activity" class="ri-table-wrap"></div>
+            </article>
+          </div>
+        </section>
+
+        <section class="ri-section" aria-labelledby="ri-comparison-title">
+          <div class="ri-section-head">
+            <div class="ri-section-copy">
+              <span class="ri-section-kicker">Period comparison</span>
+              <h2 id="ri-comparison-title">How this period compares</h2>
+              <p>Compared with the immediately preceding period of the same length.</p>
+            </div>
+            <span id="ri-comparison-caption" class="ri-section-caption">—</span>
+          </div>
+
+          <div class="ri-two-col">
+            <article class="ri-panel ri-panel-chart">
+              <div class="ri-panel-head">
+                <div>
+                  <h3>Current versus previous</h3>
+                  <p>Income, expenses, net income and savings contributions.</p>
+                </div>
+              </div>
+              <div class="ri-chart-wrap ri-chart-wrap-compare">
+                <canvas id="ri-comparison-chart"></canvas>
+                <div id="ri-comparison-empty" class="ri-chart-empty" hidden>
+                  <i data-lucide="git-compare"></i>
+                  <strong>No comparison data yet</strong>
+                  <p>Both periods are empty, so there is nothing to compare.</p>
+                </div>
+              </div>
+            </article>
+
+            <article class="ri-panel">
+              <div class="ri-panel-head">
+                <div>
+                  <h3>Period changes</h3>
+                  <p>Key totals and expense category movement versus the previous period.</p>
+                </div>
+              </div>
+              <div id="ri-category-changes" class="ri-table-wrap"></div>
+            </article>
+          </div>
+        </section>
+
+        <section class="ri-section" aria-labelledby="ri-insights-title">
+          <div class="ri-section-head">
+            <div class="ri-section-copy">
+              <span class="ri-section-kicker">From your records</span>
+              <h2 id="ri-insights-title">Useful insights</h2>
+              <p>Every insight below is derived only from stored records in this period and is hidden when the data does not support it.</p>
+            </div>
+          </div>
+          <div id="ri-insights-grid" class="ri-insight-grid"></div>
+        </section>
+
+        <p class="ri-footnote">
+          <i data-lucide="database" class="w-4 h-4"></i>
+          All report figures come from your locally stored Gabsweb CashFlow records.
+        </p>
+      </main>
+    </div>
+
+    <!-- Mobile Bottom Navigation -->
+    <nav class="bottom-nav xl:!hidden">
+      <a href="./index.html" class="bottom-nav-item flex-1 flex flex-col items-center gap-1 p-2 text-[var(--muted)] text-[11px] font-semibold no-underline transition-all duration-300 ease-in-out">
+        <i data-lucide="home" class="w-5 h-5"></i>
+        <span>Dashboard</span>
+      </a>
+      <a href="./settings.html" class="bottom-nav-item flex-1 flex flex-col items-center gap-1 p-2 text-[var(--muted)] text-[11px] font-semibold no-underline transition-all duration-300 ease-in-out">
+        <i data-lucide="credit-card" class="w-5 h-5"></i>
+        <span>Cards</span>
+      </a>
+      <a href="./goals.html" class="bottom-nav-item flex-1 flex flex-col items-center gap-1 p-2 text-[var(--muted)] text-[11px] font-semibold no-underline transition-all duration-300 ease-in-out">
+        <i data-lucide="target" class="w-5 h-5"></i>
+        <span>Goals</span>
+      </a>
+      <a href="./insights.html" class="bottom-nav-item flex-1 flex flex-col items-center gap-1 p-2 text-[var(--muted)] text-[11px] font-semibold no-underline transition-all duration-300 ease-in-out">
+        <i data-lucide="bar-chart-3" class="w-5 h-5"></i>
+        <span>Insights</span>
+      </a>
+      <button id="menu-toggle" class="toggle-btn bottom-nav-item flex-1 flex flex-col items-center gap-1 p-2 text-[var(--muted)] text-[11px] font-semibold no-underline transition-all duration-300 ease-in-out">
+        <i data-lucide="more-horizontal" class="w-5 h-5"></i>
+        <span>More</span>
+      </button>
+    </nav>
+
+    <script src="assets/js/cashflow-data.js"></script>
+    <script src="assets/js/insights.js"></script>
+    <script defer src="assets/js/index.js"></script>
+  <script src="assets/js/notifications.js"></script><script src="assets/js/global-navigation.js"></script></body>
+</html>

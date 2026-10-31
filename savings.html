@@ -1,0 +1,690 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
+    <title>Gabsweb CashFlow · Savings</title>
+    <link rel="icon" href="assets/images/fav.png" />
+    <script src="https://unpkg.com/lucide@1.64.0/dist/umd/lucide.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet" />
+    <script src="assets/js/theme-loader.js"></script>
+    <link href="assets/css/index.css" rel="stylesheet" />
+    <link href="assets/css/savings.css" rel="stylesheet" />
+    <link href="assets/css/notifications.css" rel="stylesheet" />
+    <link href="assets/css/typography.css" rel="stylesheet" />
+  </head>
+  <body id="root-body" data-page="Savings" class="bg-bg text-text">
+    <aside id="sidebar" class="sidebar w-64 sm:w-72 h-screen fixed top-0 left-0 z-[110] bg-bg border-r border-border flex flex-col max-xl:left-[-100%] max-xl:invisible max-xl:opacity-0">
+      <div class="p-3 sm:p-6 border-b border-border flex-shrink-0">
+        <div class="flex justify-between">
+          <a href="./index.html" class="flex items-center gap-3 mb-3 sm:mb-6 cursor-pointer">
+            <div class="flex items-center justify-center">
+              <img src="assets/images/gabsweb-cashflow-logo.png" alt="Gabsweb CashFlow Logo" class="brand-logo w-10 h-10 sm:w-12 sm:h-12 rounded-2xl" />
+            </div>
+            <div>
+              <h1 class="text-sm font-bold text-text">Gabsweb CashFlow</h1>
+              <p class="text-xs text-muted font-medium">Smart Finance</p>
+            </div>
+          </a>
+
+          <button id="close-sidebar" class="p-2 rounded-xl hover:bg-bgbg block xl:hidden transition-transform duration-300">
+            <i data-lucide="x" class="w-5 h-5 text-text"></i>
+          </button>
+        </div>
+
+        <div class="content-box glass p-4 border-border border rounded-2xl">
+          <div class="flex items-center justify-between mb-2">
+            <span class="text-[10px] sm:text-xs font-semibold text-muted uppercase tracking-wider">Total Balance</span>
+            <div class="live-dot"></div>
+          </div>
+          <h5 id="sidebar-total-balance" class="text-xl sm:text-2xl font-bold text-gradient mb-1">₦0.00</h5>
+          <p id="sidebar-balance-note" class="text-[10px] sm:text-xs text-muted whitespace-nowrap opacity-80 flex gap-2 mt-1">Loading finances…</p>
+        </div>
+      </div>
+
+        <nav class="flex-1 overflow-y-auto p-2 sm:p-4 custom-scrollbar">
+    <div class="space-y-1">
+      <a href="./index.html" class="nav-item">
+        <i data-lucide="layout-dashboard" class="w-5 h-5"></i>
+        <span>Dashboard</span>
+      </a>
+      <a href="./planner.html" class="nav-item">
+        <i data-lucide="calendar-check" class="w-5 h-5"></i>
+        <span>Planner</span>
+      </a>
+      <a href="./transaction.html" class="nav-item">
+        <i data-lucide="arrow-right-left" class="w-5 h-5"></i>
+        <span>My Finances</span>
+      </a>
+      <a href="./budgets.html" class="nav-item">
+        <i data-lucide="wallet-cards" class="w-5 h-5"></i>
+        <span>Budget &amp; Money Allocation</span>
+      </a>
+      <a href="./savings.html" class="nav-item">
+        <i data-lucide="coins" class="w-5 h-5"></i>
+        <span>Savings</span>
+      </a>
+      <a href="./goals.html" class="nav-item">
+        <i data-lucide="target" class="w-5 h-5"></i>
+        <span>Goals &amp; Planned Purchases</span>
+      </a>
+      <a href="./work-schedule.html" class="nav-item">
+        <i data-lucide="calendar-clock" class="w-5 h-5"></i>
+        <span>Work Schedule</span>
+      </a>
+      <a href="./insights.html" class="nav-item">
+        <i data-lucide="bar-chart-3" class="w-5 h-5"></i>
+        <span>Reports &amp; Insights</span>
+      </a>
+    </div>
+
+    <div class="mt-6 pt-6 border-t border-border space-y-1">
+      <a href="./settings.html" class="nav-item">
+        <i data-lucide="settings" class="w-5 h-5"></i>
+        <span>Settings</span>
+      </a>
+
+    </div>
+  </nav>
+
+      <div class="p-4 border-t border-border flex-shrink-0 relative">
+        <div id="user-button" class="flex items-center gap-3 rounded-2xl hover:bg-opacity-50 cursor-pointer">
+          <div class="w-10 h-10 sm:w-12 sm:h-12 border-2 border-blue-700 rounded-full flex items-center justify-center text-text font-bold">
+            <img class="w-8 h-8 md:w-10 md:h-10 rounded-full flex justify-center items-center object-cover" src="assets/images/profiles/emma.jpg" alt="profile Image" />
+          </div>
+          <div class="flex-1 min-w-0">
+            <h2 class="text-sm font-semibold text-text truncate">Den</h2>
+            <p class="text-xs text-muted truncate">Premium Member</p>
+          </div>
+          <i data-lucide="chevron-down" class="w-4 h-4 text-muted transition-transform duration-200" id="dropdown-arrow"></i>
+        </div>
+
+        <div id="user-dropdown" class="absolute left-2 bottom-full mb-2 w-full max-w-[300px] md:max-w-[200px] bg-bg border border-border rounded-xl shadow-lg hidden z-500">
+          <ul class="py-2">
+            <li>
+              <a href="./settings.html" class="block px-4 py-2 text-sm text-text hover:bg-bg">Profile</a>
+            </li>
+            <li>
+              <a href="./login.html" type="button" id="logOut" class="block px-4 py-2 text-sm cursor-progress text-text hover:bg-bg"> Logout </a>
+            </li>
+          </ul>
+        </div>
+      </div>
+    </aside>
+
+    <script>
+      const currentPage2 = window.location.pathname.split("/").pop() || "index.html";
+      const navItems = document.querySelectorAll(".nav-item");
+
+      navItems.forEach((link) => {
+        const href = link.getAttribute("href");
+        if (!href) return;
+        const fileName = href.split("/").pop();
+        if (fileName === currentPage2) {
+          link.classList.add("active");
+        } else {
+          link.classList.remove("active");
+        }
+      });
+
+      const userBtn = document.getElementById("user-button");
+      const userDropdown = document.getElementById("user-dropdown");
+      const dropdownArrow = document.getElementById("dropdown-arrow");
+
+      userBtn.addEventListener("click", (e) => {
+        e.stopPropagation();
+        userDropdown.classList.toggle("hidden");
+        dropdownArrow.classList.toggle("rotate-180");
+      });
+
+      document.addEventListener("click", () => {
+        if (!userDropdown.classList.contains("hidden")) {
+          userDropdown.classList.add("hidden");
+          dropdownArrow.classList.remove("rotate-180");
+        }
+      });
+
+      const logOut = document.getElementById("logOut");
+      if (logOut) {
+        logOut.addEventListener("click", function () {
+          localStorage.removeItem("auth");
+          window.location.href = "/login.html";
+        });
+      }
+    </script>
+
+    <div id="main-div" class="ml-0 xl:ml-72 transition-all duration-300">
+      <div id="overlay" class="hidden fixed inset-0 backdrop-blur-sm z-50"></div>
+
+      <header class="sticky top-0 glass border-b border-border px-6 py-4 flex items-center justify-between z-30">
+        <div class="flex items-center gap-4">
+          <div>
+            <h2 id="page-title" class="text-sm md:text-xl font-bold text-text">Savings</h2>
+            <p class="text-[10px] md:text-sm text-muted">Welcome back, Den!</p>
+          </div>
+        </div>
+
+        <div class="flex items-center gap-2 md:gap-3">
+          <button id="theme-toggle" class="p-1 md:p-2.5 rounded-xl hover:bg-bg transition-colors text-text cursor-pointer">
+            <svg class="moon" xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="currentColor" viewBox="0 0 256 256">
+              <path d="M120,40V16a8,8,0,0,1,16,0V40a8,8,0,0,1-16,0Zm72,88a64,64,0,1,1-64-64A64.07,64.07,0,0,1,192,128Zm-16,0a48,48,0,1,0-48,48A48.05,48.05,0,0,0,176,128ZM58.34,69.66A8,8,0,0,0,69.66,58.34l-16-16A8,8,0,0,0,42.34,53.66Zm0,116.68-16,16a8,8,0,0,0,11.32,11.32l16-16a8,8,0,0,0-11.32-11.32ZM192,72a8,8,0,0,0,5.66-2.34l16-16a8,8,0,0,0-11.32-11.32l-16,16A8,8,0,0,0,192,72Zm5.66,114.34a8,8,0,0,0-11.32,11.32l16,16a8,8,0,0,0,11.32-11.32ZM48,128a8,8,0,0,0-8-8H16a8,8,0,0,0,0,16H40A8,8,0,0,0,48,128Zm80,80a8,8,0,0,0-8,8v24a8,8,0,0,0,16,0V216A8,8,0,0,0,128,208Zm112-88H216a8,8,0,0,0,0,16h24a8,8,0,0,0,0-16Z"></path>
+            </svg>
+            <svg class="sun" xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="currentColor" viewBox="0 0 256 256">
+              <path d="M233.54,142.23a8,8,0,0,0-8-2,88.08,88.08,0,0,1-109.8-109.8,8,8,0,0,0-10-10,104.84,104.84,0,0,0-52.91,37A104,104,0,0,0,136,224a103.09,103.09,0,0,0,62.52-20.88,104.84,104.84,0,0,0,37-52.91A8,8,0,0,0,233.54,142.23ZM188.9,190.34A88,88,0,0,1,65.66,67.11a89,89,0,0,1,31.4-26A106,106,0,0,0,96,56,104.11,104.11,0,0,0,200,160a106,106,0,0,0,14.92-1.06A89,89,0,0,1,188.9,190.34Z"></path>
+            </svg>
+          </button>
+
+          <div>
+            <div class="relative" id="notification-wrapper">
+              <button id="notification-btn" class="relative p-1 md:p-2.5 rounded-xl hover:bg-bg transition-colors cursor-pointer" aria-label="Notifications">
+                <i data-lucide="bell" class="w-5 h-5 text-text"></i>
+              </button>
+
+              <div id="notification-dropdown" class="hidden app-notification opacity-0 translate-y-2 transition-all duration-200 ease-out">
+          <div class="app-notification-head">
+            <span class="app-notification-title">Notifications</span>
+          </div>
+          <div id="notification-list" class="app-notification-list custom-scrollbar">
+            <div class="app-notification-empty">
+              <span class="app-notification-empty-icon"><i data-lucide="bell" class="w-4 h-4"></i></span>
+              <p>No new notifications</p>
+              <small>Notifications from your CashFlow activity will appear here.</small>
+            </div>
+          </div>
+        </div>
+            </div>
+          </div>
+        </div>
+      </header>
+
+      <script>
+        document.addEventListener("DOMContentLoaded", () => {
+          const headerTitle = document.getElementById("page-title");
+          const currentPage = document.body.getAttribute("data-page");
+          if (headerTitle && currentPage) {
+            headerTitle.textContent = currentPage;
+          }
+        });
+
+</script>
+
+      <main id="main-content" class="sv-page px-3 pt-3 max-xl:mb-20 xl:mb-4">
+        <div class="sv-breadcrumb">
+          <a href="./index.html">Home</a>
+          <span>/</span>
+          <span aria-current="page">Savings</span>
+          <span id="sv-storage-chip" class="sv-storage-chip" role="status">
+            <span class="sv-storage-dot" aria-hidden="true"></span>
+            <span id="sv-storage-label">Saved locally</span>
+          </span>
+        </div>
+
+        <header class="sv-page-header">
+          <div class="sv-heading">
+            <span class="sv-eyebrow">
+              <i data-lucide="vault" class="w-4 h-4"></i>
+              Build your reserve
+            </span>
+            <h1 class="sv-title">Savings</h1>
+            <p class="sv-subtitle">
+              Create savings plans, set targets and record every contribution and withdrawal.
+              Linked goals read the same plan balance, so your progress stays connected to money
+              you have actually set aside.
+            </p>
+          </div>
+          <div class="sv-header-actions">
+            <button type="button" class="sv-btn sv-btn-primary" id="sv-new-plan">
+              <i data-lucide="plus" class="w-4 h-4"></i>
+              <span>New savings plan</span>
+            </button>
+          </div>
+        </header>
+
+        <section class="sv-position" aria-labelledby="sv-position-title">
+          <div class="sv-position-head">
+            <div>
+              <span class="sv-section-kicker">Funds position</span>
+              <h2 id="sv-position-title">What is available, and what is set aside</h2>
+              <p>Savings plans are amounts set aside within your existing accounts. They do not move money or create ledger entries.</p>
+            </div>
+            <span class="sv-position-note">
+              <i data-lucide="info" class="w-4 h-4"></i>
+              <span>Available balance already excludes everything set aside in savings plans.</span>
+            </span>
+          </div>
+
+          <div class="sv-position-grid">
+            <article class="sv-position-item">
+              <span class="sv-position-label">Total account balance</span>
+              <strong class="sv-position-value" id="sv-position-total">₦0.00</strong>
+              <span class="sv-position-caption">Across all accounts</span>
+            </article>
+            <article class="sv-position-item is-set-aside">
+              <span class="sv-position-label">Set aside in savings</span>
+              <strong class="sv-position-value" id="sv-position-set-aside">₦0.00</strong>
+              <span class="sv-position-caption" id="sv-position-ratio-note">No savings set aside yet</span>
+            </article>
+            <article class="sv-position-item is-available">
+              <span class="sv-position-label">Available to spend</span>
+              <strong class="sv-position-value" id="sv-position-available">₦0.00</strong>
+              <span class="sv-position-caption">Total balance minus savings set aside</span>
+            </article>
+          </div>
+
+          <div class="sv-position-bar" role="img" aria-label="Share of total balance set aside in savings">
+            <span id="sv-position-bar" style="width: 0%"></span>
+          </div>
+        </section>
+
+        <section aria-labelledby="sv-overview-title">
+          <div class="sv-overview-head">
+            <div>
+              <h2 id="sv-overview-title">Savings overview</h2>
+              <p>Live figures calculated from your plans and recorded savings movements.</p>
+            </div>
+            <span class="sv-overview-note">
+              <i data-lucide="info" class="w-4 h-4"></i>
+              <span>Contributions and withdrawals update plan balances only. They never create income, expenses or transactions.</span>
+            </span>
+          </div>
+
+          <div class="sv-overview-grid">
+            <article class="sv-stat-card">
+              <div class="sv-stat-top">
+                <span class="sv-stat-icon is-income"><i data-lucide="coins" class="w-4 h-4"></i></span>
+                <span class="sv-stat-badge is-income">Net saved</span>
+              </div>
+              <p class="sv-stat-label">Total saved</p>
+              <strong class="sv-stat-value is-positive" id="sv-total-saved">₦0.00</strong>
+              <p class="sv-stat-note" id="sv-total-saved-note">Contributions minus withdrawals</p>
+            </article>
+
+            <article class="sv-stat-card">
+              <div class="sv-stat-top">
+                <span class="sv-stat-icon is-purple"><i data-lucide="target" class="w-4 h-4"></i></span>
+                <span class="sv-stat-badge is-purple">Planned</span>
+              </div>
+              <p class="sv-stat-label">Total savings targets</p>
+              <strong class="sv-stat-value" id="sv-total-targets">₦0.00</strong>
+              <p class="sv-stat-note" id="sv-total-targets-note">Across all savings plans</p>
+            </article>
+
+            <article class="sv-stat-card">
+              <div class="sv-stat-top">
+                <span class="sv-stat-icon is-transfer"><i data-lucide="activity" class="w-4 h-4"></i></span>
+                <span class="sv-stat-badge is-transfer">Weighted</span>
+              </div>
+              <p class="sv-stat-label">Overall savings progress</p>
+              <strong class="sv-stat-value" id="sv-overall-progress">—</strong>
+              <p class="sv-stat-note" id="sv-overall-note">Create a plan with a target to measure progress</p>
+            </article>
+
+            <article class="sv-stat-card">
+              <div class="sv-stat-top">
+                <span class="sv-stat-icon is-income"><i data-lucide="arrow-down-left" class="w-4 h-4"></i></span>
+                <span class="sv-stat-badge is-income">All time</span>
+              </div>
+              <p class="sv-stat-label">Total contributions</p>
+              <strong class="sv-stat-value is-positive" id="sv-total-contributions">₦0.00</strong>
+              <p class="sv-stat-note" id="sv-total-contributions-note">No contributions recorded yet</p>
+            </article>
+
+            <article class="sv-stat-card">
+              <div class="sv-stat-top">
+                <span class="sv-stat-icon is-expense"><i data-lucide="arrow-up-right" class="w-4 h-4"></i></span>
+                <span class="sv-stat-badge is-expense">All time</span>
+              </div>
+              <p class="sv-stat-label">Total withdrawals</p>
+              <strong class="sv-stat-value" id="sv-total-withdrawals">₦0.00</strong>
+              <p class="sv-stat-note" id="sv-total-withdrawals-note">No withdrawals recorded yet</p>
+            </article>
+
+            <article class="sv-stat-card">
+              <div class="sv-stat-top">
+                <span class="sv-stat-icon is-warning"><i data-lucide="layers" class="w-4 h-4"></i></span>
+                <span class="sv-stat-badge is-warning">In progress</span>
+              </div>
+              <p class="sv-stat-label">Active savings plans</p>
+              <strong class="sv-stat-value" id="sv-active-plans">0</strong>
+              <p class="sv-stat-note" id="sv-active-plans-note">No active plans yet</p>
+            </article>
+          </div>
+        </section>
+
+        <section class="sv-section" aria-labelledby="sv-plans-title">
+          <div class="sv-section-head">
+            <div class="sv-section-copy">
+              <span class="sv-section-kicker">Your plans</span>
+              <h2 id="sv-plans-title">Savings plans</h2>
+              <p id="sv-plan-summary">No savings plans created yet.</p>
+            </div>
+            <div class="sv-filters">
+              <div class="sv-search">
+                <i data-lucide="search" class="w-4 h-4"></i>
+                <input type="search" id="sv-plan-search" placeholder="Search plans" aria-label="Search savings plans" />
+              </div>
+              <label class="sv-sort" for="sv-plan-sort">
+                <i data-lucide="arrow-up-down" class="w-4 h-4"></i>
+                <select id="sv-plan-sort" aria-label="Sort savings plans">
+                  <option value="updated">Recently updated</option>
+                  <option value="progress">Progress</option>
+                  <option value="saved">Saved amount</option>
+                  <option value="target">Target amount</option>
+                  <option value="name">Plan name</option>
+                </select>
+              </label>
+              <div class="sv-status-filters" id="sv-status-filters" role="group" aria-label="Filter savings plans by status">
+                <button type="button" class="sv-filter-chip active" data-sv-status="all">All <span class="sv-filter-count" id="sv-count-all">0</span></button>
+                <button type="button" class="sv-filter-chip" data-sv-status="active">Active <span class="sv-filter-count" id="sv-count-active">0</span></button>
+                <button type="button" class="sv-filter-chip" data-sv-status="paused">Paused <span class="sv-filter-count" id="sv-count-paused">0</span></button>
+                <button type="button" class="sv-filter-chip" data-sv-status="completed">Completed <span class="sv-filter-count" id="sv-count-completed">0</span></button>
+                <button type="button" class="sv-filter-chip" data-sv-status="archived">Archived <span class="sv-filter-count" id="sv-count-archived">0</span></button>
+              </div>
+            </div>
+          </div>
+
+          <div id="sv-plan-grid" class="sv-plan-grid"></div>
+        </section>
+
+        <section class="sv-insights" aria-labelledby="sv-insights-title">
+          <div class="sv-panel-head">
+            <div>
+              <span class="sv-section-kicker">Useful signals</span>
+              <h2 id="sv-insights-title">Savings insights</h2>
+              <p>Compact observations calculated from your stored plans and movements.</p>
+            </div>
+            <span class="sv-panel-icon"><i data-lucide="sparkles" class="w-4 h-4"></i></span>
+          </div>
+
+          <div class="sv-insight-grid">
+            <article class="sv-insight-card">
+              <span class="sv-insight-icon is-income"><i data-lucide="trophy" class="w-4 h-4"></i></span>
+              <div class="sv-insight-copy">
+                <span>Most funded plan</span>
+                <strong id="sv-insight-funded">No funded plans yet</strong>
+                <small id="sv-insight-funded-note">Record a contribution to see this insight.</small>
+              </div>
+            </article>
+
+            <article class="sv-insight-card">
+              <span class="sv-insight-icon is-transfer"><i data-lucide="gauge" class="w-4 h-4"></i></span>
+              <div class="sv-insight-copy">
+                <span>Closest to target</span>
+                <strong id="sv-insight-closest">No plans with savings yet</strong>
+                <small id="sv-insight-closest-note">Progress appears once a plan has a target and savings.</small>
+              </div>
+            </article>
+
+            <article class="sv-insight-card">
+              <span class="sv-insight-icon is-warning"><i data-lucide="calendar-clock" class="w-4 h-4"></i></span>
+              <div class="sv-insight-copy">
+                <span>Next linked goal deadline</span>
+                <strong id="sv-insight-deadline">No linked goal deadlines</strong>
+                <small id="sv-insight-deadline-note">Link a savings plan to a goal to see its target date.</small>
+              </div>
+            </article>
+
+            <article class="sv-insight-card">
+              <span class="sv-insight-icon is-purple"><i data-lucide="calendar-days" class="w-4 h-4"></i></span>
+              <div class="sv-insight-copy">
+                <span>This month</span>
+                <strong id="sv-insight-month">₦0.00 contributed</strong>
+                <small id="sv-insight-month-note">No movements recorded this month.</small>
+              </div>
+            </article>
+          </div>
+        </section>
+
+        <section class="sv-activity" aria-labelledby="sv-activity-title">
+          <div class="sv-panel-head">
+            <div>
+              <span class="sv-section-kicker">Recorded movement</span>
+              <h2 id="sv-activity-title">Savings activity</h2>
+              <p id="sv-activity-summary">Every contribution and withdrawal stored in your savings plans.</p>
+            </div>
+            <button type="button" class="sv-btn sv-btn-ghost sv-btn-small" id="sv-activity-reset">
+              <i data-lucide="rotate-ccw" class="w-4 h-4"></i>
+              <span>Reset filters</span>
+            </button>
+          </div>
+
+          <div class="sv-activity-filters">
+            <div class="sv-search">
+              <i data-lucide="search" class="w-4 h-4"></i>
+              <input type="search" id="sv-activity-search" placeholder="Search activity" aria-label="Search savings activity" />
+            </div>
+            <label class="sv-field-inline">
+              <span>Type</span>
+              <select id="sv-activity-type" class="form-select">
+                <option value="all">All movements</option>
+                <option value="contribution">Contributions</option>
+                <option value="withdrawal">Withdrawals</option>
+              </select>
+            </label>
+            <label class="sv-field-inline">
+              <span>Plan</span>
+              <select id="sv-activity-plan" class="form-select">
+                <option value="all">All plans</option>
+              </select>
+            </label>
+            <label class="sv-field-inline">
+              <span>From</span>
+              <input type="date" id="sv-activity-from" class="form-input" aria-label="Activity start date" />
+            </label>
+            <label class="sv-field-inline">
+              <span>To</span>
+              <input type="date" id="sv-activity-to" class="form-input" aria-label="Activity end date" />
+            </label>
+            <label class="sv-field-inline">
+              <span>Sort</span>
+              <select id="sv-activity-sort" class="form-select">
+                <option value="newest">Newest first</option>
+                <option value="oldest">Oldest first</option>
+                <option value="highest">Highest amount</option>
+                <option value="lowest">Lowest amount</option>
+              </select>
+            </label>
+          </div>
+
+          <div id="sv-activity-list" class="sv-activity-list"></div>
+        </section>
+      </main>
+    </div>
+
+    <nav class="bottom-nav xl:!hidden">
+      <a href="./index.html" class="bottom-nav-item flex-1 flex flex-col items-center gap-1 p-2 text-[var(--muted)] text-[11px] font-semibold no-underline transition-all duration-300 ease-in-out">
+        <i data-lucide="home" class="w-5 h-5"></i>
+        <span>Dashboard</span>
+      </a>
+      <a href="./settings.html" class="bottom-nav-item flex-1 flex flex-col items-center gap-1 p-2 text-[var(--muted)] text-[11px] font-semibold no-underline transition-all duration-300 ease-in-out">
+        <i data-lucide="credit-card" class="w-5 h-5"></i>
+        <span>Cards</span>
+      </a>
+      <a href="./goals.html" class="bottom-nav-item flex-1 flex flex-col items-center gap-1 p-2 text-[var(--muted)] text-[11px] font-semibold no-underline transition-all duration-300 ease-in-out">
+        <i data-lucide="target" class="w-5 h-5"></i>
+        <span>Goals</span>
+      </a>
+      <a href="./insights.html" class="bottom-nav-item flex-1 flex flex-col items-center gap-1 p-2 text-[var(--muted)] text-[11px] font-semibold no-underline transition-all duration-300 ease-in-out">
+        <i data-lucide="bar-chart-3" class="w-5 h-5"></i>
+        <span>Insights</span>
+      </a>
+      <button id="menu-toggle" class="toggle-btn bottom-nav-item flex-1 flex flex-col items-center gap-1 p-2 text-[var(--muted)] text-[11px] font-semibold no-underline transition-all duration-300 ease-in-out">
+        <i data-lucide="more-horizontal" class="w-5 h-5"></i>
+        <span>More</span>
+      </button>
+    </nav>
+
+    <div id="sv-plan-modal" class="modal">
+      <div class="modal-content sv-modal-content">
+        <div class="sv-modal-header">
+          <div>
+            <h3 id="sv-plan-modal-title">New savings plan</h3>
+            <p id="sv-plan-modal-subtitle">Set a target and choose whether this plan supports a goal.</p>
+          </div>
+          <button type="button" class="sv-icon-button" data-sv-close="sv-plan-modal" aria-label="Close savings plan form">
+            <i data-lucide="x" class="w-5 h-5"></i>
+          </button>
+        </div>
+
+        <form id="sv-plan-form" class="sv-form" novalidate>
+          <div class="sv-form-grid">
+            <div class="sv-field is-span-2">
+              <label for="sv-plan-name">Plan name</label>
+              <input type="text" id="sv-plan-name" class="form-input" maxlength="80" placeholder="e.g. Emergency reserve" required />
+              <span class="sv-field-hint">A short name you will recognise.</span>
+            </div>
+
+            <div class="sv-field">
+              <label for="sv-plan-target">Target amount</label>
+              <input type="number" id="sv-plan-target" class="form-input" min="0.01" step="0.01" inputmode="decimal" placeholder="0.00" required />
+              <span class="sv-field-hint">Must be greater than zero.</span>
+            </div>
+
+            <div class="sv-field">
+              <label for="sv-plan-status">Status</label>
+              <select id="sv-plan-status" class="form-select" required>
+                <option value="active" selected>Active</option>
+                <option value="paused">Paused</option>
+                <option value="completed">Completed</option>
+                <option value="archived">Archived</option>
+              </select>
+            </div>
+
+            <div class="sv-field is-span-2">
+              <label for="sv-plan-purpose">Purpose or description (optional)</label>
+              <textarea id="sv-plan-purpose" class="form-input" rows="3" maxlength="240" placeholder="What is this savings plan for?"></textarea>
+            </div>
+
+            <div class="sv-field is-span-2">
+              <label for="sv-plan-goal">Linked financial goal (optional)</label>
+              <select id="sv-plan-goal" class="form-select"></select>
+              <span class="sv-field-hint" id="sv-plan-goal-hint">A linked goal will read this plan's saved balance. One plan can support one goal.</span>
+            </div>
+
+            <div class="sv-field is-span-2">
+              <label for="sv-plan-notes">Notes (optional)</label>
+              <textarea id="sv-plan-notes" class="form-input" rows="3" maxlength="300" placeholder="Any useful context for this plan."></textarea>
+            </div>
+          </div>
+
+          <div id="sv-plan-error" class="sv-form-error" role="alert"></div>
+
+          <div class="sv-modal-actions">
+            <button type="button" class="sv-btn sv-btn-ghost" data-sv-close="sv-plan-modal">Cancel</button>
+            <button type="submit" class="sv-btn sv-btn-primary" id="sv-plan-submit">
+              <i data-lucide="check" class="w-4 h-4"></i>
+              <span>Create plan</span>
+            </button>
+          </div>
+        </form>
+      </div>
+    </div>
+
+    <div id="sv-movement-modal" class="modal">
+      <div class="modal-content sv-modal-content">
+        <div class="sv-modal-header">
+          <div>
+            <h3 id="sv-movement-title">Add funds</h3>
+            <p id="sv-movement-subtitle">Record a contribution into this savings plan.</p>
+          </div>
+          <button type="button" class="sv-icon-button" data-sv-close="sv-movement-modal" aria-label="Close savings movement form">
+            <i data-lucide="x" class="w-5 h-5"></i>
+          </button>
+        </div>
+
+        <div id="sv-movement-summary" class="sv-movement-summary"></div>
+
+        <form id="sv-movement-form" class="sv-form" novalidate>
+          <div class="sv-form-grid">
+            <div class="sv-field">
+              <label for="sv-movement-amount">Amount</label>
+              <input type="number" id="sv-movement-amount" class="form-input" min="0.01" step="0.01" inputmode="decimal" placeholder="0.00" required />
+              <span class="sv-field-hint" id="sv-movement-available">Must be greater than zero.</span>
+            </div>
+            <div class="sv-field">
+              <label for="sv-movement-date">Movement date</label>
+              <input type="date" id="sv-movement-date" class="form-input" required />
+            </div>
+            <div class="sv-field">
+              <label for="sv-movement-account" id="sv-movement-account-label">Source account (optional)</label>
+              <select id="sv-movement-account" class="form-select"></select>
+              <span class="sv-field-hint">Recorded for context only; account balances do not change.</span>
+            </div>
+            <div class="sv-field">
+              <label for="sv-movement-description">Description (optional)</label>
+              <input type="text" id="sv-movement-description" class="form-input" maxlength="140" placeholder="e.g. Monthly transfer" />
+            </div>
+          </div>
+
+          <p id="sv-movement-note" class="sv-movement-note">
+            <i data-lucide="info"></i>
+            <span>This records a savings contribution only. No income, expense or transaction is created.</span>
+          </p>
+
+          <div id="sv-movement-error" class="sv-form-error" role="alert"></div>
+
+          <div class="sv-modal-actions">
+            <button type="button" class="sv-btn sv-btn-ghost" data-sv-close="sv-movement-modal">Cancel</button>
+            <button type="submit" class="sv-btn sv-btn-primary" id="sv-movement-submit">
+              <i data-lucide="plus" class="w-4 h-4"></i>
+              <span>Add contribution</span>
+            </button>
+          </div>
+        </form>
+      </div>
+    </div>
+
+    <div id="sv-details-modal" class="modal">
+      <div class="modal-content sv-modal-content is-wide">
+        <div class="sv-modal-header">
+          <div>
+            <h3 id="sv-details-title">Savings plan details</h3>
+            <p id="sv-details-subtitle">Progress, goal connection and recorded activity.</p>
+          </div>
+          <button type="button" class="sv-icon-button" data-sv-close="sv-details-modal" aria-label="Close savings plan details">
+            <i data-lucide="x" class="w-5 h-5"></i>
+          </button>
+        </div>
+        <div id="sv-details-body"></div>
+      </div>
+    </div>
+
+    <div id="sv-confirm-modal" class="modal">
+      <div class="modal-content sv-modal-content is-small">
+        <div class="sv-modal-header">
+          <div>
+            <h3 id="sv-confirm-title">Confirm action</h3>
+            <p id="sv-confirm-subtitle">This action needs your confirmation.</p>
+          </div>
+          <button type="button" class="sv-icon-button" data-sv-close="sv-confirm-modal" aria-label="Close confirmation">
+            <i data-lucide="x" class="w-5 h-5"></i>
+          </button>
+        </div>
+        <p class="sv-confirm-copy" id="sv-confirm-copy"></p>
+        <div class="sv-modal-actions">
+          <button type="button" class="sv-btn sv-btn-ghost" data-sv-close="sv-confirm-modal">Cancel</button>
+          <button type="button" class="sv-btn sv-btn-danger" id="sv-confirm-action">Confirm</button>
+        </div>
+      </div>
+    </div>
+
+    <div id="toast" class="toast sv-toast" role="status" aria-live="polite">
+      <div class="flex items-center gap-3">
+        <div id="toast-icon" class="sv-toast-icon is-success flex items-center justify-center flex-shrink-0">
+          <i data-lucide="check" class="w-5 h-5"></i>
+        </div>
+        <div>
+          <span class="text-[14px] font-semibold text-text" id="toast-title">Success</span>
+          <span class="text-[12px] text-muted" id="toast-message">Action completed successfully</span>
+        </div>
+      </div>
+    </div>
+
+    <script src="assets/js/cashflow-data.js"></script>
+    <script src="assets/js/savings.js"></script>
+    <script defer src="assets/js/index.js"></script>
+  <script src="assets/js/notifications.js"></script><script src="assets/js/global-navigation.js"></script></body>
+</html>
+

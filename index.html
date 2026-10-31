@@ -1,0 +1,1982 @@
+<!doctype html>
+<html lang="en">
+  
+<!-- Mirrored from savvyfi-beta.vercel.app/index.html by HTTrack Website Copier/3.x [XR&CO'2014], Thu, 29 Oct 2026 22:44:11 GMT -->
+<!-- Added by HTTrack --><meta http-equiv="content-type" content="text/html;charset=utf-8" /><!-- /Added by HTTrack -->
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
+    <title>Gabsweb CashFlow · Dashboard</title>
+    <link rel="icon" href="assets/images/fav.png" />
+    <script src="https://unpkg.com/lucide@1.64.0/dist/umd/lucide.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com/" />
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&amp;display=swap" rel="stylesheet" />
+    <script src="assets/js/theme-loader.js"></script>
+  <link href="assets/css/index.css" rel="stylesheet">
+  <link href="assets/css/dashboard.css" rel="stylesheet">  <link href="assets/css/notifications.css" rel="stylesheet" />
+    <link href="assets/css/typography.css" rel="stylesheet" />
+  </head>
+  <body data-page="Dashboard" class="bg-bg text-text">
+    <!-- Desktop Sidebar -->
+    <!-- Desktop Sidebar -->
+<aside id="sidebar" class="sidebar w-64 sm:w-72 h-screen fixed top-0 left-0 z-[110] bg-bg border-r border-border flex flex-col max-xl:left-[-100%] max-xl:invisible max-xl:opacity-0">
+  <div class="p-3 sm:p-6 border-b border-border flex-shrink-0">
+    <div class="flex justify-between">
+      <a href="index.html" class="flex items-center gap-3 mb-3 sm:mb-6 cursor-pointer">
+        <div class="flex items-center justify-center">
+          <img src="assets/images/gabsweb-cashflow-logo.png" alt="Gabsweb CashFlow Logo" class="brand-logo w-10 h-10 sm:w-12 sm:h-12 rounded-2xl" />
+        </div>
+        <div>
+          <h1 class="text-sm font-bold text-text">Gabsweb CashFlow</h1>
+          <p class="text-xs text-muted font-medium">Smart Finance</p>
+        </div>
+      </a>
+
+      <!-- Close button -->
+      <button id="close-sidebar" class="p-2 rounded-xl hover:bg-bgbg block xl:hidden transition-transform duration-300">
+        <i data-lucide="x" class="w-5 h-5 text-text"></i>
+      </button>
+    </div>
+
+    <div class="content-box glass p-4 border-border border rounded-2xl">
+      <div class="flex items-center justify-between mb-2">
+        <span class="text-[10px] sm:text-xs font-semibold text-muted uppercase tracking-wider">Total Balance</span>
+        <div class="live-dot"></div>
+      </div>
+      <h5 id="sidebar-total-balance" class="text-xl sm:text-2xl font-bold text-gradient mb-1">₦0.00</h5>
+      <p id="sidebar-balance-note" class="text-[10px] sm:text-xs text-muted whitespace-nowrap opacity-80 flex gap-2 mt-1">Loading finances…</p>
+    </div>
+  </div>
+
+    <nav class="flex-1 overflow-y-auto p-2 sm:p-4 custom-scrollbar">
+    <div class="space-y-1">
+      <a href="./index.html" class="nav-item">
+        <i data-lucide="layout-dashboard" class="w-5 h-5"></i>
+        <span>Dashboard</span>
+      </a>
+      <a href="./planner.html" class="nav-item">
+        <i data-lucide="calendar-check" class="w-5 h-5"></i>
+        <span>Planner</span>
+      </a>
+      <a href="./transaction.html" class="nav-item">
+        <i data-lucide="arrow-right-left" class="w-5 h-5"></i>
+        <span>My Finances</span>
+      </a>
+      <a href="./budgets.html" class="nav-item">
+        <i data-lucide="wallet-cards" class="w-5 h-5"></i>
+        <span>Budget &amp; Money Allocation</span>
+      </a>
+      <a href="./savings.html" class="nav-item">
+        <i data-lucide="coins" class="w-5 h-5"></i>
+        <span>Savings</span>
+      </a>
+      <a href="./goals.html" class="nav-item">
+        <i data-lucide="target" class="w-5 h-5"></i>
+        <span>Goals &amp; Planned Purchases</span>
+      </a>
+      <a href="./work-schedule.html" class="nav-item">
+        <i data-lucide="calendar-clock" class="w-5 h-5"></i>
+        <span>Work Schedule</span>
+      </a>
+      <a href="./insights.html" class="nav-item">
+        <i data-lucide="bar-chart-3" class="w-5 h-5"></i>
+        <span>Reports &amp; Insights</span>
+      </a>
+    </div>
+
+    <div class="mt-6 pt-6 border-t border-border space-y-1">
+      <a href="./settings.html" class="nav-item">
+        <i data-lucide="settings" class="w-5 h-5"></i>
+        <span>Settings</span>
+      </a>
+
+    </div>
+  </nav>
+  <div class="p-4 border-t border-border flex-shrink-0 relative">
+    <div id="user-button" class="flex items-center gap-3 rounded-2xl hover:bg-opacity-50 cursor-pointer">
+      <div class="w-10 h-10 sm:w-12 sm:h-12 border-2 border-blue-700 rounded-full flex items-center justify-center text-text font-bold">
+        <img class="w-8 h-8 md:w-10 md:h-10 rounded-full flex justify-center items-center object-cover" src="assets/images/profiles/emma.jpg" alt="profile Image" />
+      </div>
+      <div class="flex-1 min-w-0">
+        <h2 class="text-sm font-semibold text-text truncate">Den</h2>
+        <p class="text-xs text-muted truncate">Premium Member</p>
+      </div>
+      <i data-lucide="chevron-down" class="w-4 h-4 text-muted transition-transform duration-200" id="dropdown-arrow"></i>
+    </div>
+
+    <!-- Dropdown Menu  -->
+    <div id="user-dropdown" class="absolute left-2 bottom-full mb-2 w-full max-w-[300px] md:max-w-[200px] bg-bg border border-border rounded-xl shadow-lg hidden z-500">
+      <ul class="py-2">
+        <li>
+          <a href="settings.html" class="block px-4 py-2 text-sm text-text hover:bg-bg">Profile</a>
+        </li>
+        <li>
+          <a href="login.html" type="button" id="logOut" class="block px-4 py-2 text-sm cursor-progress text-text hover:bg-bg"> Logout </a>
+        </li>
+      </ul>
+    </div>
+  </div>
+</aside>
+<script>
+  const currentPage2 = window.location.pathname.split("/").pop() || "index.html";
+  const navItems = document.querySelectorAll(".nav-item");
+
+  navItems.forEach((link) => {
+    const href = link.getAttribute("href");
+    if (!href) return;
+    const fileName = href.split("/").pop();
+
+    if (fileName === currentPage2) {
+      link.classList.add("active");
+    } else {
+      link.classList.remove("active");
+    }
+  });
+
+  //   daynamicaly change the title
+
+  // Use a different variable name to avoid conflict
+  const currentFile = window.location.pathname.split("/").pop();
+
+  const activeLink = document.querySelector(`.nav-item[href*="${currentFile}"], .bottom-nav-item[href*="${currentFile}"]`);
+
+  const pageTitleEl = document.getElementById("page-title");
+
+  if (activeLink && pageTitleEl) {
+    const titleText = activeLink.querySelector("span")?.textContent.trim();
+    pageTitleEl.textContent = titleText || "Dashboard";
+  } else {
+    if (pageTitleEl) pageTitleEl.textContent = "Dashboard";
+  }
+
+  //   User dropdown functionality
+  const userBtn = document.getElementById("user-button");
+  const userDropdown = document.getElementById("user-dropdown");
+  const dropdownArrow = document.getElementById("dropdown-arrow");
+
+  userBtn.addEventListener("click", (e) => {
+    e.stopPropagation();
+    userDropdown.classList.toggle("hidden");
+    dropdownArrow.classList.toggle("rotate-180"); // arrow rotation
+  });
+
+  document.addEventListener("click", (e) => {
+    if (!userDropdown.classList.contains("hidden")) {
+      userDropdown.classList.add("hidden");
+      dropdownArrow.classList.remove("rotate-180");
+    }
+  });
+
+  // logout functions
+
+  function handleLogOut() {
+    const logOut = document.getElementById("logOut");
+    logOut.addEventListener("click", function () {
+      localStorage.removeItem("auth");
+      window.location.href = "login.html";
+    });
+  }
+</script>
+
+    <div id="main-div" class="ml-0 xl:ml-72 transition-all duration-300">
+      <div id="overlay" class="hidden fixed inset-0 backdrop-blur-sm z-50"></div>
+      <!-- Header -->
+      <header class="sticky top-0 glass border-b border-border px-6 py-4 flex items-center justify-between z-30">
+  <div class="flex items-center gap-4">
+    <div>
+      <h2 id="page-title" class="text-sm md:text-xl font-bold text-text">
+        Dashboard
+      </h2>
+      <p id="header-welcome" class="text-[10px] md:text-sm text-muted">Welcome back</p>
+    </div>
+  </div>
+
+  <div class="flex items-center gap-2 md:gap-3">
+    <div class="relative hidden sm:block">
+
+      <input type="text" id="header-search" placeholder="Search..." class="form-input w-64 pt-3 pr-5 pb-3 pl-10" />
+    </div>
+
+    <button id="theme-toggle" class="p-1 md:p-2.5 rounded-xl hover:bg-bg transition-colors text-text cursor-pointer">
+      <svg class="moon" xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="currentColor"
+        viewBox="0 0 256 256">
+        <path
+          d="M120,40V16a8,8,0,0,1,16,0V40a8,8,0,0,1-16,0Zm72,88a64,64,0,1,1-64-64A64.07,64.07,0,0,1,192,128Zm-16,0a48,48,0,1,0-48,48A48.05,48.05,0,0,0,176,128ZM58.34,69.66A8,8,0,0,0,69.66,58.34l-16-16A8,8,0,0,0,42.34,53.66Zm0,116.68-16,16a8,8,0,0,0,11.32,11.32l16-16a8,8,0,0,0-11.32-11.32ZM192,72a8,8,0,0,0,5.66-2.34l16-16a8,8,0,0,0-11.32-11.32l-16,16A8,8,0,0,0,192,72Zm5.66,114.34a8,8,0,0,0-11.32,11.32l16,16a8,8,0,0,0,11.32-11.32ZM48,128a8,8,0,0,0-8-8H16a8,8,0,0,0,0,16H40A8,8,0,0,0,48,128Zm80,80a8,8,0,0,0-8,8v24a8,8,0,0,0,16,0V216A8,8,0,0,0,128,208Zm112-88H216a8,8,0,0,0,0,16h24a8,8,0,0,0,0-16Z">
+        </path>
+      </svg>
+      <svg class="sun" xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="currentColor"
+        viewBox="0 0 256 256">
+        <path
+          d="M233.54,142.23a8,8,0,0,0-8-2,88.08,88.08,0,0,1-109.8-109.8,8,8,0,0,0-10-10,104.84,104.84,0,0,0-52.91,37A104,104,0,0,0,136,224a103.09,103.09,0,0,0,62.52-20.88,104.84,104.84,0,0,0,37-52.91A8,8,0,0,0,233.54,142.23ZM188.9,190.34A88,88,0,0,1,65.66,67.11a89,89,0,0,1,31.4-26A106,106,0,0,0,96,56,104.11,104.11,0,0,0,200,160a106,106,0,0,0,14.92-1.06A89,89,0,0,1,188.9,190.34Z">
+        </path>
+      </svg>
+    </button>
+
+    <div>
+      <!-- Notification Button with Dropdown -->
+      <div class="relative" id="notification-wrapper">
+        <!-- Bell Button -->
+        <button id="notification-btn"
+          class="relative p-1 md:p-2.5 rounded-xl hover:bg-bg transition-colors cursor-pointer">
+          <i data-lucide="bell" class="w-5 h-5 text-text"></i>
+        </button>
+
+        <!-- Dropdown -->
+        <div id="notification-dropdown" class="hidden app-notification opacity-0 translate-y-2 transition-all duration-200 ease-out">
+          <div class="app-notification-head">
+            <span class="app-notification-title">Notifications</span>
+          </div>
+          <div id="notification-list" class="app-notification-list custom-scrollbar">
+            <div class="app-notification-empty">
+              <span class="app-notification-empty-icon"><i data-lucide="bell" class="w-4 h-4"></i></span>
+              <p>No new notifications</p>
+              <small>Notifications from your CashFlow activity will appear here.</small>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <a href="transaction.html" class="btn-primary items-center gap-2 flex">
+      <i data-lucide="plus" class="w-4 h-4"></i>
+      <span class="hidden md:block">Add transaction</span>
+    </a>
+  </div>
+</header>
+
+<script>
+  // dynamic title function
+
+  document.addEventListener("DOMContentLoaded", () => {
+    const headerTitle = document.getElementById("page-title");
+    const currentPage = document.body.getAttribute("data-page");
+
+    if (headerTitle && currentPage) {
+      headerTitle.textContent = `${currentPage}`;
+    }
+  });
+
+</script>
+
+      <!-- Main Content Area -->
+      <main id="main-content" class="px-3 pt-3 max-xl:mb-20 xl:mb-4">
+        <div class="db-page">
+          <div class="db-breadcrumb">
+            <a href="index.html">Home</a>
+            <span>/</span>
+            <span aria-current="page">Dashboard</span>
+            <span id="db-storage-chip" class="db-storage-chip" role="status">
+              <span class="db-storage-dot" aria-hidden="true"></span>
+              <span id="db-storage-label">Saved locally</span>
+            </span>
+          </div>
+
+          <section class="db-hero">
+            <div>
+              <span class="db-eyebrow">
+                <i data-lucide="sparkles" class="w-4 h-4"></i>
+                Your financial home
+              </span>
+              <h1 id="db-greeting">Welcome back</h1>
+              <p id="db-greeting-sub" class="db-hero-sub">Here is your financial position for this period.</p>
+              <div class="db-hero-meta">
+                <span class="db-meta-pill">
+                  <i data-lucide="calendar" class="w-4 h-4"></i>
+                  <span id="db-period-pill">Reporting period</span>
+                </span>
+                <span class="db-meta-pill">
+                  <i data-lucide="clock" class="w-4 h-4"></i>
+                  <span id="db-date-pill">Today</span>
+                </span>
+              </div>
+              <div class="db-quick-actions">
+                <a href="transaction.html" class="db-btn db-btn-primary">
+                  <i data-lucide="wallet" class="w-4 h-4"></i>
+                  My Finances
+                </a>
+                <a href="budgets.html" class="db-btn">
+                  <i data-lucide="pie-chart" class="w-4 h-4"></i>
+                  Budget
+                </a>
+                <a href="planner.html" class="db-btn"><i data-lucide="calendar-check" class="w-4 h-4"></i> Open Planner</a>
+              </div>
+            </div>
+            <div class="db-hero-balance">
+              <div class="db-balance-head">
+                <span>Total balance</span>
+                <button type="button" class="db-balance-toggle" id="db-balance-toggle" aria-pressed="false" aria-label="Hide balances" title="Hide balances">
+                  <i data-lucide="eye" class="w-4 h-4"></i>
+                </button>
+              </div>
+              <strong class="db-hero-total" id="db-hero-total">₦0.00</strong>
+              <div class="db-hero-split">
+                <div>
+                  <span>Available</span>
+                  <strong id="db-hero-available">₦0.00</strong>
+                </div>
+                <div>
+                  <span>Net this period</span>
+                  <strong id="db-hero-net">₦0.00</strong>
+                </div>
+              </div>
+              <span class="db-hero-note" id="db-hero-note">Savings set aside are excluded from your available balance.</span>
+            </div>
+          </section>
+
+          <div class="db-period-bar">
+            <div class="db-period-copy">
+              <span>Reporting period</span>
+              <strong id="db-period-label">This month</strong>
+            </div>
+            <div class="db-period-presets" role="group" aria-label="Reporting period">
+              <button type="button" class="db-period-btn" id="period-prev" aria-label="Previous month">
+                <i data-lucide="chevron-left" class="w-4 h-4"></i>
+              </button>
+              <button type="button" class="db-period-btn is-active" id="period-current">This month</button>
+              <button type="button" class="db-period-btn" id="period-next" aria-label="Next month">
+                <i data-lucide="chevron-right" class="w-4 h-4"></i>
+              </button>
+            </div>
+          </div>
+
+          <section class="db-stat-grid" aria-label="Financial overview">
+            <article class="db-stat-card">
+              <div class="db-stat-top">
+                <span class="db-stat-icon is-income"><i data-lucide="arrow-down-left" class="w-4 h-4"></i></span>
+                <span class="db-stat-badge is-income" id="stat-income-badge">Recorded</span>
+              </div>
+              <p class="db-stat-label">Income</p>
+              <strong class="db-stat-value" id="stat-income">₦0.00</strong>
+              <span class="db-stat-note">Recorded income this period.</span>
+            </article>
+            <article class="db-stat-card">
+              <div class="db-stat-top">
+                <span class="db-stat-icon is-expense"><i data-lucide="arrow-up-right" class="w-4 h-4"></i></span>
+                <span class="db-stat-badge is-expense" id="stat-expenses-badge">Actual</span>
+              </div>
+              <p class="db-stat-label">Expenses</p>
+              <strong class="db-stat-value" id="stat-expenses">₦0.00</strong>
+              <span class="db-stat-note">Real spending, excluding transfers.</span>
+            </article>
+            <article class="db-stat-card">
+              <div class="db-stat-top">
+                <span class="db-stat-icon is-transfer"><i data-lucide="scale" class="w-4 h-4"></i></span>
+                <span class="db-stat-badge is-transfer" id="stat-net-badge">Balanced</span>
+              </div>
+              <p class="db-stat-label">Net income</p>
+              <strong class="db-stat-value" id="stat-net">₦0.00</strong>
+              <span class="db-stat-note">Income minus expenses.</span>
+            </article>
+            <article class="db-stat-card">
+              <div class="db-stat-top">
+                <span class="db-stat-icon is-savings"><i data-lucide="coins" class="w-4 h-4"></i></span>
+                <span class="db-stat-badge is-savings" id="stat-savings-badge">Set aside</span>
+              </div>
+              <p class="db-stat-label">Total saved</p>
+              <strong class="db-stat-value" id="stat-savings">₦0.00</strong>
+              <span class="db-stat-note">Set aside across savings plans.</span>
+            </article>
+            <article class="db-stat-card">
+              <div class="db-stat-top">
+                <span class="db-stat-icon is-purple"><i data-lucide="pie-chart" class="w-4 h-4"></i></span>
+                <span class="db-stat-badge is-purple" id="stat-allocated-badge">Planned</span>
+              </div>
+              <p class="db-stat-label">Allocated</p>
+              <strong class="db-stat-value" id="stat-allocated">₦0.00</strong>
+              <span class="db-stat-note">Planned amounts for this period.</span>
+            </article>
+            <article class="db-stat-card">
+              <div class="db-stat-top">
+                <span class="db-stat-icon is-income"><i data-lucide="wallet" class="w-4 h-4"></i></span>
+                <span class="db-stat-badge is-income" id="stat-unallocated-badge">To assign</span>
+              </div>
+              <p class="db-stat-label">Unallocated</p>
+              <strong class="db-stat-value" id="stat-unallocated">₦0.00</strong>
+              <span class="db-stat-note">Period income minus allocations.</span>
+            </article>
+          </section>
+
+          <section class="db-section">
+            <div class="db-section-head">
+              <div class="db-section-copy">
+                <span>Cash flow</span>
+                <h2>Income &amp; expenses analytics</h2>
+                <p>Daily income and spending for the selected reporting period. Transfers and savings movements are excluded.</p>
+              </div>
+              <span class="db-section-caption" id="db-analytics-caption">This month</span>
+            </div>
+            <div class="db-grid-analytics">
+              <div class="db-card">
+                <div class="db-card-head">
+                  <div>
+                    <h3>Income and expenses</h3>
+                    <p id="db-analytics-sub">Actual recorded transactions only.</p>
+                  </div>
+                  <div class="db-chart-legend">
+                    <span><span class="db-dot is-income"></span>Income</span>
+                    <span><span class="db-dot is-expense"></span>Expenses</span>
+                  </div>
+                </div>
+                <div class="db-chart-wrap">
+                  <canvas id="db-analytics-chart"></canvas>
+                  <div class="db-chart-empty" id="db-analytics-empty" style="display:none">
+                    <strong>No income or expenses recorded</strong>
+                    <p id="db-analytics-empty-copy">Add an income or expense in My Finances for this period to see the chart.</p>
+                    <a href="transaction.html" class="db-btn db-btn-sm">Open My Finances</a>
+                  </div>
+                </div>
+                <div class="db-chart-insight">
+                  <div class="db-mini-stat">
+                    <span>Average daily income</span>
+                    <strong id="db-avg-income">₦0.00</strong>
+                  </div>
+                  <div class="db-mini-stat">
+                    <span>Average daily expenses</span>
+                    <strong id="db-avg-expense">₦0.00</strong>
+                  </div>
+                  <div class="db-mini-stat">
+                    <span>Days with activity</span>
+                    <strong id="db-active-days">0</strong>
+                  </div>
+                </div>
+              </div>
+              <div class="db-card">
+                <div class="db-card-head">
+                  <div>
+                    <h3>Financial health</h3>
+                    <p>Indicators calculated from your stored records.</p>
+                  </div>
+                  <a href="insights.html">Reports</a>
+                </div>
+                <div class="db-health-list" id="db-health-list"></div>
+              </div>
+            </div>
+          </section>
+
+          <section class="db-section">
+            <div class="db-section-head">
+              <div class="db-section-copy">
+                <span>Trend</span>
+                <h2>Monthly comparison</h2>
+                <p>How this period compares with the previous month across income, expenses, net income and savings contributions.</p>
+              </div>
+              <a href="insights.html" class="db-section-caption">Full reports →</a>
+            </div>
+            <div class="db-card">
+              <div class="db-compare-grid">
+                <div class="db-chart-wrap db-chart-wrap-sm">
+                  <canvas id="db-compare-chart"></canvas>
+                  <div class="db-chart-empty" id="db-compare-empty" style="display:none">
+                    <strong>No historical records yet</strong>
+                    <p>Monthly income and expenses will appear here when records exist.</p>
+                  </div>
+                </div>
+                <div class="db-compare-list" id="db-compare-list"></div>
+              </div>
+            </div>
+          </section>
+
+          <section class="db-section">
+            <div class="db-section-head">
+              <div class="db-section-copy">
+                <span>Activity</span>
+                <h2>Recent transactions &amp; budget</h2>
+                <p>Your latest real transactions and the allocations linked to actual spending.</p>
+              </div>
+            </div>
+            <div class="db-grid-two">
+              <div class="db-card">
+                <div class="db-card-head">
+                  <div>
+                    <h3>Recent transactions</h3>
+                    <p>Latest records across all accounts.</p>
+                  </div>
+                  <a href="transaction.html">View all</a>
+                </div>
+                <div class="db-list" id="db-recent-list"></div>
+              </div>
+              <div class="db-card">
+                <div class="db-card-head">
+                  <div>
+                    <h3>Budget overview</h3>
+                    <p id="db-budget-sub">Allocation plans for this period.</p>
+                  </div>
+                  <a href="budgets.html">View budget</a>
+                </div>
+                <div class="db-budget-summary">
+                  <div class="db-budget-stat">
+                    <span>Allocated</span>
+                    <strong id="db-budget-allocated">₦0.00</strong>
+                  </div>
+                  <div class="db-budget-stat">
+                    <span>Linked spending</span>
+                    <strong id="db-budget-actual">₦0.00</strong>
+                  </div>
+                  <div class="db-budget-stat">
+                    <span>Unallocated</span>
+                    <strong id="db-budget-unallocated">₦0.00</strong>
+                  </div>
+                </div>
+                <div id="db-budget-list"></div>
+              </div>
+            </div>
+          </section>
+
+          <section class="db-section">
+            <div class="db-section-head">
+              <div class="db-section-copy">
+                <span>Set aside</span>
+                <h2>Savings &amp; goals</h2>
+                <p>Savings plan balances and goal progress. Goal progress comes from the linked savings plan.</p>
+              </div>
+            </div>
+            <div class="db-grid-two">
+              <div class="db-card">
+                <div class="db-card-head">
+                  <div>
+                    <h3>Savings</h3>
+                    <p>Plans and contributions stored in Savings.</p>
+                  </div>
+                  <a href="savings.html">View savings</a>
+                </div>
+                <div class="db-savings-summary">
+                  <div class="db-budget-stat">
+                    <span>Total saved</span>
+                    <strong id="db-savings-total">₦0.00</strong>
+                  </div>
+                  <div class="db-budget-stat">
+                    <span>Active plans</span>
+                    <strong id="db-savings-plans">0</strong>
+                  </div>
+                  <div class="db-budget-stat">
+                    <span>This month</span>
+                    <strong id="db-savings-month">₦0.00</strong>
+                  </div>
+                </div>
+                <div id="db-savings-list"></div>
+              </div>
+              <div class="db-card">
+                <div class="db-card-head">
+                  <div>
+                    <h3>Goals</h3>
+                    <p>Progress funded through linked savings plans.</p>
+                  </div>
+                  <a href="goals.html">View goals</a>
+                </div>
+                <div id="db-goals-list"></div>
+              </div>
+            </div>
+          </section>
+
+          <section class="db-section db-productivity-summary" id="db-planner-summary">
+            <div class="db-section-head">
+              <div class="db-section-copy">
+                <span>Daily workflow</span>
+                <h2>Daily planner</h2>
+                <p id="db-planner-summary-date">Today?s planning progress.</p>
+              </div>
+              <a href="planner.html" class="db-btn db-btn-primary">Open Daily Planner</a>
+            </div>
+            <article class="db-card">
+              <div class="db-overview-strip">
+                <div class="db-budget-stat"><span>Tasks</span><strong id="db-planner-task-count">0</strong></div>
+                <div class="db-budget-stat"><span>Completed</span><strong id="db-planner-completed-count">0</strong></div>
+                <div class="db-budget-stat"><span>Remaining</span><strong id="db-planner-remaining-count">0</strong></div>
+                <div class="db-budget-stat"><span>Daily score</span><strong id="db-planner-score">?</strong></div>
+              </div>
+              <div class="db-summary-note" id="db-planner-summary-note">Open Planner to organise today?s activities.</div>
+            </article>
+          </section>
+
+          <section class="db-section db-productivity-summary" id="db-project-summary">
+            <div class="db-section-head">
+              <div class="db-section-copy">
+                <span>Project work</span>
+                <h2>Project overview</h2>
+                <p>Milestone progress from your shared project records.</p>
+              </div>
+              <a href="planner.html" class="db-btn db-btn-primary">View All Projects</a>
+            </div>
+            <article class="db-card">
+              <div class="db-overview-strip">
+                <div class="db-budget-stat"><span>Active projects</span><strong id="db-project-active-summary">0</strong></div>
+                <div class="db-budget-stat"><span>In progress</span><strong id="db-project-progress-summary">0</strong></div>
+                <div class="db-budget-stat"><span>Completed</span><strong id="db-project-completed-summary">0</strong></div>
+                <div class="db-budget-stat"><span>Upcoming deadlines</span><strong id="db-project-deadline-summary">0</strong></div>
+              </div>
+              <div class="db-summary-note" id="db-project-summary-note">Open Planner to create and manage projects.</div>
+            </article>
+          </section>
+
+          <section class="db-section">
+            <div class="db-section-head">
+              <div class="db-section-copy">
+                <span>Schedule</span>
+                <h2>Work &amp; upcoming dates</h2>
+                <p>Only confirmed work schedule records and real financial dates are shown.</p>
+              </div>
+            </div>
+            <div class="db-grid-two">
+              <div class="db-card">
+                <div class="db-card-head">
+                  <div>
+                    <h3>Work schedule</h3>
+                    <p>Confirmed shifts only.</p>
+                  </div>
+                  <a href="work-schedule.html">View schedule</a>
+                </div>
+                <div class="db-work-today" id="db-work-today"></div>
+                <div class="db-work-lines" id="db-work-lines"></div>
+              </div>
+              <div class="db-card">
+                <div class="db-card-head">
+                  <div>
+                    <h3>Upcoming dates</h3>
+                    <p>Goals, milestones and confirmed shifts.</p>
+                  </div>
+                </div>
+                <div class="db-list" id="db-upcoming-list"></div>
+              </div>
+            </div>
+          </section>
+
+          <p class="db-footnote">
+            <i data-lucide="database" class="w-4 h-4"></i>
+            <span>All figures come from your shared Gabsweb CashFlow data layer.</span>
+          </p>
+        </div>
+      </main>
+    </div>
+
+    <!-- Mobile Bottom Navigation -->
+    <nav class="bottom-nav xl:!hidden">
+  <a
+    href="index.html"
+    class="bottom-nav-item flex-1 flex flex-col items-center gap-1 p-2 text-[var(--muted)] text-[11px] font-semibold no-underline transition-all duration-300 ease-in-out"
+  >
+    <i data-lucide="home" class="w-5 h-5"></i>
+    <span>Dashboard</span>
+  </a>
+  <a
+    href="planner.html"
+    class="bottom-nav-item flex-1 flex flex-col items-center gap-1 p-2 text-[var(--muted)] text-[11px] font-semibold no-underline transition-all duration-300 ease-in-out"
+  >
+    <i data-lucide="calendar-check" class="w-5 h-5"></i>
+    <span>Planner</span>
+  </a>
+  <a
+    href="goals.html"
+    class="bottom-nav-item flex-1 flex flex-col items-center gap-1 p-2 text-[var(--muted)] text-[11px] font-semibold no-underline transition-all duration-300 ease-in-out"
+  >
+    <i data-lucide="target" class="w-5 h-5"></i>
+    <span>Goals</span>
+  </a>
+  <a
+    href="insights.html"
+    class="bottom-nav-item flex-1 flex flex-col items-center gap-1 p-2 text-[var(--muted)] text-[11px] font-semibold no-underline transition-all duration-300 ease-in-out"
+  >
+    <i data-lucide="bar-chart-3" class="w-5 h-5"></i>
+    <span>Insights</span>
+  </a>
+  <button
+    id="menu-toggle"
+    class="toggle-btn bottom-nav-item flex-1 flex flex-col items-center gap-1 p-2 text-[var(--muted)] text-[11px] font-semibold no-underline transition-all duration-300 ease-in-out"
+  >
+    <i data-lucide="more-horizontal" class="w-5 h-5"></i>
+    <span>More</span>
+  </button>
+</nav>
+
+
+    <!-- Legacy template modals are kept inert and removed at runtime. -->
+    <template id="db-legacy-templates">
+        <!-- Send Money Modal -->
+    <div id="send-modal" class="modal">
+      <div class="modal-content">
+        <div class="modal-header sticky">
+          <h2 class="text-lg sm:text-xl md:text-2xl font-bold">Send Money</h2>
+          <button class="close-modal" onclick="closeModal('send-modal')">
+            <i data-lucide="x" class="w-4 h-4 md:w-5 md:h-5"></i>
+          </button>
+        </div>
+
+        <div class="modal-body custom-scrollbar overflow-x-hidden">
+          <!-- Step Indicator -->
+          <div class="step-indicator">
+            <div class="step-indicator-progress" id="send-progress"></div>
+            <div class="step active" data-step="1">
+              <span class="step-circle">1</span>
+              <span class="step-label">Details</span>
+            </div>
+            <div class="step" data-step="2">
+              <span class="step-circle">2</span>
+              <span class="step-label">Review</span>
+            </div>
+            <div class="step" data-step="3">
+              <span class="step-circle">3</span>
+              <span class="step-label">Verify</span>
+            </div>
+            <div class="step" data-step="4">
+              <span class="step-circle">4</span>
+              <span class="step-label">Complete</span>
+            </div>
+          </div>
+
+          <!-- Step 1: Enter Details -->
+          <div class="step-content active" data-step-content="1">
+            <div class="form-group">
+              <label class="form-label">Amount</label>
+              <div class="relative">
+                <input type="number" id="send-amount" class="form-input pl-9 text-[16px] font-bold" placeholder="0.00" />
+              </div>
+            </div>
+
+            <!-- Recipient Section -->
+            <div class="form-group">
+              <label class="form-label">Select Recipient</label>
+
+              <!-- Old Recipients -->
+              <div id="send-recipients">
+                <div class="recipient-card" onclick="selectRecipient(this, 'John Doe', 'john@example.com')">
+                  <div class="user-avatar">
+                    <img src="assets/images/profiles/emma.jpg" alt="" />
+                  </div>
+                  <div class="flex-1">
+                    <h2 class="text-xs md:text-lg text-text font-bold">John Doe</h2>
+                    <p class="text-[10px] md:text-xs text-muted mt-1">john@example.com</p>
+                  </div>
+                </div>
+
+                <div class="recipient-card" onclick="selectRecipient(this, 'Sarah Smith', 'sarah@example.com')">
+                  <div class="user-avatar gradient-success">
+                    <img src="assets/images/profiles/sarah.jpg" alt="" />
+                  </div>
+                  <div class="flex-1">
+                    <h2 class="text-xs md:text-lg text-text font-bold">Sarah Smith</h2>
+                    <p class="text-[10px] md:text-xs text-muted mt-1">sarah@example.com</p>
+                  </div>
+                </div>
+
+                <div class="recipient-card" onclick="selectRecipient(this, 'Mike Johnson', 'mike@example.com')">
+                  <div class="user-avatar gradient-orange">
+                    <img src="assets/images/profiles/michael.jpg" alt="" />
+                  </div>
+                  <div class="flex-1">
+                    <h2 class="text-xs md:text-lg text-text font-bold">Mike Johnson</h2>
+                    <p class="text-[10px] md:text-xs text-muted mt-1">mike@example.com</p>
+                  </div>
+                </div>
+              </div>
+
+              <!-- Divider -->
+              <div class="flex items-center gap-2 my-4 text-muted text-[14px]">
+                <div class="flex-1 h-px bg-border"></div>
+                <span>or</span>
+                <div class="flex-1 h-px bg-border"></div>
+              </div>
+
+              <!-- Add New Recipient -->
+              <button id="add-new-recipient-btn" class="btn-secondary w-full flex items-center justify-center gap-2" onclick="toggleNewRecipientForm()">
+                <i data-lucide="user-plus" class="w-4.5 h-4.5"></i>
+                <span>Add New Recipient</span>
+              </button>
+
+              <!-- New Recipient Form (Hidden by default) -->
+              <div id="new-recipient-form" class="hidden mt-4 border border-border rounded-[12px] p-4">
+                <div class="form-group">
+                  <label class="form-label">Full Name</label>
+                  <input type="text" id="new-recipient-name" class="form-input" placeholder="Enter recipient name" />
+                </div>
+
+                <div class="form-group">
+                  <label class="form-label">Email or Account ID</label>
+                  <input type="text" id="new-recipient-email" class="form-input" placeholder="Enter email or account" />
+                </div>
+
+                <div class="form-group">
+                  <label class="form-label">Phone (optional)</label>
+                  <input type="text" id="new-recipient-phone" class="form-input" placeholder="+8801XXXXXXXXX" />
+                </div>
+
+                <button id="save-new-recipient" class="btn-primary w-full mt-2">Save Recipient</button>
+              </div>
+            </div>
+
+            <div class="form-group">
+              <label class="form-label">Note (Optional)</label>
+              <input type="text" id="send-note" class="form-input" placeholder="Add a note..." />
+            </div>
+          </div>
+
+          <!-- Step 2: Review -->
+          <div class="step-content" data-step-content="2">
+            <div class="info-box">
+              <i data-lucide="info" class="w-5 h-5"></i>
+              <div>
+                <h6 class="font-bold text-xs md:text-sm text-text mb-1">Review your transaction</h6>
+                <p class="text-[10px] md:text-xs text-muted">Please verify all details before proceeding</p>
+              </div>
+            </div>
+
+            <div class="summary-card">
+              <div class="summary-row">
+                <span class="text-xs md:text-sm text-muted font-bold">Recipient</span>
+                <span class="text-xs md:text-sm font-bold text-text" id="review-recipient">-</span>
+              </div>
+              <div class="summary-row">
+                <span class="text-xs md:text-sm text-muted"> Amount</span>
+                <span class="text-xs md:text-sm font-bold text-text" id="review-amount">$0.00</span>
+              </div>
+              <div class="summary-row">
+                <span class="text-xs md:text-sm text-muted">Transaction Fee</span>
+                <span class="text-xs md:text-sm font-bold text-text">$2.50</span>
+              </div>
+              <div class="summary-row">
+                <span class="text-xs md:text-sm text-muted">Total</span>
+                <span class="text-xs text-blue-600 md:text-sm font-bold" id="review-total">$0.00</span>
+              </div>
+            </div>
+
+            <div class="mb-4 bg-emerald-soft border border-emerald-soft rounded-[16px] p-4 flex gap-3 items-center">
+              <i data-lucide="shield-check" class="w-5 h-5 text-success flex-shrink-0"></i>
+              <p class="text-[10px] md:text-xs text-text">Your transaction is protected by our security guarantee</p>
+            </div>
+          </div>
+
+          <!-- Step 3: OTP Verification -->
+          <div class="step-content" data-step-content="3">
+            <div class="text-center mb-8">
+              <div class="w-20 h-20 rounded-full bg-brown-soft flex items-center justify-center mx-auto mb-4">
+                <i data-lucide="smartphone" class="w-8 h-8 md:w-10 md:h-10 text-blue-600"></i>
+              </div>
+              <h3 class="text-sm md:text-lg font-bold text-text mb-2">Enter Verification Code</h3>
+              <p class="text-xs md:text-sm text-muted">We've sent a 6-digit code to your phone<br /><strong>+1 (555) 123-4567</strong></p>
+            </div>
+
+            <div class="otp-inputs" id="send-otp">
+              <input type="text" class="otp-input" maxlength="1" inputmode="numeric" />
+              <input type="text" class="otp-input" maxlength="1" inputmode="numeric" />
+              <input type="text" class="otp-input" maxlength="1" inputmode="numeric" />
+              <input type="text" class="otp-input" maxlength="1" inputmode="numeric" />
+              <input type="text" class="otp-input" maxlength="1" inputmode="numeric" />
+              <input type="text" class="otp-input" maxlength="1" inputmode="numeric" />
+            </div>
+
+            <div class="mb-4 text-center mt-6">
+              <p class="text-[10px] md:text-xs text-text">
+                Didn't receive the code?
+                <button onclick="resendOTP('send')" class="text-blue-500 font-bold bg-none border-none cursor-pointer text-[10px] md:text-xs">Resend</button>
+              </p>
+            </div>
+          </div>
+
+          <!-- Step 4: Success -->
+          <div class="step-content" data-step-content="4">
+            <div class="text-center">
+              <div class="success-icon">
+                <i data-lucide="check" class="w-12 h-12 text-white"></i>
+              </div>
+              <h3 class="mb-2">Payment Successful!</h3>
+              <p class="text-muted text-xs md:text-sm mb-6 md:mb-8">Your money has been sent successfully</p>
+
+              <div class="summary-card">
+                <div class="text-center pb-4 border-b border-border mb-4">
+                  <p class="text-muted text-xs md:text-sm mb-2">Amount Sent</p>
+                  <h2 class="text-2xl md:text-4xl font-extrabold text-primary" id="success-amount">$0.00</h2>
+                </div>
+                <div class="summary-row">
+                  <span class="text-muted text-xs md:text-sm">To</span>
+                  <span class="text-xs md:text-sm font-bold text-text" id="success-recipient">-</span>
+                </div>
+                <div class="summary-row">
+                  <span class="text-muted text-xs md:text-sm">Transaction ID</span>
+                  <span class="text-xs md:text-sm font-bold text-text">TXN-2025-4892</span>
+                </div>
+                <div class="summary-row">
+                  <span class="text-muted text-xs md:text-sm">Date</span>
+                  <span class="text-xs md:text-sm font-bold text-text" id="success-date">-</span>
+                </div>
+              </div>
+
+              <button onclick="downloadReceipt()" class="btn-secondary mb-4 w-full mt-4">
+                <span class="flex items-center justify-center gap-2"> Download Receipt </span>
+              </button>
+            </div>
+          </div>
+        </div>
+
+        <div class="modal-footer">
+          <button id="send-back-btn" class="btn-secondary flex justify-center flex-1" onclick="previousStepSend()">Back</button>
+          <button id="send-next-btn" class="btn-primary flex-1" onclick="nextStepSend()">
+            <span>Continue</span>
+          </button>
+        </div>
+      </div>
+    </div>
+
+    <!-- Receive Money Modal -->
+
+    <div id="receive-modal" class="modal">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h2 class="text-lg sm:text-xl md:text-2xl font-bold">Receive Money</h2>
+          <button class="close-modal" onclick="closeModal('receive-modal')">
+            <i data-lucide="x" class="w-4 h-4 md:w-5 md:h-5"></i>
+          </button>
+        </div>
+
+        <div class="modal-body custom-scrollbar overflow-x-hidden">
+          <!-- Step Indicator -->
+          <div class="step-indicator">
+            <div class="step-indicator-progress" id="receive-progress"></div>
+            <div class="step active" data-step="1">
+              <span class="step-circle">1</span>
+              <span class="step-label">Amount</span>
+            </div>
+            <div class="step" data-step="2">
+              <span class="step-circle">2</span>
+              <span class="step-label">QR Code</span>
+            </div>
+            <div class="step" data-step="3">
+              <span class="step-circle">3</span>
+              <span class="step-label">Waiting</span>
+            </div>
+            <div class="step" data-step="4">
+              <span class="step-circle">4</span>
+              <span class="step-label">Complete</span>
+            </div>
+          </div>
+
+          <!-- Step 1: Enter Amount -->
+          <div class="step-content active" data-step-content="1">
+            <div class="info-box">
+              <i data-lucide="info" class="w-5 h-5"></i>
+              <div>
+                <h2 class="font-semibold text-xs md:text-sm text-text mb-1">Request a payment</h2>
+                <p class="text-[10px] md:text-xs text-muted">Specify the amount you want to receive</p>
+              </div>
+            </div>
+
+            <div class="form-group">
+              <label class="form-label">Amount to Receive</label>
+              <div class="relative">
+                <input type="number" id="receive-amount" class="form-input pl-9 text-[16px] font-bold" placeholder="0.00" />
+              </div>
+            </div>
+
+            <div class="form-group">
+              <label class="form-label">Description (Optional)</label>
+              <input type="text" id="receive-description" class="form-input" placeholder="What is this payment for?" />
+            </div>
+          </div>
+
+          <!-- Step 2: QR Code -->
+          <div class="step-content" data-step-content="2">
+            <div class="text-center">
+              <h3 class="mb-2">Scan to Pay</h3>
+              <p class="text-[14px] text-muted mb-6">Share this QR code with the payer</p>
+
+              <div class="qr-code">
+                <img src="assets/images/qr-code.png" alt="qr-code" />
+              </div>
+
+              <div class="mb-4 bg-bg rounded-[16px] p-4 flex items-center justify-between gap-2">
+                <div class="flex-1 text-left">
+                  <p class="text-[12px] text-muted mb-1">Your Wallet Address</p>
+                  <p class="font-semibold text-text m-0 text-[12px] break-all">0x742d35Cc6634C0532925a3b844Bc9e7595f0bEb</p>
+                </div>
+                <button onclick="copyAddress()" class="btn-secondary p-3 mb-3">
+                  <i data-lucide="copy" class="w-4 h-4"></i>
+                </button>
+              </div>
+            </div>
+          </div>
+
+          <!-- Step 3: Waiting for Payment -->
+          <div class="step-content" data-step-content="3">
+            <div class="text-center">
+              <div class="w-[100px] h-[100px] rounded-full bg-brown-soft flex items-center justify-center mx-auto mb-6 animate-pulse">
+                <i data-lucide="clock" class="w-[50px] h-[50px] text-primary"></i>
+              </div>
+              <h3 class="mb-2">Waiting for Payment</h3>
+              <p class="text-muted text-xs md:text-sm mb-6 md:mb-8">We'll notify you once the payment is received</p>
+
+              <div class="summary-card">
+                <div class="text-center pb-4 border-b border-border mb-4">
+                  <p class="text-muted text-xs md:text-sm mb-2">Requested Amount</p>
+                  <p class="text-2xl md:text-4xl font-extrabold text-primary" id="waiting-amount">$0.00</p>
+                </div>
+                <div class="summary-row">
+                  <span class="text-muted text-xs md:text-sm">Status</span>
+                  <span class="text-orange font-bold">
+                    <span class="inline-flex items-center gap-1.5">
+                      <span class="w-2 h-2 rounded-full bg-amber-500 animate-[blink_1.5s_infinite]"></span>
+                      Pending
+                    </span>
+                  </span>
+                </div>
+                <div class="summary-row">
+                  <span class="text-muted text-xs md:text-sm">Request ID</span>
+                  <span class="bolt-bold text-text text-xs">REQ-2025-7823</span>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Step 4: Success -->
+          <div class="step-content" data-step-content="4">
+            <div class="text-center">
+              <div class="success-icon">
+                <i data-lucide="check" class="w-12 h-12 text-white"></i>
+              </div>
+              <h3 class="mb-2">Payment Received!</h3>
+              <p class="text-muted text-xs md:text-sm mb-6 md:mb-8">The payment has been credited to your account</p>
+
+              <div class="summary-card">
+                <div class="text-center pb-4 border-b border-border mb-4">
+                  <p class="text-muted text-xs md:text-sm mb-2">Amount Received</p>
+                  <span class="text-2xl md:text-4xl font-extrabold text-primary" id="received-amount"> $0.00 </span>
+                </div>
+                <div class="summary-row">
+                  <span class="text-muted text-xs md:text-sm">From</span>
+                  <span class="text-[10px] md:text-xs text-text">John Doe</span>
+                </div>
+                <div class="summary-row">
+                  <span class="text-muted text-xs md:text-sm">Transaction ID</span>
+                  <span class="text-[10px] md:text-xs text-text">TXN-2025-4893</span>
+                </div>
+                <div class="summary-row">
+                  <span class="text-muted text-xs md:text-sm">Date</span>
+                  <span class="text-[10px] md:text-xs text-text" id="received-date">-</span>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="modal-footer">
+          <button id="receive-back-btn" class="btn-secondary flex justify-center flex-1" onclick="previousStepReceive()">Back</button>
+          <button id="receive-next-btn" class="btn-primary flex-1" onclick="nextStepReceive()">
+            <span>Continue</span>
+          </button>
+        </div>
+      </div>
+    </div>
+
+    <!-- Transfer Modal -->
+    <div id="transfer-modal" class="modal">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h2 class="text-lg sm:text-xl md:text-2xl font-bold">Transfer Funds</h2>
+          <button class="close-modal" onclick="closeModal('transfer-modal')">
+            <i data-lucide="x" class="w-4 h-4 md:w-5 md:h-5"></i>
+          </button>
+        </div>
+
+        <div class="modal-body custom-scrollbar overflow-x-hidden">
+          <!-- Step Indicator -->
+          <div class="step-indicator">
+            <div class="step-indicator-progress" id="transfer-progress"></div>
+            <div class="step active" data-step="1">
+              <span class="step-circle">1</span>
+              <span class="step-label">Accounts</span>
+            </div>
+            <div class="step" data-step="2">
+              <span class="step-circle">2</span>
+              <span class="step-label">Review</span>
+            </div>
+            <div class="step" data-step="3">
+              <span class="step-circle">3</span>
+              <span class="step-label">Verify</span>
+            </div>
+            <div class="step" data-step="4">
+              <span class="step-circle">4</span>
+              <span class="step-label">Complete</span>
+            </div>
+          </div>
+
+          <!-- Step 1: Select Accounts -->
+          <div class="step-content active" data-step-content="1">
+            <div class="form-group">
+              <label class="form-label">From Account</label>
+              <select id="transfer-from" class="select-custom w-full !bg-panel">
+                <option value="">Select account</option>
+                <option value="checking">Checking Account - $8,750.00</option>
+                <option value="savings">Savings Account - $12,450.00</option>
+                <option value="investment">Investment Account - $25,890.00</option>
+              </select>
+            </div>
+
+            <div class="text-center mt-4">
+              <div class="w-10 h-10 sm:w-12 sm:h-12 md:w-12 md:h-12 rounded-full bg-border inline-flex items-center justify-center">
+                <i data-lucide="arrow-down" class="w-6 h-6 text-text"></i>
+              </div>
+            </div>
+
+            <div class="form-group">
+              <label class="form-label">To Account</label>
+              <select id="transfer-to" class="select-custom w-full !bg-panel">
+                <option value="">Select account</option>
+                <option value="checking">Checking Account - $8,750.00</option>
+                <option value="savings">Savings Account - $12,450.00</option>
+                <option value="investment">Investment Account - $25,890.00</option>
+              </select>
+            </div>
+
+            <div class="form-group">
+              <label class="form-label">Amount</label>
+              <div class="relative">
+                <input type="number" id="transfer-amount" class="form-input pl-9 text-[16px] font-bold" placeholder="0.00" />
+              </div>
+            </div>
+
+            <div class="form-group">
+              <label class="form-label">Note (Optional)</label>
+              <input type="text" id="transfer-note" class="form-input" placeholder="Add a note..." />
+            </div>
+          </div>
+
+          <!-- Step 2: Review -->
+          <div class="step-content" data-step-content="2">
+            <div class="info-box">
+              <i data-lucide="info" class="w-5 h-5"></i>
+              <div>
+                <h6 class="font-bold text-xs md:text-sm text-text mb-1">Review your transfer</h6>
+                <p class="text-[10px] md:text-xs text-muted">Please verify all details before proceeding</p>
+              </div>
+            </div>
+
+            <div class="summary-card">
+              <div class="summary-row">
+                <span class="text-muted text-xs md:text-sm">From</span>
+                <span class="text-[10px] md:text-sm font-bold text-text" id="transfer-review-from">-</span>
+              </div>
+              <div class="summary-row">
+                <span class="text-muted text-xs md:text-sm">To</span>
+                <span class="text-[10px] md:text-sm font-bold text-text" id="transfer-review-to">-</span>
+              </div>
+              <div class="summary-row">
+                <span class="text-muted text-xs md:text-sm">Amount</span>
+                <span class="text-xs md:text-sm font-bold text-text" id="transfer-review-amount">$0.00</span>
+              </div>
+              <div class="summary-row">
+                <span class="text-muted text-xs md:text-sm">Transfer Fee</span>
+                <span class="text-xs md:text-sm font-bold text-text">$0.00</span>
+              </div>
+              <div class="summary-row">
+                <span class="text-xs md:text-sm text-muted">Total</span>
+                <span class="text-xs text-blue-600 md:text-sm font-bold" id="transfer-review-total">$0.00</span>
+              </div>
+            </div>
+
+            <div class="mb-4 bg-[rgba(59,130,246,0.1)] border border-[rgba(59,130,246,0.2)] rounded-[16px] p-4 flex gap-3 items-center">
+              <i data-lucide="zap" class="w-5 h-5 text-primary"></i>
+              <p class="font-bold text-xs md:text-sm text-text mb-1">Instant transfer - Funds will be available immediately</p>
+            </div>
+          </div>
+
+          <!-- Step 3: OTP Verification -->
+          <div class="step-content" data-step-content="3">
+            <div class="text-center mb-8">
+              <div class="w-20 h-20 rounded-full bg-brown-soft flex items-center justify-center mx-auto mb-4">
+                <i data-lucide="smartphone" class="w-10 h-10 text-primary"></i>
+              </div>
+              <h3 class="mb-2">Enter Verification Code</h3>
+              <p class="text-muted text-xs md:text-sm mb-6 md:mb-8">We've sent a 6-digit code to your phone<br /><strong>+1 (555) 123-4567</strong></p>
+            </div>
+
+            <div class="otp-inputs" id="transfer-otp">
+              <input type="text" class="otp-input" maxlength="1" pattern="[0-9]" inputmode="numeric" />
+              <input type="text" class="otp-input" maxlength="1" pattern="[0-9]" inputmode="numeric" />
+              <input type="text" class="otp-input" maxlength="1" pattern="[0-9]" inputmode="numeric" />
+              <input type="text" class="otp-input" maxlength="1" pattern="[0-9]" inputmode="numeric" />
+              <input type="text" class="otp-input" maxlength="1" pattern="[0-9]" inputmode="numeric" />
+              <input type="text" class="otp-input" maxlength="1" pattern="[0-9]" inputmode="numeric" />
+            </div>
+
+            <div class="mb-4 text-center mt-6">
+              <p class="text-muted text-xs md:text-sm mb-6 md:mb-8">
+                Didn't receive the code?
+                <button onclick="resendOTP('transfer')" class="text-primary font-semibold bg-none border-none cursor-pointer p-0">Resend</button>
+              </p>
+            </div>
+          </div>
+
+          <!-- Step 4: Success -->
+          <div class="step-content" data-step-content="4">
+            <div class="text-center">
+              <div class="success-icon">
+                <i data-lucide="check" class="w-12 h-12 text-white"></i>
+              </div>
+              <h3 class="mb-2">Transfer Successful!</h3>
+              <p class="text-muted text-xs md:text-sm mb-6 md:mb-8">Your funds have been transferred successfully</p>
+
+              <div class="summary-card">
+                <div class="text-center pb-4 border-b border-border mb-4">
+                  <p class="text-muted text-xs md:text-sm mb-2">Amount Transferred</p>
+                  <span class="text-2xl md:text-4xl font-extrabold text-primary" id="transfer-success-amount"> $0.00 </span>
+                </div>
+                <div class="summary-row">
+                  <span class="text-muted text-xs md:text-sm">From</span>
+                  <span class="text-[10px] md:text-sm font-bold text-text" id="transfer-success-from">-</span>
+                </div>
+                <div class="summary-row">
+                  <span class="text-muted text-xs md:text-sm">To</span>
+                  <span class="text-[10px] md:text-sm font-bold text-text" id="transfer-success-to">-</span>
+                </div>
+                <div class="summary-row">
+                  <span class="text-muted text-xs md:text-sm">Transaction ID</span>
+                  <span class="bolt-bold text-text text-xs">TXN-2025-4894</span>
+                </div>
+                <div class="summary-row">
+                  <span class="text-muted text-xs md:text-sm">Date</span>
+                  <span class="text-xs md:text-sm font-bold text-text" id="transfer-success-date">-</span>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="modal-footer">
+          <button id="transfer-back-btn" class="btn-secondary flex justify-center flex-1" onclick="previousStepTransfer()">Back</button>
+          <button id="transfer-next-btn" class="btn-primary flex-1" onclick="nextStepTransfer()">
+            <span>Continue</span>
+          </button>
+        </div>
+      </div>
+    </div>
+    <!-- Bills Modal -->
+    <div id="bills-modal" class="modal">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h2 class="text-lg sm:text-xl md:text-2xl font-bold">Pay Bills</h2>
+          <button class="close-modal" onclick="closeModal('bills-modal')">
+            <i data-lucide="x" class="w-4 h-4 md:w-5 md:h-5"></i>
+          </button>
+        </div>
+
+        <div class="modal-body custom-scrollbar overflow-x-hidden">
+          <!-- Step Indicator -->
+          <div class="step-indicator">
+            <div class="step-indicator-progress" id="bills-progress"></div>
+            <div class="step active" data-step="1">
+              <span class="step-circle">1</span>
+              <span class="step-label">Select</span>
+            </div>
+            <div class="step" data-step="2">
+              <span class="step-circle">2</span>
+              <span class="step-label">Review</span>
+            </div>
+            <div class="step" data-step="3">
+              <span class="step-circle">3</span>
+              <span class="step-label">Verify</span>
+            </div>
+            <div class="step" data-step="4">
+              <span class="step-circle">4</span>
+              <span class="step-label">Complete</span>
+            </div>
+          </div>
+
+          <!-- Step 1: Select Bill -->
+          <div class="step-content active" data-step-content="1">
+            <div class="info-box">
+              <i data-lucide="info" class="w-5 h-5"></i>
+              <div>
+                <h6 class="font-bold text-xs md:text-sm text-text mb-1">Select a bill to pay</h6>
+                <p class="text-[10px] md:text-xs text-muted">Choose from your recent bills</p>
+              </div>
+            </div>
+
+            <div id="bills-list">
+              <div class="bill-item" onclick="selectBill(this, 'electricity', 'Electricity Bill', '142.50')">
+                <div class="flex items-center gap-4 sm:gap-4 md:gap-4 lg:gap-4">
+                  <div class="bill-icon gradient-yellow">
+                    <i data-lucide="zap" class="w-6 h-6"></i>
+                  </div>
+                  <div>
+                    <h6 class="font-bold text-text text-xs md:text-sm">Electricity Bill</h6>
+                    <p class="text-muted text-[10px] md:text-xs mt-1">Due: Nov 15, 2025</p>
+                  </div>
+                </div>
+                <div class="text-right">
+                  <p class="font-extrabold text-text text-xs md:text-sm px-2 py-1">$142.50</p>
+                  <span class="text-[10px] text-danger bg-[rgba(239,68,68,0.1)] px-2 py-[2px] rounded-[6px] mt-1 inline-block">Overdue</span>
+                </div>
+              </div>
+
+              <div class="bill-item" onclick="selectBill(this, 'internet', 'Internet Bill', '79.99')">
+                <div class="flex items-center gap-4 sm:gap-4 md:gap-4 lg:gap-4">
+                  <div class="bill-icon gradient-secondary">
+                    <i data-lucide="wifi" class="w-6 h-6"></i>
+                  </div>
+                  <div>
+                    <h6 class="font-bold text-text text-xs md:text-sm">Internet Bill</h6>
+                    <p class="text-muted text-[10px] md:text-xs mt-1">Due: Nov 20, 2025</p>
+                  </div>
+                </div>
+                <div class="text-right">
+                  <span class="font-extrabold text-text text-xs md:text-sm px-2 py-1"> $79.99 </span>
+                </div>
+              </div>
+
+              <div class="bill-item" onclick="selectBill(this, 'water', 'Water Bill', '45.30')">
+                <div class="flex items-center gap-4 sm:gap-4 md:gap-4 lg:gap-4">
+                  <div class="bill-icon gradient-primary">
+                    <i data-lucide="droplet" class="w-6 h-6"></i>
+                  </div>
+                  <div>
+                    <h6 class="font-bold text-text text-xs md:text-sm">Water Bill</h6>
+                    <p class="text-muted text-[10px] md:text-xs mt-1">Due: Nov 25, 2025</p>
+                  </div>
+                </div>
+                <div class="text-right">
+                  <span class="font-extrabold text-text text-xs md:text-sm px-2 py-1"> $45.30 </span>
+                </div>
+              </div>
+
+              <div class="bill-item" onclick="selectBill(this, 'phone', 'Phone Bill', '89.00')">
+                <div class="flex items-center gap-4 sm:gap-4 md:gap-4 lg:gap-4">
+                  <div class="bill-icon gradient-success">
+                    <i data-lucide="smartphone" class="w-6 h-6"></i>
+                  </div>
+                  <div>
+                    <h6 class="font-bold text-text text-xs md:text-sm">Phone Bill</h6>
+                    <p class="text-muted text-[10px] md:text-xs mt-1">Due: Nov 28, 2025</p>
+                  </div>
+                </div>
+                <div class="text-right">
+                  <span class="font-extrabold text-text text-xs md:text-sm px-2 py-1"> $89.00 </span>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Step 2: Review -->
+          <div class="step-content mb-4" data-step-content="2">
+            <div class="info-box">
+              <i data-lucide="info" class="w-5 h-5"></i>
+              <div>
+                <h2 class="font-bold text-xs md:text-sm text-text mb-1">Review your payment</h2>
+                <p class="text-[10px] md:text-xs text-muted">Please verify all details before proceeding</p>
+              </div>
+            </div>
+
+            <div class="summary-card">
+              <div class="summary-row">
+                <span class="text-muted text-xs md:text-sm">Bill Type</span>
+                <span class="text-xs md:text-sm font-bold text-text" id="bills-review-type">-</span>
+              </div>
+              <div class="summary-row">
+                <span class="text-muted text-xs md:text-sm">Amount Due</span>
+                <span class="text-xs md:text-sm font-bold text-text" id="bills-review-amount">$0.00</span>
+              </div>
+              <div class="summary-row">
+                <span class="text-muted text-xs md:text-sm">Processing Fee</span>
+                <span class="text-xs md:text-sm font-bold text-text">$1.50</span>
+              </div>
+              <div class="summary-row">
+                <span class="text-muted text-xs md:text-sm">Payment Method</span>
+                <span class="text-xs md:text-sm font-bold text-text">Checking Account</span>
+              </div>
+              <div class="summary-row">
+                <span class="text-xs md:text-sm text-muted">Total</span>
+                <span class="text-xs text-blue-600 md:text-sm font-bold" id="bills-review-total">$0.00</span>
+              </div>
+            </div>
+
+            <div class="bg-[rgba(245,158,11,0.1)] border border-[rgba(245,158,11,0.2)] rounded-[16px] p-4 flex gap-3 items-center">
+              <i data-lucide="clock" class="w-5 h-5 text-amber-500 flex-shrink-0"></i>
+              <p class="font-bold text-xs md:text-sm text-text mb-1">Payment will be processed within 1-2 business days</p>
+            </div>
+          </div>
+
+          <!-- Step 3: OTP Verification -->
+          <div class="step-content mb-4" data-step-content="3">
+            <div class="text-center mb-8">
+              <div class="w-20 h-20 rounded-full bg-brown-soft flex items-center justify-center mx-auto mb-4">
+                <i data-lucide="smartphone" class="w-10 h-10 text-primary"></i>
+              </div>
+              <h3 class="mb-2">Enter Verification Code</h3>
+              <p class="text-muted text-xs md:text-sm mb-6 md:mb-8">
+                We've sent a 6-digit code to your phone<br />
+                <strong>+1 (555) 123-4567</strong>
+              </p>
+            </div>
+
+            <div class="otp-inputs" id="bills-otp">
+              <input type="text" class="otp-input" maxlength="1" pattern="[0-9]" inputmode="numeric" />
+              <input type="text" class="otp-input" maxlength="1" pattern="[0-9]" inputmode="numeric" />
+              <input type="text" class="otp-input" maxlength="1" pattern="[0-9]" inputmode="numeric" />
+              <input type="text" class="otp-input" maxlength="1" pattern="[0-9]" inputmode="numeric" />
+              <input type="text" class="otp-input" maxlength="1" pattern="[0-9]" inputmode="numeric" />
+              <input type="text" class="otp-input" maxlength="1" pattern="[0-9]" inputmode="numeric" />
+            </div>
+
+            <div class="text-center mt-6">
+              <p class="text-muted text-xs md:text-sm mb-6 md:mb-8">
+                Didn't receive the code?
+                <button class="text-primary font-semibold bg-none border-none cursor-pointer p-0">Resend</button>
+              </p>
+            </div>
+          </div>
+
+          <!-- Step 4: Success -->
+          <div class="step-content mb-4" data-step-content="4">
+            <div class="text-center">
+              <div class="success-icon">
+                <i data-lucide="check" class="w-12 h-12 text-white"></i>
+              </div>
+              <h3 class="mb-2">Payment Successful!</h3>
+              <p class="text-muted text-xs md:text-sm mb-6 md:mb-8">Your bill has been paid successfully</p>
+
+              <div class="summary-card">
+                <step-indicator-progress class="text-center pb-4 border-b border-border mb-4 flex flex-col items-center">
+                  <span class="text-muted text-xs md:text-sm mb-2">Amount Paid</span>
+                  <span class="text-2xl md:text-4xl font-extrabold text-primary" id="bills-success-amount"> $0.00 </span>
+                </step-indicator-progress>
+                <div class="summary-row">
+                  <span class="text-muted text-xs md:text-sm">Bill Type</span>
+                  <span class="text-xs md:text-sm font-bold text-text" id="bills-success-type">-</span>
+                </div>
+                <div class="summary-row">
+                  <span class="text-muted text-xs md:text-sm">Transaction ID</span>
+                  <span class="bolt-bold text-text text-xs">TXN-2025-4895</span>
+                </div>
+                <div class="summary-row">
+                  <span class="text-muted text-xs md:text-sm">Date</span>
+                  <span class="text-xs md:text-sm font-bold text-text" id="bills-success-date">-</span>
+                </div>
+                <div class="summary-row">
+                  <span class="text-muted text-xs md:text-sm">Status</span>
+                  <span class="text-success font-semibold">Paid</span>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="modal-footer">
+          <button id="bills-back-btn" class="btn-secondary flex justify-center flex-1" onclick="previousStepBills()">Back</button>
+          <button id="bills-next-btn" class="btn-primary flex-1" onclick="nextStepBills()">
+            <span>Continue</span>
+          </button>
+        </div>
+      </div>
+    </div>
+
+    <!-- AI Forecast Red Zone Modal -->
+    <div id="forecast-modal" class="modal">
+      <div class="modal-content">
+        <!-- Modal Header -->
+        <div class="modal-header">
+          <div class="flex-1">
+            <div class="inline-flex items-center gap-2 px-3 py-1 rounded-full gradient-primary text-white text-[10px] sm:text-xs font-bold mb-2">
+              <i data-lucide="sparkles" class="w-3 h-3"></i>
+              <span>AI POWERED INSIGHTS</span>
+            </div>
+            <h2 class="text-lg sm:text-2xl font-bold text-text">Red Zone Alert</h2>
+            <p class="text-xs sm:text-sm text-muted mt-1">AI-detected spending patterns and recommendations</p>
+          </div>
+          <button onclick="closeModal('forecast-modal')" class="p-2.5 rounded-xl cursor-pointer hover:bg-bg transition-colors">
+            <i data-lucide="x" class="w-5 h-5 text-muted"></i>
+          </button>
+        </div>
+
+        <!-- Modal Body -->
+        <div class="modal-body custom-scrollbar overflow-x-hidden">
+          <!-- Alert Cards -->
+          <div class="mb-4 sm:mb-8">
+            <h3 class="mb-4">Critical Alerts</h3>
+
+            <div class="alert-card danger">
+              <div class="w-10 h-10 sm:w-12 sm:h-12 rounded-2xl bg-red-500/20 flex items-center justify-center flex-shrink-0">
+                <i data-lucide="alert-triangle" class="w-6 h-6 text-red-500"></i>
+              </div>
+              <div class="flex-1">
+                <h4 class="font-bold text-sm sm:text-base text-text mb-1">Budget Overspending Detected</h4>
+                <p class="text-xs sm:text-sm text-muted mb-2">You're 23% over your entertainment budget this week</p>
+                <div class="flex items-center gap-2 sm:gap-4 text-xs">
+                  <span class="font-semibold text-[10px] sm:text-xs text-red-500">Spent: $956</span>
+                  <span class="text-muted text-[10px] sm:text-xs">Budget: $780</span>
+                  <span class="px-2 py-1 rounded-full text-[10px] sm:text-xs bg-red-500/10 text-red-500 font-bold">+$176</span>
+                </div>
+              </div>
+            </div>
+            <div class="section-divider"></div>
+
+            <div class="alert-card warning my-2">
+              <div class="h-10 w-10 sm:w-12 sm:h-12 rounded-2xl bg-orange-500/20 flex items-center justify-center flex-shrink-0">
+                <i data-lucide="trending-up" class="w-6 h-6 text-orange-500"></i>
+              </div>
+              <div class="flex-1">
+                <h4 class="font-bold text-sm sm:text-base text-text mb-1">Unusual Spending Pattern</h4>
+                <p class="text-xs sm:text-sm text-muted mb-2">Your food expenses increased by 45% compared to last month</p>
+                <div class="flex items-center gap-2 sm:gap-4 text-xs">
+                  <span class="font-semibold text-[10px] sm:text-xs text-orange-500">This month: $892</span>
+                  <span class="text-muted text-[10px] sm:text-xs">Last month: $615</span>
+                </div>
+              </div>
+            </div>
+
+            <div class="section-divider"></div>
+
+            <div class="alert-card info">
+              <div class="w-10 h-10 sm:w-12 sm:h-12 rounded-2xl bg-blue-500/20 flex items-center justify-center flex-shrink-0">
+                <i data-lucide="calendar" class="w-6 h-6 text-blue-500"></i>
+              </div>
+              <div class="flex-1">
+                <h4 class="font-bold text-sm sm:text-base text-text mb-1">Upcoming Bill Reminder</h4>
+                <p class="text-xs sm:text-sm text-muted mb-2">3 bills totaling $480 are due within the next 7 days</p>
+                <div class="flex flex-wrap items-center gap-2 sm:gap-4 text-[10px] sm:text-xs">
+                  <span class="px-2 py-1 rounded-full bg-blue-500/10 text-blue-500 font-bold">Netflix $15</span>
+                  <span class="px-2 py-1 rounded-full bg-blue-500/10 text-blue-500 font-bold">Spotify $12</span>
+                  <span class="px-2 py-1 rounded-full bg-blue-500/10 text-blue-500 font-bold">Internet $453</span>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div class="section-divider"></div>
+
+          <!-- Predictive Analytics -->
+          <div class="mb-4 sm:mb-8">
+            <h3 class="mb-4">7-Day Spending Forecast</h3>
+            <div class="card-elevated p-6">
+              <div class="chart-container mb-6 h-32">
+                <canvas id="detailed-forecast-chart"></canvas>
+              </div>
+              <div class="flex flex-wrap gap-4">
+                <div class="stat-box flex flex-col">
+                  <p class="text-[10px] sm:text-xs text-muted mb-1">Predicted Spending</p>
+                  <p class="text-xl sm:text-2xl font-bold text-gradient">$1,450</p>
+                  <p class="text-[10px] sm:text-xs text-muted mt-1">Next 7 days</p>
+                </div>
+                <div class="stat-box flex flex-col">
+                  <p class="text-[10px] sm:text-xs text-muted mb-1">Safe Zone</p>
+                  <p class="text-xl sm:text-2xl font-bold text-accent">$1,200</p>
+                  <p class="text-[10px] sm:text-xs text-muted mt-1">Recommended</p>
+                </div>
+                <div class="stat-box flex flex-col">
+                  <p class="text-[10px] sm:text-xs text-muted mb-1">Potential Savings</p>
+                  <p class="text-xl sm:text-2xl font-bold text-orange-500">$250</p>
+                  <p class="text-[10px] sm:text-xs text-muted mt-1">If optimized</p>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Category Breakdown -->
+          <div class="mb-4 sm:mb-8">
+            <h3 class="mb-4">Spending by Category</h3>
+            <div class="space-y-4">
+              <div>
+                <div class="flex items-center justify-between mb-2">
+                  <div class="flex items-center gap-3">
+                    <div class="w-10 h-10 rounded-xl bg-red-500/10 flex items-center justify-center">
+                      <i data-lucide="film" class="w-5 h-5 text-red-500"></i>
+                    </div>
+                    <div>
+                      <p class="font-semibold text-sm sm:text-base text-text">Entertainment</p>
+                      <p class="text-[10px] sm:text-xs text-muted">23% over budget</p>
+                    </div>
+                  </div>
+                  <div class="text-right">
+                    <p class="font-bold text-sm sm:text-base text-red-500">$956</p>
+                    <p class="text-[10px] sm:text-xs text-muted">of $780</p>
+                  </div>
+                </div>
+                <div class="category-bar">
+                  <div class="category-fill bg-red-500 w-[123%]"></div>
+                </div>
+              </div>
+
+              <div>
+                <div class="flex items-center justify-between mb-2">
+                  <div class="flex items-center gap-3">
+                    <div class="w-10 h-10 rounded-xl bg-orange-500/10 flex items-center justify-center">
+                      <i data-lucide="utensils" class="w-5 h-5 text-orange-500"></i>
+                    </div>
+                    <div>
+                      <p class="font-semibold text-sm sm:text-base text-text">Food & Dining</p>
+                      <p class="text-[10px] sm:text-xs text-muted">12% over budget</p>
+                    </div>
+                  </div>
+                  <div class="text-right">
+                    <p class="font-bold text-sm sm:text-base text-orange-500">$892</p>
+                    <p class="text-[10px] sm:text-xs text-muted">of $800</p>
+                  </div>
+                </div>
+                <div class="category-bar">
+                  <div class="category-fill bg-orange-500 w-[112%]"></div>
+                </div>
+              </div>
+
+              <div>
+                <div class="flex items-center justify-between mb-2">
+                  <div class="flex items-center gap-3">
+                    <div class="w-10 h-10 rounded-xl bg-blue-500/10 flex items-center justify-center">
+                      <i data-lucide="plane" class="w-5 h-5 text-blue-500"></i>
+                    </div>
+                    <div>
+                      <p class="font-semibold text-sm sm:text-base text-text">Travel</p>
+                      <p class="text-[10px] sm:text-xs text-accent">Within budget ✓</p>
+                    </div>
+                  </div>
+                  <div class="text-right">
+                    <p class="font-bold text-sm sm:text-base text-text">$723</p>
+                    <p class="text-[10px] sm:text-xs text-muted">of $900</p>
+                  </div>
+                </div>
+                <div class="category-bar">
+                  <div class="category-fill bg-blue-500 w-[80%]"></div>
+                </div>
+              </div>
+
+              <div>
+                <div class="flex items-center justify-between mb-2">
+                  <div class="flex items-center gap-3">
+                    <div class="w-10 h-10 rounded-xl bg-accent/10 flex items-center justify-center">
+                      <i data-lucide="briefcase" class="w-5 h-5 text-accent"></i>
+                    </div>
+                    <div>
+                      <p class="font-semibold text-sm sm:text-base text-text">Business</p>
+                      <p class="text-[10px] sm:text-xs text-accent">Within budget ✓</p>
+                    </div>
+                  </div>
+                  <div class="text-right">
+                    <p class="font-bold text-sm sm:text-base text-text">$630</p>
+                    <p class="text-[10px] sm:text-xs text-muted">of $1,000</p>
+                  </div>
+                </div>
+                <div class="category-bar">
+                  <div class="category-fill bg-accent w-[63%]"></div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- AI Recommendations -->
+          <div class="mb-3 sm:mb-6">
+            <h3 class="mb-4">AI Recommendations</h3>
+
+            <div class="recommendation-card">
+              <div class="flex items-start gap-4 mb-3">
+                <div class="w-10 h-10 rounded-xl gradient-primary flex items-center justify-center text-white flex-shrink-0">
+                  <i data-lucide="lightbulb" class="w-5 h-5"></i>
+                </div>
+                <div class="flex-1">
+                  <h4 class="font-bold text-sm sm:text-base text-text mb-2">Reduce Entertainment Spending</h4>
+                  <p class="text-xs sm:text-sm text-muted mb-3">Consider cutting back on streaming services and dining out. You could save $180/month by:</p>
+                  <ul class="space-y-1 text-xs sm:text-sm text-muted ml-4">
+                    <li class="flex items-start gap-2">
+                      <span class="text-accent mt-0.5">•</span>
+                      <span>Cancelling 2 unused subscriptions ($30/month)</span>
+                    </li>
+                    <li class="flex items-start gap-2">
+                      <span class="text-accent mt-0.5">•</span>
+                      <span>Reducing takeout to 2x per week ($100/month)</span>
+                    </li>
+                    <li class="flex items-start gap-2">
+                      <span class="text-accent mt-0.5">•</span>
+                      <span>Using rewards points for movie tickets ($50/month)</span>
+                    </li>
+                  </ul>
+                </div>
+              </div>
+              <div class="flex gap-2">
+                <button class="btn-primary flex-1">
+                  <span>Apply Savings Plan</span>
+                </button>
+                <button class="btn-secondary">Customize</button>
+              </div>
+            </div>
+
+            <div class="recommendation-card my-3">
+              <div class="flex items-start gap-4 mb-3">
+                <div class="w-10 h-10 rounded-xl gradient-secondary flex items-center justify-center text-white flex-shrink-0">
+                  <i data-lucide="target" class="w-5 h-5"></i>
+                </div>
+                <div class="flex-1">
+                  <h4 class="font-bold text-sm sm:text-base text-text mb-2">Set Budget Alerts</h4>
+                  <p class="text-xs sm:text-sm text-muted">Get notified when you're approaching 80% of your category budgets to avoid overspending.</p>
+                </div>
+              </div>
+              <button class="btn-secondary w-full">Enable Alerts</button>
+            </div>
+
+            <div class="recommendation-card">
+              <div class="flex items-start gap-4 mb-3">
+                <div class="w-10 h-10 rounded-xl gradient-success flex items-center justify-center text-white flex-shrink-0">
+                  <i data-lucide="piggy-bank" class="w-5 h-5"></i>
+                </div>
+                <div class="flex-1">
+                  <h4 class="font-bold text-sm sm:text-base text-text mb-2">Automate Savings</h4>
+                  <p class="text-[10px] sm:text-sm text-muted">Set up automatic transfers of $150/week to your savings goal. You'll reach your laptop goal 2 months earlier!</p>
+                </div>
+              </div>
+              <button class="btn-secondary w-full">Activate Auto-Save</button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Toast Notification -->
+    <div id="toast" class="toast">
+      <div class="flex items-center gap-3">
+        <div class="w-10 h-10 gradient-success rounded-xl flex items-center justify-center flex-shrink-0">
+          <i data-lucide="check" class="w-5 h-5 text-white"></i>
+        </div>
+        <div>
+          <p class="text-sm font-semibold text-text" id="toast-title">Success</p>
+          <p class="text-xs text-muted opacity-80 flex gap-2 mt-1" id="toast-message">Action completed successfully</p>
+        </div>
+      </div>
+    </div>
+    </template>
+
+    <!-- ============= GABSWEB CASHFLOW DASHBOARD MODALS ============= -->
+
+    <div class="db-modal" id="db-task-modal" role="dialog" aria-modal="true" aria-labelledby="db-task-modal-title">
+      <div class="db-modal-panel">
+        <div class="db-modal-head">
+          <div>
+            <h3 id="db-task-modal-title">Edit task</h3>
+            <p>Changes update the same task shown in the daily plan.</p>
+          </div>
+          <button type="button" class="db-modal-close" data-close="db-task-modal" aria-label="Close">
+            <i data-lucide="x" class="w-4 h-4"></i>
+          </button>
+        </div>
+        <form class="db-modal-body db-task-form" id="db-task-form">
+          <label class="db-field">
+            <span>Task title</span>
+            <input type="text" class="db-input" id="db-task-title-field" autocomplete="off" />
+          </label>
+          <label class="db-field">
+            <span>Description</span>
+            <textarea class="db-textarea" id="db-task-description-field"></textarea>
+          </label>
+          <label class="db-field">
+            <span>Priority</span>
+            <select class="db-select" id="db-task-priority-field">
+              <option value="low">Low</option>
+              <option value="medium">Medium</option>
+              <option value="high">High</option>
+            </select>
+          </label>
+        </form>
+        <div class="db-modal-foot">
+          <button type="button" class="db-btn" data-close="db-task-modal">Cancel</button>
+          <button type="submit" form="db-task-form" class="db-btn db-btn-primary">Save task</button>
+        </div>
+      </div>
+    </div>
+
+    <div class="db-modal" id="db-meeting-modal" role="dialog" aria-modal="true" aria-labelledby="db-meeting-modal-title">
+      <div class="db-modal-panel">
+        <div class="db-modal-head">
+          <div>
+            <h3 id="db-meeting-modal-title">Add appointment</h3>
+            <p id="db-meeting-date-label">Selected day</p>
+          </div>
+          <button type="button" class="db-modal-close" data-close="db-meeting-modal" aria-label="Close">
+            <i data-lucide="x" class="w-4 h-4"></i>
+          </button>
+        </div>
+        <form class="db-modal-body db-meeting-form" id="db-meeting-form">
+          <label class="db-field">
+            <span>Appointment title</span>
+            <input type="text" class="db-input" id="db-meeting-title-field" autocomplete="off" />
+          </label>
+          <div class="db-field-row">
+            <label class="db-field">
+              <span>Start time</span>
+              <input type="time" class="db-input" id="db-meeting-start-field" />
+            </label>
+            <label class="db-field">
+              <span>End time</span>
+              <input type="time" class="db-input" id="db-meeting-end-field" />
+            </label>
+          </div>
+          <label class="db-field">
+            <span>Location or meeting link</span>
+            <input type="text" class="db-input" id="db-meeting-location-field" autocomplete="off" />
+          </label>
+          <label class="db-field">
+            <span>Notes</span>
+            <textarea class="db-textarea" id="db-meeting-notes-field"></textarea>
+          </label>
+        </form>
+        <div class="db-modal-foot">
+          <button type="button" class="db-btn" data-close="db-meeting-modal">Cancel</button>
+          <button type="submit" form="db-meeting-form" class="db-btn db-btn-primary">Save appointment</button>
+        </div>
+      </div>
+    </div>
+
+    <div class="db-modal" id="db-project-modal" role="dialog" aria-modal="true" aria-labelledby="db-project-modal-title">
+      <div class="db-modal-panel is-wide">
+        <div class="db-modal-head">
+          <div>
+            <h3 id="db-project-modal-title">New project</h3>
+            <p>Estimated cost is a plan and never counts as an expense.</p>
+          </div>
+          <button type="button" class="db-modal-close" data-close="db-project-modal" aria-label="Close">
+            <i data-lucide="x" class="w-4 h-4"></i>
+          </button>
+        </div>
+        <form class="db-modal-body db-project-form" id="db-project-form">
+          <label class="db-field">
+            <span>Project name</span>
+            <input type="text" class="db-input" id="db-project-name-field" autocomplete="off" />
+          </label>
+          <label class="db-field">
+            <span>Status</span>
+            <select class="db-select" id="db-project-status-field">
+              <option value="planned">Planned</option>
+              <option value="active">Active</option>
+              <option value="on-hold">On hold</option>
+              <option value="completed">Completed</option>
+            </select>
+          </label>
+          <div class="db-field-row">
+            <label class="db-field">
+              <span>Start date</span>
+              <input type="date" class="db-input" id="db-project-start-field" />
+            </label>
+            <label class="db-field">
+              <span>End date</span>
+              <input type="date" class="db-input" id="db-project-end-field" />
+            </label>
+          </div>
+          <div class="db-field-row">
+            <label class="db-field">
+              <span>Deadline</span>
+              <input type="date" class="db-input" id="db-project-deadline-field" />
+            </label>
+            <label class="db-field">
+              <span>Estimated cost</span>
+              <input type="number" min="0" step="0.01" class="db-input" id="db-project-cost-field" />
+            </label>
+          </div>
+          <label class="db-field">
+            <span>Objectives</span>
+            <textarea class="db-textarea" id="db-project-objectives-field"></textarea>
+          </label>
+          <label class="db-field">
+            <span>Execution plan</span>
+            <textarea class="db-textarea" id="db-project-plan-field"></textarea>
+          </label>
+          <label class="db-field">
+            <span>Notes</span>
+            <textarea class="db-textarea" id="db-project-notes-field"></textarea>
+          </label>
+        </form>
+        <div class="db-modal-foot">
+          <button type="button" class="db-btn" data-close="db-project-modal">Cancel</button>
+          <button type="submit" form="db-project-form" class="db-btn db-btn-primary">Save project</button>
+        </div>
+      </div>
+    </div>
+
+    <div class="db-modal" id="db-project-manage-modal" role="dialog" aria-modal="true" aria-labelledby="db-project-manage-title">
+      <div class="db-modal-panel is-wide">
+        <div class="db-modal-head">
+          <div>
+            <h3 id="db-project-manage-title">Project</h3>
+            <p id="db-project-manage-meta">Project details</p>
+          </div>
+          <button type="button" class="db-modal-close" data-close="db-project-manage-modal" aria-label="Close">
+            <i data-lucide="x" class="w-4 h-4"></i>
+          </button>
+        </div>
+        <div class="db-modal-body" id="db-project-manage-body"></div>
+        <div class="db-modal-foot">
+          <button type="button" class="db-btn" data-close="db-project-manage-modal">Close</button>
+          <button type="button" class="db-btn db-btn-primary" id="db-project-manage-edit">Edit project</button>
+        </div>
+      </div>
+    </div>
+
+    <div class="db-modal" id="db-milestone-modal" role="dialog" aria-modal="true" aria-labelledby="db-milestone-modal-title">
+      <div class="db-modal-panel">
+        <div class="db-modal-head">
+          <div>
+            <h3 id="db-milestone-modal-title">Edit milestone</h3>
+            <p>Milestone progress drives project progress.</p>
+          </div>
+          <button type="button" class="db-modal-close" data-close="db-milestone-modal" aria-label="Close">
+            <i data-lucide="x" class="w-4 h-4"></i>
+          </button>
+        </div>
+        <form class="db-modal-body db-milestone-form" id="db-milestone-form">
+          <label class="db-field">
+            <span>Milestone title</span>
+            <input type="text" class="db-input" id="db-milestone-title-field" autocomplete="off" />
+          </label>
+          <div class="db-field-row">
+            <label class="db-field">
+              <span>Due date</span>
+              <input type="date" class="db-input" id="db-milestone-due-field" />
+            </label>
+            <label class="db-field">
+              <span>Status</span>
+              <select class="db-select" id="db-milestone-status-field">
+                <option value="pending">Pending</option>
+                <option value="in-progress">In progress</option>
+                <option value="completed">Completed</option>
+              </select>
+            </label>
+          </div>
+          <label class="db-field">
+            <span>Description</span>
+            <textarea class="db-textarea" id="db-milestone-description-field"></textarea>
+          </label>
+          <label class="db-field">
+            <span>Notes</span>
+            <textarea class="db-textarea" id="db-milestone-notes-field"></textarea>
+          </label>
+        </form>
+        <div class="db-modal-foot">
+          <button type="button" class="db-btn" data-close="db-milestone-modal">Cancel</button>
+          <button type="submit" form="db-milestone-form" class="db-btn db-btn-primary">Save milestone</button>
+        </div>
+      </div>
+    </div>
+
+    <div class="db-modal" id="db-confirm-modal" role="dialog" aria-modal="true" aria-labelledby="db-confirm-title">
+      <div class="db-modal-panel">
+        <div class="db-modal-head">
+          <div>
+            <h3 id="db-confirm-title">Confirm</h3>
+            <p>This action cannot be undone.</p>
+          </div>
+          <button type="button" class="db-modal-close" data-close="db-confirm-modal" aria-label="Close">
+            <i data-lucide="x" class="w-4 h-4"></i>
+          </button>
+        </div>
+        <div class="db-modal-body">
+          <p class="db-confirm-message" id="db-confirm-message">Please confirm this action.</p>
+        </div>
+        <div class="db-modal-foot">
+          <button type="button" class="db-btn" data-close="db-confirm-modal">Cancel</button>
+          <button type="button" class="db-btn db-btn-danger" id="db-confirm-ok">Confirm</button>
+        </div>
+      </div>
+    </div>
+
+    <div class="db-toast" id="db-toast" role="status" aria-live="polite">
+      <i data-lucide="check-circle" class="db-toast-icon w-5 h-5"></i>
+      <div class="db-toast-copy">
+        <strong id="db-toast-title">Saved</strong>
+        <span id="db-toast-message">Your changes were saved.</span>
+      </div>
+    </div>
+
+  <script src="assets/js/cashflow-data.js"></script>
+  <script src="assets/js/dashboard.js"></script>
+  <script defer src="assets/js/index.js"></script><script src="assets/js/notifications.js"></script><script src="assets/js/global-navigation.js"></script></body>
+
+<!-- Mirrored from savvyfi-beta.vercel.app/index.html by HTTrack Website Copier/3.x [XR&CO'2014], Thu, 29 Oct 2026 22:44:13 GMT -->
+</html>

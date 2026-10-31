@@ -1,0 +1,1321 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
+    <title>Gabsweb CashFlow - Settings</title>
+    <link rel="icon" href="assets/images/fav.png" />
+    <script src="https://unpkg.com/lucide@1.64.0/dist/umd/lucide.js"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet" />
+    <script src="assets/js/theme-loader.js"></script>
+  <link href="assets/css/index.css" rel="stylesheet"><link href="assets/css/settings.css" rel="stylesheet">  <link href="assets/css/notifications.css" rel="stylesheet" />
+    <link href="assets/css/typography.css" rel="stylesheet" />
+  </head>
+
+  <body data-page="Settings" class="bg-bg text-text">
+    <!-- Desktop Sidebar -->
+    <!-- Desktop Sidebar -->
+<aside id="sidebar" class="sidebar w-64 sm:w-72 h-screen fixed top-0 left-0 z-[110] bg-bg border-r border-border flex flex-col max-xl:left-[-100%] max-xl:invisible max-xl:opacity-0">
+  <div class="p-3 sm:p-6 border-b border-border flex-shrink-0">
+    <div class="flex justify-between">
+      <a href="./index.html" class="flex items-center gap-3 mb-3 sm:mb-6 cursor-pointer">
+        <div class="flex items-center justify-center">
+          <img src="assets/images/gabsweb-cashflow-logo.png" alt="Gabsweb CashFlow Logo" class="brand-logo w-10 h-10 sm:w-12 sm:h-12 rounded-2xl" />
+        </div>
+        <div>
+          <h1 class="text-sm font-bold text-text">Gabsweb CashFlow</h1>
+          <p class="text-xs text-muted font-medium">Smart Finance</p>
+        </div>
+      </a>
+
+      <!-- Close button -->
+      <button id="close-sidebar" class="p-2 rounded-xl hover:bg-bgbg block xl:hidden transition-transform duration-300">
+        <i data-lucide="x" class="w-5 h-5 text-text"></i>
+      </button>
+    </div>
+
+    <div class="content-box glass p-4 border-border border rounded-2xl">
+      <div class="flex items-center justify-between mb-2">
+        <span class="text-[10px] sm:text-xs font-semibold text-muted uppercase tracking-wider">Total Balance</span>
+        <div class="live-dot"></div>
+      </div>
+      <h5 class="text-xl sm:text-2xl font-bold text-gradient mb-1">$8,750.00</h5>
+      <p class="text-[10px] sm:text-xs text-muted whitespace-nowrap opacity-80 flex gap-2 mt-1">+12.5% this month</p>
+    </div>
+  </div>
+
+    <nav class="flex-1 overflow-y-auto p-2 sm:p-4 custom-scrollbar">
+    <div class="space-y-1">
+      <a href="./index.html" class="nav-item">
+        <i data-lucide="layout-dashboard" class="w-5 h-5"></i>
+        <span>Dashboard</span>
+      </a>
+      <a href="./planner.html" class="nav-item">
+        <i data-lucide="calendar-check" class="w-5 h-5"></i>
+        <span>Planner</span>
+      </a>
+      <a href="./transaction.html" class="nav-item">
+        <i data-lucide="arrow-right-left" class="w-5 h-5"></i>
+        <span>My Finances</span>
+      </a>
+      <a href="./budgets.html" class="nav-item">
+        <i data-lucide="wallet-cards" class="w-5 h-5"></i>
+        <span>Budget &amp; Money Allocation</span>
+      </a>
+      <a href="./savings.html" class="nav-item">
+        <i data-lucide="coins" class="w-5 h-5"></i>
+        <span>Savings</span>
+      </a>
+      <a href="./goals.html" class="nav-item">
+        <i data-lucide="target" class="w-5 h-5"></i>
+        <span>Goals &amp; Planned Purchases</span>
+      </a>
+      <a href="./work-schedule.html" class="nav-item">
+        <i data-lucide="calendar-clock" class="w-5 h-5"></i>
+        <span>Work Schedule</span>
+      </a>
+      <a href="./insights.html" class="nav-item">
+        <i data-lucide="bar-chart-3" class="w-5 h-5"></i>
+        <span>Reports &amp; Insights</span>
+      </a>
+    </div>
+
+    <div class="mt-6 pt-6 border-t border-border space-y-1">
+      <a href="./settings.html" class="nav-item">
+        <i data-lucide="settings" class="w-5 h-5"></i>
+        <span>Settings</span>
+      </a>
+
+    </div>
+  </nav>
+  <div class="p-4 border-t border-border flex-shrink-0 relative">
+    <div id="user-button" class="flex items-center gap-3 rounded-2xl hover:bg-opacity-50 cursor-pointer">
+      <div class="w-10 h-10 sm:w-12 sm:h-12 border-2 border-blue-700 rounded-full flex items-center justify-center text-text font-bold">
+        <img class="w-8 h-8 md:w-10 md:h-10 rounded-full flex justify-center items-center object-cover" src="assets/images/profiles/emma.jpg" alt="profile Image" />
+      </div>
+      <div class="flex-1 min-w-0">
+        <h2 class="text-sm font-semibold text-text truncate">Den</h2>
+        <p class="text-xs text-muted truncate">Premium Member</p>
+      </div>
+      <i data-lucide="chevron-down" class="w-4 h-4 text-muted transition-transform duration-200" id="dropdown-arrow"></i>
+    </div>
+
+    <!-- Dropdown Menu  -->
+    <div id="user-dropdown" class="absolute left-2 bottom-full mb-2 w-full max-w-[300px] md:max-w-[200px] bg-bg border border-border rounded-xl shadow-lg hidden z-500">
+      <ul class="py-2">
+        <li>
+          <a href="./settings.html" class="block px-4 py-2 text-sm text-text hover:bg-bg">Profile</a>
+        </li>
+        <li>
+          <a href="./login.html" type="button" id="logOut" class="block px-4 py-2 text-sm cursor-progress text-text hover:bg-bg"> Logout </a>
+        </li>
+      </ul>
+    </div>
+  </div>
+</aside>
+<script>
+  const currentPage2 = window.location.pathname.split("/").pop() || "index.html";
+  const navItems = document.querySelectorAll(".nav-item");
+
+  navItems.forEach((link) => {
+    const href = link.getAttribute("href");
+    if (!href) return;
+    const fileName = href.split("/").pop();
+
+    if (fileName === currentPage2) {
+      link.classList.add("active");
+    } else {
+      link.classList.remove("active");
+    }
+  });
+
+  //   daynamicaly change the title
+
+  // Use a different variable name to avoid conflict
+  const currentFile = window.location.pathname.split("/").pop();
+
+  const activeLink = document.querySelector(`.nav-item[href*="${currentFile}"], .bottom-nav-item[href*="${currentFile}"]`);
+
+  const pageTitleEl = document.getElementById("page-title");
+
+  if (activeLink && pageTitleEl) {
+    const titleText = activeLink.querySelector("span")?.textContent.trim();
+    pageTitleEl.textContent = titleText || "Dashboard";
+  } else {
+    if (pageTitleEl) pageTitleEl.textContent = "Dashboard";
+  }
+
+  //   User dropdown functionality
+  const userBtn = document.getElementById("user-button");
+  const userDropdown = document.getElementById("user-dropdown");
+  const dropdownArrow = document.getElementById("dropdown-arrow");
+
+  userBtn.addEventListener("click", (e) => {
+    e.stopPropagation();
+    userDropdown.classList.toggle("hidden");
+    dropdownArrow.classList.toggle("rotate-180"); // arrow rotation
+  });
+
+  document.addEventListener("click", (e) => {
+    if (!userDropdown.classList.contains("hidden")) {
+      userDropdown.classList.add("hidden");
+      dropdownArrow.classList.remove("rotate-180");
+    }
+  });
+
+  // logout functions
+
+  function handleLogOut() {
+    const logOut = document.getElementById("logOut");
+    logOut.addEventListener("click", function () {
+      localStorage.removeItem("auth");
+      window.location.href = "/login.html";
+    });
+  }
+</script>
+
+
+    <!-- Main Content -->
+
+    <div id="overlay" class="hidden fixed inset-0 backdrop-blur-sm z-50"></div>
+
+    <div class="ml-0 xl:ml-72 transition-all duration-300">
+      <!-- Header -->
+      <header class="sticky top-0 glass border-b border-border px-6 py-4 flex items-center justify-between z-30">
+  <div class="flex items-center gap-4">
+    <div>
+      <h2 id="page-title" class="text-sm md:text-xl font-bold text-text">
+        Dashboard
+      </h2>
+      <p class="text-[10px] md:text-sm text-muted">Welcome back, Den!</p>
+    </div>
+  </div>
+
+  <div class="flex items-center gap-2 md:gap-3">
+    <div class="relative hidden sm:block">
+
+      <input type="text" id="header-search" placeholder="Search..." class="form-input w-64 pt-3 pr-5 pb-3 pl-10" />
+    </div>
+
+    <button id="theme-toggle" class="p-1 md:p-2.5 rounded-xl hover:bg-bg transition-colors text-text cursor-pointer">
+      <svg class="moon" xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="currentColor"
+        viewBox="0 0 256 256">
+        <path
+          d="M120,40V16a8,8,0,0,1,16,0V40a8,8,0,0,1-16,0Zm72,88a64,64,0,1,1-64-64A64.07,64.07,0,0,1,192,128Zm-16,0a48,48,0,1,0-48,48A48.05,48.05,0,0,0,176,128ZM58.34,69.66A8,8,0,0,0,69.66,58.34l-16-16A8,8,0,0,0,42.34,53.66Zm0,116.68-16,16a8,8,0,0,0,11.32,11.32l16-16a8,8,0,0,0-11.32-11.32ZM192,72a8,8,0,0,0,5.66-2.34l16-16a8,8,0,0,0-11.32-11.32l-16,16A8,8,0,0,0,192,72Zm5.66,114.34a8,8,0,0,0-11.32,11.32l16,16a8,8,0,0,0,11.32-11.32ZM48,128a8,8,0,0,0-8-8H16a8,8,0,0,0,0,16H40A8,8,0,0,0,48,128Zm80,80a8,8,0,0,0-8,8v24a8,8,0,0,0,16,0V216A8,8,0,0,0,128,208Zm112-88H216a8,8,0,0,0,0,16h24a8,8,0,0,0,0-16Z">
+        </path>
+      </svg>
+      <svg class="sun" xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="currentColor"
+        viewBox="0 0 256 256">
+        <path
+          d="M233.54,142.23a8,8,0,0,0-8-2,88.08,88.08,0,0,1-109.8-109.8,8,8,0,0,0-10-10,104.84,104.84,0,0,0-52.91,37A104,104,0,0,0,136,224a103.09,103.09,0,0,0,62.52-20.88,104.84,104.84,0,0,0,37-52.91A8,8,0,0,0,233.54,142.23ZM188.9,190.34A88,88,0,0,1,65.66,67.11a89,89,0,0,1,31.4-26A106,106,0,0,0,96,56,104.11,104.11,0,0,0,200,160a106,106,0,0,0,14.92-1.06A89,89,0,0,1,188.9,190.34Z">
+        </path>
+      </svg>
+    </button>
+
+    <div>
+      <!-- Notification Button with Dropdown -->
+      <div class="relative" id="notification-wrapper">
+        <!-- Bell Button -->
+        <button id="notification-btn"
+          class="relative p-1 md:p-2.5 rounded-xl hover:bg-bg transition-colors cursor-pointer">
+          <i data-lucide="bell" class="w-5 h-5 text-text"></i>
+        </button>
+
+        <!-- Dropdown -->
+        <div id="notification-dropdown" class="hidden app-notification opacity-0 translate-y-2 transition-all duration-200 ease-out">
+          <div class="app-notification-head">
+            <span class="app-notification-title">Notifications</span>
+          </div>
+          <div id="notification-list" class="app-notification-list custom-scrollbar">
+            <div class="app-notification-empty">
+              <span class="app-notification-empty-icon"><i data-lucide="bell" class="w-4 h-4"></i></span>
+              <p>No new notifications</p>
+              <small>Notifications from your CashFlow activity will appear here.</small>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <button id="open-deposit-btn" class="btn-primary items-center gap-2 flex">
+      <i data-lucide="plus" class="w-4 h-4"></i>
+      <span class="hidden md:block">Deposit</span>
+    </button>
+  </div>
+</header>
+
+<script>
+  // dynamic title function
+
+  document.addEventListener("DOMContentLoaded", () => {
+    const headerTitle = document.getElementById("page-title");
+    const currentPage = document.body.getAttribute("data-page");
+
+    if (headerTitle && currentPage) {
+      headerTitle.textContent = `${currentPage}`;
+    }
+  });
+
+</script>
+
+      <!-- Main Content Area -->
+      <main id="main-content" class="gs-page px-3 pt-3 xl:mb-4">
+        <nav class="gs-breadcrumb" aria-label="Breadcrumb">
+          <a href="./index.html">Home</a>
+          <span aria-hidden="true">/</span>
+          <span aria-current="page">Settings</span>
+        </nav>
+
+        <header class="gs-page-header">
+          <div class="gs-page-heading">
+            <span class="gs-eyebrow"><i data-lucide="sliders-horizontal" class="w-3.5 h-3.5"></i> Account &amp; preferences</span>
+            <h1 class="gs-title">Settings</h1>
+            <p class="gs-description">Manage the details and defaults that shape your Gabsweb CashFlow experience.</p>
+          </div>
+          <div id="settings-storage-chip" class="gs-storage-chip" role="status">
+            <span class="gs-storage-dot" aria-hidden="true"></span>
+            <span class="gs-storage-copy">
+              <strong id="settings-storage-title">Saved on this device</strong>
+              <small id="settings-storage-copy">Private browser storage</small>
+            </span>
+          </div>
+        </header>
+
+        <div class="gs-shell">
+          <aside class="gs-nav-card" aria-label="Settings sections">
+            <div class="gs-nav-heading">
+              <span>Preferences</span>
+              <p>Choose a section to manage.</p>
+            </div>
+            <nav class="gs-nav" role="tablist" aria-label="Settings categories">
+              <button type="button" class="gs-nav-btn active" id="settings-tab-profile" data-settings-target="profile" role="tab" aria-selected="true" aria-controls="settings-profile">
+                <span class="gs-nav-icon"><i data-lucide="user" class="w-4 h-4"></i></span>
+                <span class="gs-nav-label"><strong>Personal profile</strong><small>Name and email</small></span>
+                <i data-lucide="chevron-right" class="gs-nav-arrow w-4 h-4"></i>
+              </button>
+              <button type="button" class="gs-nav-btn" id="settings-tab-financial" data-settings-target="financial" role="tab" aria-selected="false" aria-controls="settings-financial">
+                <span class="gs-nav-icon"><i data-lucide="wallet" class="w-4 h-4"></i></span>
+                <span class="gs-nav-label"><strong>Financial preferences</strong><small>Currency and month</small></span>
+                <i data-lucide="chevron-right" class="gs-nav-arrow w-4 h-4"></i>
+              </button>
+              <button type="button" class="gs-nav-btn" id="settings-tab-work" data-settings-target="work" role="tab" aria-selected="false" aria-controls="settings-work">
+                <span class="gs-nav-icon"><i data-lucide="briefcase" class="w-4 h-4"></i></span>
+                <span class="gs-nav-label"><strong>Work preferences</strong><small>Team and shifts</small></span>
+                <i data-lucide="chevron-right" class="gs-nav-arrow w-4 h-4"></i>
+              </button>
+              <button type="button" class="gs-nav-btn" id="settings-tab-appearance" data-settings-target="appearance" role="tab" aria-selected="false" aria-controls="settings-appearance">
+                <span class="gs-nav-icon"><i data-lucide="palette" class="w-4 h-4"></i></span>
+                <span class="gs-nav-label"><strong>Appearance</strong><small>Dark and light mode</small></span>
+                <i data-lucide="chevron-right" class="gs-nav-arrow w-4 h-4"></i>
+              </button>
+            </nav>
+          </aside>
+
+          <div class="gs-content">
+            <section class="gs-panel active" id="settings-profile" data-settings-panel="profile" role="tabpanel" aria-labelledby="settings-tab-profile">
+              <div class="gs-panel-heading">
+                <div>
+                  <span class="gs-section-number">01</span>
+                  <h2>Personal profile</h2>
+                  <p>Keep the identity attached to your financial workspace accurate.</p>
+                </div>
+                <span class="gs-panel-tag"><i data-lucide="user" class="w-3.5 h-3.5"></i> Identity</span>
+              </div>
+
+              <div class="gs-profile-hero">
+                <div class="gs-avatar" id="profile-avatar" aria-hidden="true">
+                  <img id="profile-avatar-image" alt="" hidden />
+                  <span id="profile-avatar-initials">--</span>
+                </div>
+                <div class="gs-profile-identity">
+                  <span>Your profile</span>
+                  <h3 id="profile-display-name">Not set</h3>
+                  <p id="profile-display-email">No email saved</p>
+                </div>
+              </div>
+
+              <div class="gs-profile-grid">
+                <div class="gs-card gs-profile-view-card" id="profile-view-card">
+                  <div class="gs-card-heading">
+                    <span class="gs-icon-box"><i data-lucide="user" class="w-5 h-5"></i></span>
+                    <div>
+                      <h3>Profile details</h3>
+                      <p>The information saved for your CashFlow profile.</p>
+                    </div>
+                  </div>
+
+                  <div class="gs-profile-detail-list">
+                    <div class="gs-profile-detail-row">
+                      <span>Full name</span>
+                      <strong id="profile-detail-name">Not set</strong>
+                    </div>
+                    <div class="gs-profile-detail-row">
+                      <span>Email address</span>
+                      <strong id="profile-detail-email">Not set</strong>
+                    </div>
+                    <div class="gs-profile-detail-row">
+                      <span>Work team</span>
+                      <strong id="profile-detail-team">Not set</strong>
+                    </div>
+                    <div class="gs-profile-detail-row">
+                      <span>Supervisor</span>
+                      <strong id="profile-detail-supervisor">Not set</strong>
+                    </div>
+                    <div class="gs-profile-detail-row">
+                      <span>Preferred shift</span>
+                      <strong id="profile-detail-shift">Not set</strong>
+                    </div>
+                  </div>
+
+                  <div class="gs-form-actions">
+                    <button type="button" class="gs-btn gs-btn-primary" id="edit-profile-btn">
+                      <i data-lucide="pencil" class="w-4 h-4"></i>
+                      Edit profile
+                    </button>
+                  </div>
+                </div>
+
+                <form class="gs-card gs-form-card" id="profile-form" novalidate hidden>
+                  <div class="gs-card-heading">
+                    <span class="gs-icon-box"><i data-lucide="user" class="w-5 h-5"></i></span>
+                    <div>
+                      <h3>Edit profile</h3>
+                      <p>Update the details shown on your profile.</p>
+                    </div>
+                  </div>
+
+                  <div class="gs-image-editor">
+                    <div class="gs-avatar gs-avatar-edit" id="profile-image-preview" aria-hidden="true">
+                      <img id="profile-image-preview-img" alt="" hidden />
+                      <span id="profile-image-preview-initials">--</span>
+                    </div>
+                    <div class="gs-image-copy">
+                      <span class="gs-label">Profile image</span>
+                      <p class="gs-hint">JPG, PNG or WebP. Square images work best.</p>
+                      <div class="gs-image-actions">
+                        <label class="gs-btn gs-btn-secondary gs-upload-btn" for="profile-image-input">
+                          <i data-lucide="image-plus" class="w-4 h-4"></i>
+                          Choose image
+                        </label>
+                        <input type="file" id="profile-image-input" class="gs-file-input" accept="image/png,image/jpeg,image/webp" />
+                        <button type="button" class="gs-btn gs-btn-ghost" id="remove-profile-image-btn">Remove</button>
+                      </div>
+                    </div>
+                  </div>
+
+                  <div class="gs-form-grid">
+                    <div class="gs-field" id="profile-name-field">
+                      <label class="gs-label" for="profile-name">Full name <span class="gs-required" aria-hidden="true">*</span></label>
+                      <input type="text" id="profile-name" class="form-input" placeholder="Enter your full name" autocomplete="name" required aria-describedby="profile-name-error" />
+                      <p class="gs-field-error" id="profile-name-error" role="alert"></p>
+                    </div>
+                    <div class="gs-field" id="profile-email-field">
+                      <label class="gs-label" for="profile-email">Email address <span class="gs-required" aria-hidden="true">*</span></label>
+                      <input type="email" id="profile-email" class="form-input" placeholder="you@example.com" autocomplete="email" required aria-describedby="profile-email-error" />
+                      <p class="gs-field-error" id="profile-email-error" role="alert"></p>
+                    </div>
+                  </div>
+
+                  <div class="gs-form-actions">
+                    <button type="button" class="gs-btn gs-btn-secondary" id="reset-profile-btn">Cancel</button>
+                    <button type="submit" class="gs-btn gs-btn-primary" id="save-profile-btn">
+                      <i data-lucide="check" class="w-4 h-4"></i>
+                      Save changes
+                    </button>
+                  </div>
+                </form>
+
+                <aside class="gs-card gs-snapshot" aria-label="Profile summary">
+                  <div class="gs-snapshot-heading">
+                    <span class="gs-icon-box"><i data-lucide="id-card" class="w-5 h-5"></i></span>
+                    <div>
+                      <h3>Profile at a glance</h3>
+                      <p>Your saved identity details.</p>
+                    </div>
+                  </div>
+                  <div class="gs-snapshot-list">
+                    <div class="gs-snapshot-row">
+                      <span>Display name</span>
+                      <strong id="profile-summary-name">Not set</strong>
+                    </div>
+                    <div class="gs-snapshot-row">
+                      <span>Email</span>
+                      <strong id="profile-summary-email">Not set</strong>
+                    </div>
+                    <div class="gs-snapshot-row">
+                      <span>Initials</span>
+                      <strong id="profile-summary-initials">--</strong>
+                    </div>
+                  </div>
+                </aside>
+              </div>
+            </section>
+
+            <section class="gs-panel" id="settings-financial" data-settings-panel="financial" role="tabpanel" aria-labelledby="settings-tab-financial" hidden>
+              <div class="gs-panel-heading">
+                <div>
+                  <span class="gs-section-number">02</span>
+                  <h2>Financial preferences</h2>
+                  <p>Set the defaults used to present money and monthly summaries.</p>
+                </div>
+                <span class="gs-panel-tag"><i data-lucide="wallet" class="w-3.5 h-3.5"></i> Money</span>
+              </div>
+
+              <div class="gs-currency-hero">
+                <div class="gs-currency-mark" aria-hidden="true">₦</div>
+                <div class="gs-currency-copy">
+                  <span>Default currency</span>
+                  <h3>Nigerian Naira</h3>
+                  <p>NGN · displayed as ₦ across financial views</p>
+                </div>
+                <span class="gs-soft-badge">NGN</span>
+              </div>
+
+              <form class="gs-card gs-form-card" id="financial-preferences-form" novalidate>
+                <div class="gs-card-heading">
+                  <span class="gs-icon-box"><i data-lucide="settings-2" class="w-5 h-5"></i></span>
+                  <div>
+                    <h3>Money display</h3>
+                    <p>These preferences affect how financial information is formatted and organised.</p>
+                  </div>
+                </div>
+
+                <div class="gs-setting-list">
+                  <div class="gs-setting-row">
+                    <div class="gs-setting-copy">
+                      <label class="gs-label" for="settings-currency">Currency</label>
+                      <p>The currency used for balances, transactions and reports.</p>
+                    </div>
+                    <div class="gs-setting-control">
+                      <select id="settings-currency" class="form-select gs-select" aria-describedby="currency-hint">
+                        <option value="NGN">NGN — Nigerian Naira (₦)</option>
+                      </select>
+                    </div>
+                  </div>
+
+                  <div class="gs-setting-row">
+                    <div class="gs-setting-copy">
+                      <span class="gs-label">Financial month</span>
+                      <p>Monthly summaries use a standard calendar cycle.</p>
+                    </div>
+                    <div class="gs-setting-control">
+                      <span class="gs-locked-value"><i data-lucide="calendar" class="w-4 h-4"></i> Calendar month</span>
+                    </div>
+                  </div>
+                </div>
+
+                <div class="gs-inline-note" id="currency-hint">
+                  <i data-lucide="calendar" class="w-4 h-4"></i>
+                  <p>Monthly summaries run from the 1st to the last day of the month.</p>
+                </div>
+
+                <input type="hidden" id="settings-financial-month" value="calendar" />
+                <div class="gs-form-actions">
+                  <button type="submit" class="gs-btn gs-btn-primary" id="save-financial-preferences-btn">
+                    <i data-lucide="check" class="w-4 h-4"></i>
+                    Save financial preferences
+                  </button>
+                </div>
+              </form>
+            </section>
+
+            <section class="gs-panel" id="settings-work" data-settings-panel="work" role="tabpanel" aria-labelledby="settings-tab-work" hidden>
+              <div class="gs-panel-heading">
+                <div>
+                  <span class="gs-section-number">03</span>
+                  <h2>Work preferences</h2>
+                  <p>Keep your shift-based work context close to your financial plan.</p>
+                </div>
+                <span class="gs-panel-tag"><i data-lucide="briefcase" class="w-3.5 h-3.5"></i> Work</span>
+              </div>
+
+              <div class="gs-role-card">
+                <span class="gs-role-icon"><i data-lucide="briefcase" class="w-6 h-6"></i></span>
+                <div class="gs-role-copy">
+                  <span>Current role</span>
+                  <h3>Digital Sales Administrator</h3>
+                  <p>Shift-based work schedule</p>
+                </div>
+                <span class="gs-soft-badge">Confirmed</span>
+              </div>
+
+              <div class="gs-shift-block">
+                <div class="gs-block-heading">
+                  <div>
+                    <h3>Shift sequence</h3>
+                    <p>Morning → Afternoon → Night → repeat.</p>
+                  </div>
+                  <span class="gs-mini-label">3-shift rotation</span>
+                </div>
+                <div class="gs-shift-grid">
+                  <div class="gs-shift-card">
+                    <span class="gs-shift-step">1</span>
+                    <span class="gs-shift-icon gs-shift-morning"><i data-lucide="sun" class="w-4 h-4"></i></span>
+                    <strong>Morning</strong>
+                    <small>7:00 AM – 1:00 PM</small>
+                  </div>
+                  <div class="gs-shift-card">
+                    <span class="gs-shift-step">2</span>
+                    <span class="gs-shift-icon gs-shift-afternoon"><i data-lucide="cloud-sun" class="w-4 h-4"></i></span>
+                    <strong>Afternoon</strong>
+                    <small>1:00 PM – 7:00 PM</small>
+                  </div>
+                  <div class="gs-shift-card">
+                    <span class="gs-shift-step">3</span>
+                    <span class="gs-shift-icon gs-shift-night"><i data-lucide="moon" class="w-4 h-4"></i></span>
+                    <strong>Night</strong>
+                    <small>7:00 PM – 7:00 AM</small>
+                  </div>
+                </div>
+              </div>
+
+              <div class="gs-join-card">
+                <span class="gs-join-icon"><i data-lucide="calendar" class="w-5 h-5"></i></span>
+                <div>
+                  <span>Joining arrangement</span>
+                  <strong>Afternoon shift · 1 November 2026</strong>
+                </div>
+                <span class="gs-soft-badge">Confirmed</span>
+              </div>
+
+              <form class="gs-card gs-form-card" id="work-preferences-form" novalidate>
+                <div class="gs-card-heading">
+                  <span class="gs-icon-box"><i data-lucide="briefcase" class="w-5 h-5"></i></span>
+                  <div>
+                    <h3>Work details</h3>
+                    <p>Add your team, supervisor and preferred shift.</p>
+                  </div>
+                </div>
+
+                <div class="gs-form-grid">
+                  <div class="gs-field">
+                    <label class="gs-label" for="work-team">Work team <span class="gs-optional">Optional</span></label>
+                    <input type="text" id="work-team" class="form-input" placeholder="Enter your team" autocomplete="organization-title" />
+                  </div>
+                  <div class="gs-field">
+                    <label class="gs-label" for="work-supervisor">Supervisor <span class="gs-optional">Optional</span></label>
+                    <input type="text" id="work-supervisor" class="form-input" placeholder="Enter supervisor name" autocomplete="off" />
+                  </div>
+                  <div class="gs-field gs-field-wide">
+                    <label class="gs-label" for="work-shift">Preferred shift</label>
+                    <select id="work-shift" class="form-select gs-select">
+                      <option value="">No preference</option>
+                      <option value="morning">Morning · 7:00 AM – 1:00 PM</option>
+                      <option value="afternoon">Afternoon · 1:00 PM – 7:00 PM</option>
+                      <option value="night">Night · 7:00 PM – 7:00 AM</option>
+                    </select>
+                    <p class="gs-hint">Saving a preferred shift does not change the confirmed rotation or joining arrangement.</p>
+                  </div>
+                </div>
+
+                <div class="gs-form-actions">
+                  <button type="submit" class="gs-btn gs-btn-primary" id="save-work-preferences-btn">
+                    <i data-lucide="check" class="w-4 h-4"></i>
+                    Save work preferences
+                  </button>
+                </div>
+              </form>
+            </section>
+
+            <section class="gs-panel" id="settings-appearance" data-settings-panel="appearance" role="tabpanel" aria-labelledby="settings-tab-appearance" hidden>
+              <div class="gs-panel-heading">
+                <div>
+                  <span class="gs-section-number">04</span>
+                  <h2>Appearance</h2>
+                  <p>Choose the theme that feels best for your workspace.</p>
+                </div>
+                <span class="gs-panel-tag"><i data-lucide="palette" class="w-3.5 h-3.5"></i> Theme</span>
+              </div>
+
+              <div class="gs-theme-grid">
+                <button type="button" class="gs-theme-option" data-theme-option="dark" aria-pressed="false">
+                  <span class="gs-theme-preview gs-preview-dark" aria-hidden="true">
+                    <span class="gs-preview-side"></span>
+                    <span class="gs-preview-canvas">
+                      <span class="gs-preview-bar"></span>
+                      <span class="gs-preview-cards"><i></i><i></i></span>
+                      <span class="gs-preview-line"></span>
+                    </span>
+                  </span>
+                  <span class="gs-theme-meta">
+                    <span class="gs-theme-icon"><i data-lucide="moon" class="w-4 h-4"></i></span>
+                    <span class="gs-theme-copy"><strong>Dark mode</strong><small>Low-light, high contrast</small></span>
+                    <span class="gs-theme-check"><i data-lucide="check" class="w-4 h-4"></i></span>
+                  </span>
+                </button>
+
+                <button type="button" class="gs-theme-option" data-theme-option="light" aria-pressed="false">
+                  <span class="gs-theme-preview gs-preview-light" aria-hidden="true">
+                    <span class="gs-preview-side"></span>
+                    <span class="gs-preview-canvas">
+                      <span class="gs-preview-bar"></span>
+                      <span class="gs-preview-cards"><i></i><i></i></span>
+                      <span class="gs-preview-line"></span>
+                    </span>
+                  </span>
+                  <span class="gs-theme-meta">
+                    <span class="gs-theme-icon"><i data-lucide="sun" class="w-4 h-4"></i></span>
+                    <span class="gs-theme-copy"><strong>Light mode</strong><small>Bright, clean and focused</small></span>
+                    <span class="gs-theme-check"><i data-lucide="check" class="w-4 h-4"></i></span>
+                  </span>
+                </button>
+              </div>
+
+              <div class="gs-theme-status">
+                <span class="gs-status-pulse" aria-hidden="true"></span>
+                <p>Current theme: <strong id="current-theme-label">Dark</strong>. Changes apply immediately and are saved automatically.</p>
+              </div>
+            </section>
+          </div>
+        </div>
+      </main>
+    </div>
+
+    <!-- deposit sidebar -->
+    <!-- ============= MODALS ============= -->
+
+<!-- Deposit Drawer Overlay -->
+<div id="deposit-overlay" class="drawer-overlay z-[200]"></div>
+
+<!-- Deposit Drawer -->
+<div id="deposit-drawer" class="deposit-drawer custom-scrollbar">
+  <div class="p-3 sm:p-6">
+    <div class="flex items-center justify-between mb-8">
+      <div>
+        <h3 class="text-2xl font-bold text-text">Deposit Money</h3>
+        <p class="text-sm text-muted mt-1">Add funds to your account</p>
+      </div>
+      <button id="close-drawer-btn" class="p-2.5 rounded-xl hover:bg-bg cursor-pointer transition-colors">
+        <i data-lucide="x" class="w-6 h-6 text-muted"></i>
+      </button>
+    </div>
+    <div class="mb-6">
+      <label class="text-sm font-semibold text-text mb-3 block">Enter Amount</label>
+      <div class="relative">
+        <input type="number" id="deposit-amount" class="input-field pl-12 text-3xl font-bold" placeholder="0.00"
+          value="100" />
+      </div>
+    </div>
+
+    <div class="mb-8">
+      <label class="text-sm font-semibold text-text mb-3 block">Quick Select</label>
+      <div class="grid grid-cols-3 gap-3">
+        <button class="quick-amount" data-amount="100">$100</button>
+        <button class="quick-amount" data-amount="250">$250</button>
+        <button class="quick-amount" data-amount="500">$500</button>
+        <button class="quick-amount" data-amount="1000">$1,000</button>
+        <button class="quick-amount" data-amount="2500">$2,500</button>
+        <button class="quick-amount" data-amount="5000">$5,000</button>
+      </div>
+    </div>
+
+    <div class="mb-8">
+      <label class="text-sm font-semibold text-text mb-3 block">Payment Method</label>
+      <div class="space-y-3">
+       <div class="payment-method " data-method="bank">
+          <div class="w-12 h-12 gradient-secondary rounded-xl flex items-center justify-center flex-shrink-0">
+            <i data-lucide="building-2" class="w-6 h-6 text-white"></i>
+          </div>
+          <div class="flex-1">
+            <h2 class="font-semibold text-xs sm:text-sm text-text">Bank</h2>
+            <p class="text-xs text-muted whitespace-nowrap opacity-80 flex gap-2 mt-1">
+              Visa ••••8765
+            </p>
+          </div>
+        </div>
+        <div class="payment-method" data-method="card">
+          <div class="w-12 h-12 gradient-secondary rounded-xl flex items-center justify-center flex-shrink-0">
+            <i data-lucide="credit-card" class="w-6 h-6 text-white"></i>
+          </div>
+          <div class="flex-1">
+            <h2 class="font-semibold text-xs sm:text-sm text-text">Debit Card</h2>
+            <p class="text-xs text-muted whitespace-nowrap opacity-80 flex gap-2 mt-1">
+              Visa ••••8765
+            </p>
+          </div>
+        </div>
+        <div class="payment-method" data-method="paypal">
+          <div class="w-12 h-12 gradient-orange rounded-xl flex items-center justify-center flex-shrink-0">
+            <i data-lucide="wallet" class="w-6 h-6 text-white"></i>
+          </div>
+          <div class="flex-1">
+            <h2 class="font-semibold text-xs sm:text-sm text-text">PayPal</h2>
+            <p class="text-xs text-muted whitespace-nowrap opacity-80 flex gap-2 mt-1">
+              den@example.com
+            </p>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="mb-8 p-4 rounded-2xl bg-bg">
+      <h4 class="text-sm font-semibold text-text mb-3">Transaction Details</h4>
+      <div class="space-y-2">
+        <div class="flex justify-between text-sm">
+          <span class="text-sm sm:text-base text-muted">Deposit Amount</span>
+          <span class="font-semibold text-xs sm:text-sm text-text" id="detail-amount">$100.00</span>
+        </div>
+        <div class="flex justify-between text-sm">
+          <span class="text-sm sm:text-base text-muted">Processing Fee</span>
+          <span class="font-semibold text-xs sm:text-sm text-text">$0.00</span>
+        </div>
+        <div class="h-px bg-border my-2"></div>
+        <div class="flex justify-between">
+          <span class="font-semibold text-xs sm:text-sm text-text">Total Amount</span>
+          <span class="font-bold text-xl text-gradient" id="detail-total">$100.00</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="mb-8">
+      <label class="text-sm font-semibold text-text mb-3 block">Add Note (Optional)</label>
+      <textarea class="input-field" rows="3" placeholder="Add a note for this deposit..."></textarea>
+    </div>
+    <div class="flex gap-3">
+      <button id="cancel-deposit-btn" class="btn-secondary flex-1">
+        <span>Cancel</span>
+      </button>
+      <button id="confirm-deposit-btn" class="btn-primary flex-1">
+        <span>Confirm Deposit</span>
+      </button>
+    </div>
+    <div class="mt-6 p-4 rounded-2xl bg-accent/10 border border-accent/20">
+      <div class="flex gap-3">
+        <div class="w-5 h-5 rounded-full bg-accent flex items-center justify-center flex-shrink-0 mt-0.5">
+          <i data-lucide="shield-check" class="w-3 h-3 text-white"></i>
+        </div>
+        <div>
+          <p class="text-sm font-semibold text-green-600 dark:text-green-400 mb-1">
+            Secure Transaction
+          </p>
+          <p class="text-xs text-muted opacity-80 flex gap-2 mt-1">
+            Your payment information is encrypted and secure. We never store
+            your card details.
+          </p>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+    <!-- Mobile Bottom Navigation -->
+    <nav class="bottom-nav xl:!hidden">
+  <a
+    href="./index.html"
+    class="bottom-nav-item flex-1 flex flex-col items-center gap-1 p-2 text-[var(--muted)] text-[11px] font-semibold no-underline transition-all duration-300 ease-in-out"
+  >
+    <i data-lucide="home" class="w-5 h-5"></i>
+    <span>Dashboard</span>
+  </a>
+  <a
+    href="./settings.html"
+    class="bottom-nav-item flex-1 flex flex-col items-center gap-1 p-2 text-[var(--muted)] text-[11px] font-semibold no-underline transition-all duration-300 ease-in-out"
+  >
+    <i data-lucide="credit-card" class="w-5 h-5"></i>
+    <span>Cards</span>
+  </a>
+  <a
+    href="./goals.html"
+    class="bottom-nav-item flex-1 flex flex-col items-center gap-1 p-2 text-[var(--muted)] text-[11px] font-semibold no-underline transition-all duration-300 ease-in-out"
+  >
+    <i data-lucide="target" class="w-5 h-5"></i>
+    <span>Goals</span>
+  </a>
+  <a
+    href="./insights.html"
+    class="bottom-nav-item flex-1 flex flex-col items-center gap-1 p-2 text-[var(--muted)] text-[11px] font-semibold no-underline transition-all duration-300 ease-in-out"
+  >
+    <i data-lucide="bar-chart-3" class="w-5 h-5"></i>
+    <span>Insights</span>
+  </a>
+  <button
+    id="menu-toggle"
+    class="toggle-btn bottom-nav-item flex-1 flex flex-col items-center gap-1 p-2 text-[var(--muted)] text-[11px] font-semibold no-underline transition-all duration-300 ease-in-out"
+  >
+    <i data-lucide="more-horizontal" class="w-5 h-5"></i>
+    <span>More</span>
+  </button>
+</nav>
+
+
+    <!-- Delete Account Modal -->
+    <div id="delete-account-modal" class="modal fixed inset-0 z-50 flex items-center justify-center bg-black/50 opacity-0 pointer-events-none transition-all duration-300">
+      <div class="modal-content bg-bg rounded-2xl shadow-xl w-[90%] max-w-md relative overflow-hidden translate-y-4 transition-all duration-300">
+        <!-- Close Button -->
+        <button onclick="closeModal('delete-account-modal')" class="absolute top-4 right-4 p-2 rounded-lg hover:bg-bg transition" aria-label="Close">
+          <i data-lucide="x" class="w-5 h-5 text-text"></i>
+        </button>
+
+        <!-- Header Section -->
+        <div class="text-center px-6 pt-8 pb-4">
+          <div class="w-16 h-16 sm:w-20 sm:h-20 bg-gradient-to-br from-red-500 to-red-600 rounded-full flex items-center justify-center mx-auto mb-4">
+            <i data-lucide="alert-triangle" class="w-9 h-9 text-text"></i>
+          </div>
+
+          <h3 class="mb-1">Delete Account?</h3>
+          <p class="text-[10px] sm:text-xs md:text-sm text-muted">This action cannot be undone. All your data will be permanently deleted.</p>
+        </div>
+
+        <!-- Body Section -->
+        <div class="modal-body p-6 max-h-[60vh] overflow-y-auto custom-scrollbar">
+          <div class="bg-red-500/10 p-4 rounded-xl mb-6">
+            <p class="font-semibold text-text text-sm mb-2">You will lose:</p>
+
+            <ul class="space-y-2">
+              <li class="flex items-center gap-2 text-muted text-xs sm:text-sm"><i data-lucide="x" class="w-4 h-4 text-red-500"></i> All transaction history</li>
+              <li class="flex items-center gap-2 text-muted text-xs sm:text-sm"><i data-lucide="x" class="w-4 h-4 text-red-500"></i> Your savings goals and badges</li>
+              <li class="flex items-center gap-2 text-muted text-xs sm:text-sm"><i data-lucide="x" class="w-4 h-4 text-red-500"></i> Connected accounts and apps</li>
+              <li class="flex items-center gap-2 text-muted text-xs sm:text-sm"><i data-lucide="x" class="w-4 h-4 text-red-500"></i> Premium subscription benefits</li>
+            </ul>
+          </div>
+
+          <!-- Confirm Input -->
+          <div class="mb-6">
+            <label class="form-label block text-xs font-medium mb-1">Type "DELETE" to confirm</label>
+            <input type="text" id="delete-confirm-input" class="form-input w-full" placeholder="Type DELETE" />
+          </div>
+
+          <!-- Action Buttons -->
+          <div class="flex gap-3">
+            <button onclick="closeModal('delete-account-modal')" class="btn-secondary rounded-lg font-medium">Cancel</button>
+            <button onclick="confirmDelete()" class="btn-danger text-sm rounded-lg font-medium">Delete Account</button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Change Email Modal -->
+    <div id="change-email-modal" class="modal">
+      <div class="modal-content p-6 rounded-2xl bg-background text-text">
+        <!-- Header -->
+        <div class="flex items-center justify-between mb-6">
+          <h3 class="mb-1">Change Email</h3>
+          <button onclick="closeModal('change-email-modal')" class="p-2 rounded-xl bg-transparent hover:bg-muted/10 transition">
+            <i data-lucide="x" class="w-5 h-5"></i>
+          </button>
+        </div>
+
+        <!-- Form Fields -->
+        <div class="modal-body custom-scrollbar">
+          <div class="flex flex-col gap-4">
+            <div>
+              <label class="form-label block mb-1 text-sm font-medium text-muted">Current Email</label>
+              <input type="email" class="form-input w-full" placeholder="Enter current email" />
+            </div>
+
+            <div>
+              <label class="form-label block mb-1 text-sm font-medium text-muted">New Email</label>
+              <input type="email" class="form-input w-full" placeholder="Enter new email" />
+            </div>
+
+            <div>
+              <label class="form-label block mb-1 text-sm font-medium text-muted">Confirm New Email</label>
+              <input type="email" class="form-input w-full" placeholder="Confirm new email" />
+            </div>
+
+            <!-- Info Box -->
+            <div class="p-2 sm:p-4 rounded-xl bg-blue-500/10 mt-2">
+              <p class="text-xs sm:text-sm font-semibold text-blue-500 mb-2">Email Change Info</p>
+              <ul class="space-y-1 text-[10px] sm:text-sm text-muted">
+                <li class="flex items-center gap-2">
+                  <i data-lucide="info" class="w-4 h-4 text-accent"></i>
+                  <span>We’ll send a verification link to your new email.</span>
+                </li>
+                <li class="flex items-center gap-2">
+                  <i data-lucide="circle" class="w-4 h-4 text-muted"></i>
+                  <span>Make sure you have access to it.</span>
+                </li>
+              </ul>
+            </div>
+
+            <!-- Buttons -->
+            <div class="flex gap-3 mt-6">
+              <button onclick="closeModal('change-email-modal')" class="btn-secondary flex-1">Cancel</button>
+              <button
+                class="btn-primary flex-1"
+                onclick="
+                  showToast('Email Updated', 'Verification link sent to your new email address', 'success');
+                  closeModal('change-email-modal');
+                "
+              >
+                Update Email
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Change Phone Number Modal -->
+    <div id="change-phone-modal" class="modal">
+      <div class="modal-content p-6 rounded-2xl bg-background text-text">
+        <!-- Header -->
+        <div class="flex items-center justify-between mb-6">
+          <h3 class="mb-1">Change Phone Number</h3>
+          <button onclick="closeModal('change-phone-modal')" class="p-2 rounded-xl bg-transparent hover:bg-muted/10 transition">
+            <i data-lucide="x" class="w-5 h-5"></i>
+          </button>
+        </div>
+
+        <!-- Form Fields -->
+        <div class="flex flex-col gap-4 modal-body custom-scrollbar">
+          <div>
+            <label class="form-label block mb-1 text-sm font-medium text-muted">Current Phone Number</label>
+            <input type="tel" class="form-input w-full" placeholder="Enter current phone number" />
+          </div>
+
+          <div>
+            <label class="form-label block mb-1 text-sm font-medium text-muted">New Phone Number</label>
+            <input type="tel" class="form-input w-full" placeholder="Enter new phone number" />
+          </div>
+
+          <div>
+            <label class="form-label block mb-1 text-sm font-medium text-muted">Confirm New Phone Number</label>
+            <input type="tel" class="form-input w-full" placeholder="Confirm new phone number" />
+          </div>
+
+          <!-- Info Box -->
+          <div class="p-4 rounded-xl bg-blue-500/10 mt-2">
+            <p class="font-semibold text-blue-500 text-xs sm:text-sm mb-2">Phone Number Change Info</p>
+            <ul class="space-y-1 text-[10px] sm:text-xs text-muted">
+              <li class="flex items-center gap-2">
+                <i data-lucide="info" class="w-4 h-4 text-accent"></i>
+                <span>We’ll send an OTP verification code to your new number.</span>
+              </li>
+              <li class="flex items-center gap-2">
+                <i data-lucide="circle" class="w-4 h-4 text-muted"></i>
+                <span>Make sure you have access to receive SMS on it.</span>
+              </li>
+            </ul>
+          </div>
+
+          <!-- Buttons -->
+          <div class="flex gap-3 mt-6">
+            <button onclick="closeModal('change-phone-modal')" class="btn-secondary flex-1">Cancel</button>
+            <button
+              class="btn-primary flex-1"
+              onclick="
+                showToast('Phone Number Updated', 'Verification code sent to your new phone number', 'success');
+                closeModal('change-phone-modal');
+              "
+            >
+              Update Phone
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Deactivate Account Modal -->
+    <div id="deactivate-account-modal" class="modal">
+      <div class="modal-content p-6 rounded-2xl bg-background text-text">
+        <!-- Header -->
+        <div class="flex items-center justify-between mb-6">
+          <h3 class="mb-1">Deactivate Account</h3>
+          <button onclick="closeModal('deactivate-account-modal')" class="p-2 rounded-xl bg-transparent hover:bg-muted/10 transition">
+            <i data-lucide="x" class="w-5 h-5"></i>
+          </button>
+        </div>
+
+        <div class="modal-body custom-scrollbar">
+          <!-- Warning Section -->
+          <div class="p-4 rounded-xl bg-red-500/10 border border-red-500/20 mb-4">
+            <div class="flex items-start gap-3">
+              <i data-lucide="alert-triangle" class="w-5 h-5 text-red-500 mt-0.5"></i>
+              <div>
+                <p class="text-red-500 font-semibold text-xs sm:text-sm mb-1">This action is irreversible!</p>
+                <p class="text-[10px] sm:text-xs text-muted">Deactivating your account will remove access to all your data, settings, and preferences. You can’t log in again unless reactivated by support.</p>
+              </div>
+            </div>
+          </div>
+
+          <!-- Form Section -->
+          <div class="flex flex-col gap-4">
+            <div>
+              <label class="form-label block mb-1 text-sm font-medium text-muted">Reason for Deactivation</label>
+              <select class="select-custom !bg-panel w-full">
+                <option value="">Select a reason</option>
+                <option value="privacy">Privacy concerns</option>
+                <option value="not-using">Not using the account</option>
+                <option value="technical">Technical issues</option>
+                <option value="other">Other</option>
+              </select>
+            </div>
+
+            <div>
+              <label class="form-label block mb-1 text-sm font-medium text-muted">Confirm Password</label>
+              <input type="password" class="form-input w-full" placeholder="Enter your password to confirm" />
+            </div>
+
+            <!-- Confirmation Checkbox -->
+            <div class="flex items-start gap-2 mt-2">
+              <input id="confirm-deactivate" type="checkbox" class="w-4 h-4 rounded border-muted focus:ring-red-500" />
+              <label for="confirm-deactivate" class="text-[10px] sm:text-sm text-muted">I understand that deactivating my account is permanent.</label>
+            </div>
+
+            <!-- Buttons -->
+            <div class="flex gap-3 mt-6">
+              <button onclick="closeModal('deactivate-account-modal')" class="btn-secondary flex-1">Cancel</button>
+              <button
+                class="btn-primary flex-1 bg-red-500 hover:bg-red-600 border-none"
+                onclick="
+                  showToast('Account Deactivated', 'Your account has been deactivated successfully', 'error');
+                  closeModal('deactivate-account-modal');
+                "
+              >
+                Deactivate
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Add Payment Method Modal -->
+    <div id="add-payment-method-modal" class="modal">
+      <div class="modal-content custom-scrollbar">
+        <!-- Modal Header -->
+        <div class="flex items-center justify-between mb-6">
+          <h3 class="mb-1">Add Payment Method</h3>
+          <button onclick="closeModal('add-payment-method-modal')" class="p-2 rounded-xl text-muted hover:bg-bg">
+            <i data-lucide="x" class="w-5 h-5"></i>
+          </button>
+        </div>
+
+        <div class="modal-body custom-scrollbar">
+          <!-- FORM -->
+          <form id="payment-method-form" class="flex flex-col gap-5">
+            <!-- Card Type -->
+            <div>
+              <label class="form-label">Card Type</label>
+              <select class="select-custom w-full !bg-panel" id="card-type-input">
+                <option value="visa">Visa</option>
+                <option value="mastercard">Mastercard</option>
+                <option value="amex">American Express</option>
+                <option value="paypal">PayPal</option>
+              </select>
+            </div>
+
+            <!-- Card Number -->
+            <div>
+              <label class="form-label">Card Number</label>
+              <input type="number" class="amount-input" id="card-number-input" placeholder="1234 5678 9012 3456" />
+            </div>
+
+            <!-- Expire + CVV -->
+            <div>
+              <label class="block text-sm font-semibold text-text mb-2">Expiration</label>
+              <div class="relative w-full">
+                <input type="date" id="date-input" class="amount-input w-full pr-10 custom-date" />
+                <button type="button" id="date-btn" class="absolute right-2 top-1/2 -translate-y-1/2 p-1 text-text">
+                  <i data-lucide="calendar" class="w-5 h-5"></i>
+                </button>
+              </div>
+            </div>
+
+            <!-- Default Toggle -->
+            <div class="flex items-center justify-between border rounded-xl p-3 cursor-pointer border-border transition" onclick="document.getElementById('default-checkbox').checked = !document.getElementById('default-checkbox').checked">
+              <p class="font-semibold text-xs sm:text-sm text-text">Set as default payment</p>
+              <input type="checkbox" id="default-checkbox" class="w-5 h-5 accent-primary border-border bg-bg" />
+            </div>
+
+            <!-- Buttons -->
+            <div class="flex gap-3 pt-3">
+              <button type="button" onclick="closeModal('add-payment-method-modal')" class="btn-secondary flex-1">Cancel</button>
+              <button type="submit" class="btn-primary flex justify-center text-center flex-1 items-center gap-2">
+                <i data-lucide="save" class="w-4 h-4"></i>
+                <span>Save</span>
+              </button>
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
+
+    <!-- Overlay -->
+    <div id="generate-token-modal" class="modal">
+      <!-- Modal Content -->
+      <div class="modal-content p-3 sm:p-6 rounded-2xl bg-background text-text">
+        <!-- Header -->
+        <div class="flex items-center justify-between mb-4">
+          <h2 class="text-base sm:text-lg md:text-xl font-bold text-text">Generate New API Token</h2>
+          <button onclick="closeModal('generate-token-modal')" class="text-muted hover:text-text">
+            <i data-lucide="x" class="w-5 h-5"></i>
+          </button>
+        </div>
+
+        <!-- Body Scroll for Small Screens -->
+        <div class="modal-body max-h-[65vh] overflow-y-auto custom-scrollbar">
+          <p class="text-sm text-muted mb-6">A new secure token will be generated. You can assign a name and permission level.</p>
+
+          <!-- Token Name -->
+          <div class="mb-5">
+            <label class="text-sm text-text font-medium mb-1 block">Token Name</label>
+            <input id="tokenName" type="text" placeholder="e.g. Production Server" class="w-full rounded-lg bg-panel border border-border p-2.5 text-sm outline-none focus:border-primary transition" />
+          </div>
+
+          <!-- Permission Level -->
+          <div class="mb-6">
+            <label class="text-sm text-text font-medium mb-1 block">Permissions</label>
+            <select id="tokenPermission" class="select-custom w-full rounded-lg !bg-panel border border-border p-2.5 text-sm outline-none focus:border-primary transition">
+              <option value="read">Read Only</option>
+              <option value="write">Read & Write</option>
+              <option value="admin">Admin Access</option>
+            </select>
+          </div>
+        </div>
+
+        <!-- Footer -->
+        <div class="flex flex-col sm:flex-row items-center justify-end gap-3 mt-6">
+          <button onclick="closeModal('generate-token-modal')" class="btn-secendary w-full sm:w-auto px-4 py-2 rounded-lg border border-border text-muted hover:text-text hover:bg-bg-dark transition">Cancel</button>
+
+          <button onclick="closeModal('generate-token-modal')" class="w-full sm:w-auto btn-primary px-4 py-2 rounded-lg bg-blue-500 text-text hover:opacity-90 transition">Generate</button>
+        </div>
+      </div>
+    </div>
+
+    <!-- Change Password Modal -->
+    <div id="change-password-modal" class="modal">
+      <div class="modal-content">
+        <div class="flex justify-between mb-4">
+          <h3 class="mb-1">Change Password</h3>
+          <button onclick="closeModal('change-password-modal')" class="p-2 rounded-xl bg-transparent border-none cursor-pointer">
+            <i data-lucide="x" class="w-4 h-4 md:w-5 md:h-5"></i>
+          </button>
+        </div>
+
+        <div class="modal-body custom-scrollbar">
+          <div class="flex flex-col gap-4">
+            <div>
+              <label class="form-label">Current Password</label>
+              <input type="password" class="form-input" placeholder="Enter current password" />
+            </div>
+
+            <div>
+              <label class="form-label">New Password</label>
+              <input type="password" class="form-input" placeholder="Enter new password" />
+            </div>
+
+            <div>
+              <label class="form-label">Confirm New Password</label>
+              <input type="password" class="form-input" placeholder="Confirm new password" />
+            </div>
+
+            <div class="mt-2 p-4 rounded-xl bg-blue-500/10">
+              <p class="text-xs sm:text-sm font-semibold text-blue-500 mb-2">Password Requirements</p>
+              <ul class="list-none p-0 m-0">
+                <li class="flex items-center gap-2 text-xs text-muted mb-1">
+                  <i data-lucide="check" class="w-3.5 h-3.5 text-emerald-500"></i>
+                  <span>At least 8 characters</span>
+                </li>
+                <li class="flex items-center gap-2 text-xs text-muted mb-1">
+                  <i data-lucide="circle" class="w-3.5 h-3.5 text-muted"></i>
+                  <span>Include uppercase & lowercase</span>
+                </li>
+                <li class="flex items-center gap-2 text-xs text-muted mb-1">
+                  <i data-lucide="circle" class="w-3.5 h-3.5 text-muted"></i>
+                  <span>Include numbers</span>
+                </li>
+                <li class="flex items-center gap-2 text-xs text-muted">
+                  <i data-lucide="circle" class="w-3.5 h-3.5 text-muted"></i>
+                  <span>Include special characters</span>
+                </li>
+              </ul>
+            </div>
+
+            <div class="flex gap-3 mt-4">
+              <button onclick="closeModal('change-password-modal')" class="btn-secondary flex-1">
+                <span>Cancel</span>
+              </button>
+              <button
+                class="btn-primary flex-1"
+                onclick="
+                  showToast('Password Changed', 'Your password has been updated successfully', 'success');
+                  closeModal('change-password-modal');
+                "
+              >
+                <span>Update Password</span>
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Manage Storage Modal -->
+    <div id="manage-storage-modal" class="modal">
+      <div class="modal-content w-full max-w-md mx-auto p-6 bg-bg rounded-2xl shadow-xl">
+        <!-- Header -->
+        <div class="flex items-center justify-between mb-4">
+          <h2 class="text-sm sm:text-lg font-bold text-text">Manage Storage</h2>
+          <button onclick="closeModal('manage-storage-modal')" class="text-text transition cursor-pointer">
+            <i data-lucide="x" class="w-5 h-5"></i>
+          </button>
+        </div>
+        <div class="modal-body custom-scrollbar">
+          <!-- Storage Info -->
+          <div class="mb-6">
+            <div class="flex justify-between text-sm mb-1">
+              <span class="text-gray-600 dark:text-gray-400">Used: 7.2 GB</span>
+              <span class="text-gray-600 dark:text-gray-400">Total: 10 GB</span>
+            </div>
+            <div class="w-full h-3 bg-gray-200 dark:bg-gray-700 rounded-full overflow-hidden">
+              <div class="h-full bg-blue-500 rounded-full w-[72%]"></div>
+            </div>
+            <p class="text-sm text-gray-500 dark:text-gray-400 mt-2">
+              You’ve used
+              <span class="font-semibold text-blue-500">72%</span> of your available storage.
+            </p>
+          </div>
+
+          <!-- Manage Options -->
+          <div class="space-y-3">
+            <button class="btn-secondary w-full flex items-center justify-between px-4 py-3 rounded-xl border hover:bg-bg transition">
+              <span class="flex items-center gap-2">
+                <i data-lucide="trash-2" class="w-4 h-4"></i>
+                Clear Cached Files
+              </span>
+              <i data-lucide="chevron-right" class="w-4 h-4"></i>
+            </button>
+
+            <button class="btn-secondary w-full flex items-center justify-between px-4 py-3 rounded-xl border hover:bg-bg transition">
+              <span class="flex items-center gap-2">
+                <i data-lucide="image" class="w-4 h-4"></i>
+                Remove Large Media Files
+              </span>
+              <i data-lucide="chevron-right" class="w-4 h-4"></i>
+            </button>
+
+            <button class="btn-secondary w-full flex items-center justify-between px-4 py-3 rounded-xl border hover:bg-bg transition">
+              <span class="flex items-center gap-2">
+                <i data-lucide="cloud-off" class="w-4 h-4"></i>
+                Disconnect Cloud Backup
+              </span>
+              <i data-lucide="chevron-right" class="w-4 h-4"></i>
+            </button>
+          </div>
+
+          <!-- Footer -->
+          <div class="mt-6 text-right">
+            <button onclick="closeModal('manage-storage-modal')" class="btn-primary">Done</button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Toast Notification -->
+    <div id="toast" class="toast">
+      <div class="flex items-center gap-3">
+        <div class="w-10 h-10 bg-gradient-to-br from-emerald-500 to-emerald-600 rounded-xl flex items-center justify-center shrink-0">
+          <i data-lucide="check" class="w-5 h-5 text-white"></i>
+        </div>
+        <div>
+          <p class="text-sm font-semibold text-text" id="toast-title">Success</p>
+          <p class="text-xs text-muted" id="toast-message">Action completed successfully</p>
+        </div>
+      </div>
+    </div>
+
+    <script src="assets/js/cashflow-data.js"></script>
+    <script src="assets/js/settings.js"></script>
+  <script defer src="assets/js/index.js"></script><script src="assets/js/notifications.js"></script><script src="assets/js/global-navigation.js"></script></body>
+</html>

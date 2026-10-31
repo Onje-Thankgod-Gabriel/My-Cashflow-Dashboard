@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Gabsweb CashFlow - Sign In</title>
+    <link rel="icon" href="assets/images/fav.png" />
+    <script src="https://unpkg.com/lucide@1.64.0/dist/umd/lucide.js"></script>
+    <link href="assets/css/index.css" rel="stylesheet" />
+    <link href="assets/css/auth.css" rel="stylesheet" />
+      <link href="assets/css/typography.css" rel="stylesheet" />
+  </head>
+  <body class="auth-page flex items-center justify-center relative">
+    <button id="theme-toggle" class="auth-theme-toggle" type="button" aria-label="Switch to light mode" aria-pressed="false">
+      <i data-lucide="sun" aria-hidden="true"></i>
+    </button>
+    <main class="auth-card auth-card-login px-10 py-12">
+      <header class="auth-card-header text-center">
+        <a href="./index.html">
+          <img src="assets/images/gabsweb-cashflow-logo.png" alt="Gabsweb CashFlow Logo" class="brand-logo mx-auto size-10 sm:size-16" />
+          <h1>Welcome Back</h1>
+        </a>
+        <p>Sign in to your Gabsweb CashFlow account to manage your finances and stay on top of your plans.</p>
+        <p class="mt-2">Don't have an account? <a class="auth-inline-link" href="./register.html">Create an account.</a></p>
+      </header>
+
+      <button type="button" class="auth-google btn-secondary flex items-center justify-center gap-2 transition" data-google-auth>
+        <svg class="w-5 h-5" viewBox="0 0 48 48" aria-hidden="true">
+          <path fill="#FFC107" d="M43.6 20.5H42V20H24v8h11.3c-1.6 4.6-6 8-11.3 8-6.6 0-12-5.4-12-12s5.4-12 12-12c3.1 0 5.9 1.2 8 3.1l5.7-5.7C34.3 6.9 29.5 4.9 24 4.9 12.4 4.9 3 14.3 3 25.9s9.4 21 21 21 21-9.4 21-21c0-1.4-.1-2.8-.4-4.4z" />
+          <path fill="#FF3D00" d="M6.3 14.7l6.6 4.8C14.7 16.1 18.9 13.9 24 13.9c3.1 0 5.9 1.2 8 3.1l5.7-5.7C34.3 6.9 29.5 4.9 24 4.9c-7.7 0-14.3 3.9-17.7 9.8z" />
+          <path fill="#4CAF50" d="M24 46.9c5.2 0 10.1-2 13.7-5.2l-6.3-4.9c-2.1 1.6-4.9 2.6-7.7 2.6-5.3 0-9.7-3.4-11.3-8L6.3 32c3.3 6 9.9 10 17.7 10z" />
+          <path fill="#1976D2" d="M43.6 20.5H42V20H24v8h11.3c-.8 2.4-2.4 4.4-4.5 5.9l-.1.1 6.3 4.9c-.4.4 7-4.4 7-13.9 0-1.4-.1-2.8-.4-4.4z" />
+        </svg>
+        Continue with Google
+      </button>
+      <div class="auth-divider">or</div>
+
+      <form class="auth-form" data-auth-form="login" novalidate>
+        <div class="auth-field">
+          <label for="email">Email address</label>
+          <div class="auth-control">
+            <i data-lucide="mail" class="auth-icon w-4 h-4" aria-hidden="true"></i>
+            <input id="email" type="email" placeholder="Enter your email" autocomplete="email" required />
+          </div>
+        </div>
+        <div class="auth-field">
+          <label for="password">Password</label>
+          <div class="auth-control">
+            <i data-lucide="lock" class="auth-icon w-4 h-4" aria-hidden="true"></i>
+            <input id="password" type="password" placeholder="Enter your password" autocomplete="current-password" required />
+            <button type="button" class="auth-toggle" data-password-toggle aria-controls="password" aria-label="Show password">
+              <i data-lucide="eye" class="w-4 h-4" aria-hidden="true"></i>
+            </button>
+          </div>
+        </div>
+        <div class="auth-options">
+          <label class="auth-check"><input type="checkbox" id="remember-me" /> <span>Remember me</span></label>
+          <a href="./password-reset.html" id="forgot-password">Forgot password?</a>
+        </div>
+        <button type="submit" class="auth-submit btn-primary transition">Sign In</button>
+        <p id="auth-status" class="auth-status" role="status" aria-live="polite"></p>
+      </form>
+    </main>
+    <script src="assets/js/auth.js"></script>
+    <script>if (window.lucide) window.lucide.createIcons();</script>
+  </body>
+</html>

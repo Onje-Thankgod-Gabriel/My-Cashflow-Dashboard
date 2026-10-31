@@ -1,0 +1,222 @@
+/*
+ * Shared readability layer.
+ * Keep display values and icons page-specific; raise only supporting interface text.
+ */
+:root {
+  --type-body: 0.9375rem;
+  --type-control: 0.875rem;
+  --type-support: 0.875rem;
+  --type-meta: 0.875rem;
+}
+
+body {
+  font-size: var(--type-body);
+}
+
+body p,
+body li,
+body label,
+body button,
+body input,
+body select,
+body textarea {
+  font-size: max(var(--type-control), 1em) !important;
+}
+
+body p,
+body li {
+  font-size: max(var(--type-body), 1em) !important;
+}
+
+body small,
+body .text-xs,
+body [class~="text-[10px]"],
+body [class~="text-[11px]"],
+body [class~="text-[12px]"],
+body [class~="sm:text-xs"],
+body [class~="md:text-xs"] {
+  font-size: var(--type-meta) !important;
+}
+
+body .text-sm,
+body [class~="text-[13px]"],
+body [class~="sm:text-sm"],
+body [class~="md:text-sm"] {
+  font-size: var(--type-support) !important;
+}
+
+body p,
+body li {
+  font-size: var(--type-body) !important;
+}
+
+body p[class~="text-xs"],
+body p[class~="text-[10px]"],
+body p[class~="text-[11px]"],
+body p[class~="text-[12px]"],
+body p[class~="sm:text-xs"],
+body p[class~="md:text-xs"],
+body li[class~="text-xs"],
+body li[class~="text-[10px]"],
+body li[class~="text-[11px]"],
+body li[class~="text-[12px]"],
+body li[class~="sm:text-xs"],
+body li[class~="md:text-xs"] {
+  font-size: var(--type-body) !important;
+}
+
+body nav a,
+body .nav-item,
+body .btn-primary,
+body .btn-secondary,
+body .form-label,
+body .form-input,
+body .select-custom,
+body table th,
+body table td {
+  font-size: var(--type-control) !important;
+}
+
+body .global-bottom-nav .bottom-nav-item {
+  font-size: 0.68rem !important;
+}
+
+body #header-welcome {
+  font-size: 0.8125rem !important;
+}
+
+body p[class~="text-[10px]"][class~="md:text-sm"] {
+  font-size: 0.8125rem !important;
+}
+
+body .terms-content .terms-toc a,
+body .terms-meta span,
+body .terms-meta strong,
+body .terms-footer p {
+  font-size: var(--type-meta) !important;
+}
+
+body .terms-content p,
+body .terms-content li {
+  font-size: var(--type-body) !important;
+}
+
+/* Secondary metric copy stays smaller than values without becoming tiny. */
+body .db-stat-label,
+body .db-stat-note,
+body .db-health-label,
+body .db-health-note,
+body .db-list-meta,
+body .db-goal-meta,
+body .db-task-meta,
+body .db-meeting-meta,
+body .db-project-meta,
+body .db-milestone-meta,
+body .db-summary-note,
+body .db-section-caption,
+body .ri-stat-label,
+body .ri-stat-note,
+body .ri-section-kicker,
+body .ri-section-copy p,
+body .ri-section-caption,
+body .sv-position-label,
+body .sv-position-note,
+body .sv-overview-note,
+body .sv-stat-label,
+body .sv-stat-note,
+body .sv-plan-meta,
+body .sv-movement-note,
+body .sv-chart-meta,
+body .sv-details-note {
+  font-size: 0.75rem !important;
+}
+
+@media (max-width: 640px) {
+  body {
+    font-size: 0.875rem;
+  }
+
+  body p,
+  body li,
+  body .terms-content p,
+  body .terms-content li {
+    font-size: 0.875rem !important;
+  }
+
+  body button,
+  body input,
+  body select,
+  body textarea,
+  body .form-label,
+  body .form-input,
+  body .select-custom {
+    font-size: 0.8125rem !important;
+  }
+
+  body small,
+  body .text-xs,
+  body [class~="text-[10px]"],
+  body [class~="text-[11px]"],
+  body [class~="text-[12px]"],
+  body [class~="sm:text-xs"],
+  body [class~="md:text-xs"] {
+    font-size: 0.75rem !important;
+  }
+
+  body .global-bottom-nav .bottom-nav-item {
+    font-size: 0.61rem !important;
+  }
+
+  body small,
+  body .text-xs,
+  body [class~="text-[10px]"],
+  body [class~="text-[11px]"],
+  body [class~="text-[12px]"],
+  body [class~="sm:text-xs"],
+  body [class~="md:text-xs"] {
+    font-size: 0.8125rem !important;
+  }
+
+  body #header-welcome {
+    font-size: 0.75rem !important;
+  }
+
+  body p[class~="text-[10px]"][class~="md:text-sm"] {
+    font-size: 0.75rem !important;
+  }
+
+  body .db-stat-label,
+  body .db-stat-note,
+  body .db-health-label,
+  body .db-health-note,
+  body .db-list-meta,
+  body .db-goal-meta,
+  body .db-task-meta,
+  body .db-meeting-meta,
+  body .db-project-meta,
+  body .db-milestone-meta,
+  body .db-summary-note,
+  body .db-section-caption,
+  body .ri-stat-label,
+  body .ri-stat-note,
+  body .ri-section-kicker,
+  body .ri-section-copy p,
+  body .ri-section-caption,
+  body .sv-position-label,
+  body .sv-position-note,
+  body .sv-overview-note,
+  body .sv-stat-label,
+  body .sv-stat-note,
+  body .sv-plan-meta,
+  body .sv-movement-note,
+  body .sv-chart-meta,
+  body .sv-details-note {
+    font-size: 0.6875rem !important;
+  }
+}
+
+@media (min-width: 640px) {
+  body .global-bottom-nav .bottom-nav-item {
+    font-size: 0.72rem !important;
+  }
+}

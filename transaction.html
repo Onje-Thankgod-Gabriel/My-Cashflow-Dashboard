@@ -1,0 +1,734 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
+    <title>Gabsweb CashFlow · My Finances</title>
+    <link rel="icon" href="assets/images/fav.png" />
+    <script src="https://unpkg.com/lucide@1.64.0/dist/umd/lucide.js"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet" />
+
+    <script src="assets/js/theme-loader.js"></script>
+  <link href="assets/css/index.css" rel="stylesheet"><link href="assets/css/finances.css" rel="stylesheet">  <link href="assets/css/notifications.css" rel="stylesheet" />
+    <link href="assets/css/typography.css" rel="stylesheet" />
+  </head>
+  <body data-page="My Finances" class="bg-bg text-text">
+    <!-- Desktop Sidebar -->
+    <!-- Desktop Sidebar -->
+<aside id="sidebar" class="sidebar w-64 sm:w-72 h-screen fixed top-0 left-0 z-[110] bg-bg border-r border-border flex flex-col max-xl:left-[-100%] max-xl:invisible max-xl:opacity-0">
+  <div class="p-3 sm:p-6 border-b border-border flex-shrink-0">
+    <div class="flex justify-between">
+      <a href="./index.html" class="flex items-center gap-3 mb-3 sm:mb-6 cursor-pointer">
+        <div class="flex items-center justify-center">
+          <img src="assets/images/gabsweb-cashflow-logo.png" alt="Gabsweb CashFlow Logo" class="brand-logo w-10 h-10 sm:w-12 sm:h-12 rounded-2xl" />
+        </div>
+        <div>
+          <h1 class="text-sm font-bold text-text">Gabsweb CashFlow</h1>
+          <p class="text-xs text-muted font-medium">Smart Finance</p>
+        </div>
+      </a>
+
+      <!-- Close button -->
+      <button id="close-sidebar" class="p-2 rounded-xl hover:bg-bgbg block xl:hidden transition-transform duration-300">
+        <i data-lucide="x" class="w-5 h-5 text-text"></i>
+      </button>
+    </div>
+
+    <div class="content-box glass p-4 border-border border rounded-2xl">
+      <div class="flex items-center justify-between mb-2">
+        <span class="text-[10px] sm:text-xs font-semibold text-muted uppercase tracking-wider">Total Balance</span>
+        <div class="live-dot"></div>
+      </div>
+      <h5 id="sidebar-total-balance" class="text-xl sm:text-2xl font-bold text-gradient mb-1">₦0.00</h5>
+      <p id="sidebar-balance-note" class="text-[10px] sm:text-xs text-muted whitespace-nowrap opacity-80 flex gap-2 mt-1">Loading finances…</p>
+    </div>
+  </div>
+
+    <nav class="flex-1 overflow-y-auto p-2 sm:p-4 custom-scrollbar">
+    <div class="space-y-1">
+      <a href="./index.html" class="nav-item">
+        <i data-lucide="layout-dashboard" class="w-5 h-5"></i>
+        <span>Dashboard</span>
+      </a>
+      <a href="./planner.html" class="nav-item">
+        <i data-lucide="calendar-check" class="w-5 h-5"></i>
+        <span>Planner</span>
+      </a>
+      <a href="./transaction.html" class="nav-item">
+        <i data-lucide="arrow-right-left" class="w-5 h-5"></i>
+        <span>My Finances</span>
+      </a>
+      <a href="./budgets.html" class="nav-item">
+        <i data-lucide="wallet-cards" class="w-5 h-5"></i>
+        <span>Budget &amp; Money Allocation</span>
+      </a>
+      <a href="./savings.html" class="nav-item">
+        <i data-lucide="coins" class="w-5 h-5"></i>
+        <span>Savings</span>
+      </a>
+      <a href="./goals.html" class="nav-item">
+        <i data-lucide="target" class="w-5 h-5"></i>
+        <span>Goals &amp; Planned Purchases</span>
+      </a>
+      <a href="./work-schedule.html" class="nav-item">
+        <i data-lucide="calendar-clock" class="w-5 h-5"></i>
+        <span>Work Schedule</span>
+      </a>
+      <a href="./insights.html" class="nav-item">
+        <i data-lucide="bar-chart-3" class="w-5 h-5"></i>
+        <span>Reports &amp; Insights</span>
+      </a>
+    </div>
+
+    <div class="mt-6 pt-6 border-t border-border space-y-1">
+      <a href="./settings.html" class="nav-item">
+        <i data-lucide="settings" class="w-5 h-5"></i>
+        <span>Settings</span>
+      </a>
+
+    </div>
+  </nav>
+  <div class="p-4 border-t border-border flex-shrink-0 relative">
+    <div id="user-button" class="flex items-center gap-3 rounded-2xl hover:bg-opacity-50 cursor-pointer">
+      <div class="w-10 h-10 sm:w-12 sm:h-12 border-2 border-blue-700 rounded-full flex items-center justify-center text-text font-bold">
+        <img class="w-8 h-8 md:w-10 md:h-10 rounded-full flex justify-center items-center object-cover" src="assets/images/profiles/emma.jpg" alt="profile Image" />
+      </div>
+      <div class="flex-1 min-w-0">
+        <h2 class="text-sm font-semibold text-text truncate">Den</h2>
+        <p class="text-xs text-muted truncate">Premium Member</p>
+      </div>
+      <i data-lucide="chevron-down" class="w-4 h-4 text-muted transition-transform duration-200" id="dropdown-arrow"></i>
+    </div>
+
+    <!-- Dropdown Menu  -->
+    <div id="user-dropdown" class="absolute left-2 bottom-full mb-2 w-full max-w-[300px] md:max-w-[200px] bg-bg border border-border rounded-xl shadow-lg hidden z-500">
+      <ul class="py-2">
+        <li>
+          <a href="./settings.html" class="block px-4 py-2 text-sm text-text hover:bg-bg">Profile</a>
+        </li>
+        <li>
+          <a href="./login.html" type="button" id="logOut" class="block px-4 py-2 text-sm cursor-progress text-text hover:bg-bg"> Logout </a>
+        </li>
+      </ul>
+    </div>
+  </div>
+</aside>
+<script>
+  const currentPage2 = window.location.pathname.split("/").pop() || "index.html";
+  const navItems = document.querySelectorAll(".nav-item");
+
+  navItems.forEach((link) => {
+    const href = link.getAttribute("href");
+    if (!href) return;
+    const fileName = href.split("/").pop();
+
+    if (fileName === currentPage2) {
+      link.classList.add("active");
+    } else {
+      link.classList.remove("active");
+    }
+  });
+
+  //   daynamicaly change the title
+
+  // Use a different variable name to avoid conflict
+  const currentFile = window.location.pathname.split("/").pop();
+
+  const activeLink = document.querySelector(`.nav-item[href*="${currentFile}"], .bottom-nav-item[href*="${currentFile}"]`);
+
+  const pageTitleEl = document.getElementById("page-title");
+
+  if (activeLink && pageTitleEl) {
+    const titleText = activeLink.querySelector("span")?.textContent.trim();
+    pageTitleEl.textContent = titleText || "Dashboard";
+  } else {
+    if (pageTitleEl) pageTitleEl.textContent = "Dashboard";
+  }
+
+  //   User dropdown functionality
+  const userBtn = document.getElementById("user-button");
+  const userDropdown = document.getElementById("user-dropdown");
+  const dropdownArrow = document.getElementById("dropdown-arrow");
+
+  userBtn.addEventListener("click", (e) => {
+    e.stopPropagation();
+    userDropdown.classList.toggle("hidden");
+    dropdownArrow.classList.toggle("rotate-180"); // arrow rotation
+  });
+
+  document.addEventListener("click", (e) => {
+    if (!userDropdown.classList.contains("hidden")) {
+      userDropdown.classList.add("hidden");
+      dropdownArrow.classList.remove("rotate-180");
+    }
+  });
+
+  // logout functions
+
+  function handleLogOut() {
+    const logOut = document.getElementById("logOut");
+    logOut.addEventListener("click", function () {
+      localStorage.removeItem("auth");
+      window.location.href = "/login.html";
+    });
+  }
+</script>
+
+
+    <!-- Main Content -->
+    <div class="ml-0 xl:ml-72 transition-all duration-300">
+      <!-- Header -->
+      <header class="sticky top-0 glass border-b border-border px-6 py-4 flex items-center justify-between z-30">
+  <div class="flex items-center gap-4">
+    <div>
+      <h2 id="page-title" class="text-sm md:text-xl font-bold text-text">
+        Dashboard
+      </h2>
+      <p class="text-[10px] md:text-sm text-muted">Welcome back, Den!</p>
+    </div>
+  </div>
+
+  <div class="flex items-center gap-2 md:gap-3">
+    <div class="relative hidden sm:block">
+
+      <input type="text" id="header-search" placeholder="Search..." class="form-input w-64 pt-3 pr-5 pb-3 pl-10" />
+    </div>
+
+    <button id="theme-toggle" class="p-1 md:p-2.5 rounded-xl hover:bg-bg transition-colors text-text cursor-pointer">
+      <svg class="moon" xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="currentColor"
+        viewBox="0 0 256 256">
+        <path
+          d="M120,40V16a8,8,0,0,1,16,0V40a8,8,0,0,1-16,0Zm72,88a64,64,0,1,1-64-64A64.07,64.07,0,0,1,192,128Zm-16,0a48,48,0,1,0-48,48A48.05,48.05,0,0,0,176,128ZM58.34,69.66A8,8,0,0,0,69.66,58.34l-16-16A8,8,0,0,0,42.34,53.66Zm0,116.68-16,16a8,8,0,0,0,11.32,11.32l16-16a8,8,0,0,0-11.32-11.32ZM192,72a8,8,0,0,0,5.66-2.34l16-16a8,8,0,0,0-11.32-11.32l-16,16A8,8,0,0,0,192,72Zm5.66,114.34a8,8,0,0,0-11.32,11.32l16,16a8,8,0,0,0,11.32-11.32ZM48,128a8,8,0,0,0-8-8H16a8,8,0,0,0,0,16H40A8,8,0,0,0,48,128Zm80,80a8,8,0,0,0-8,8v24a8,8,0,0,0,16,0V216A8,8,0,0,0,128,208Zm112-88H216a8,8,0,0,0,0,16h24a8,8,0,0,0,0-16Z">
+        </path>
+      </svg>
+      <svg class="sun" xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="currentColor"
+        viewBox="0 0 256 256">
+        <path
+          d="M233.54,142.23a8,8,0,0,0-8-2,88.08,88.08,0,0,1-109.8-109.8,8,8,0,0,0-10-10,104.84,104.84,0,0,0-52.91,37A104,104,0,0,0,136,224a103.09,103.09,0,0,0,62.52-20.88,104.84,104.84,0,0,0,37-52.91A8,8,0,0,0,233.54,142.23ZM188.9,190.34A88,88,0,0,1,65.66,67.11a89,89,0,0,1,31.4-26A106,106,0,0,0,96,56,104.11,104.11,0,0,0,200,160a106,106,0,0,0,14.92-1.06A89,89,0,0,1,188.9,190.34Z">
+        </path>
+      </svg>
+    </button>
+
+    <div>
+      <!-- Notification Button with Dropdown -->
+      <div class="relative" id="notification-wrapper">
+        <!-- Bell Button -->
+        <button id="notification-btn"
+          class="relative p-1 md:p-2.5 rounded-xl hover:bg-bg transition-colors cursor-pointer">
+          <i data-lucide="bell" class="w-5 h-5 text-text"></i>
+        </button>
+
+        <!-- Dropdown -->
+        <div id="notification-dropdown" class="hidden app-notification opacity-0 translate-y-2 transition-all duration-200 ease-out">
+          <div class="app-notification-head">
+            <span class="app-notification-title">Notifications</span>
+          </div>
+          <div id="notification-list" class="app-notification-list custom-scrollbar">
+            <div class="app-notification-empty">
+              <span class="app-notification-empty-icon"><i data-lucide="bell" class="w-4 h-4"></i></span>
+              <p>No new notifications</p>
+              <small>Notifications from your CashFlow activity will appear here.</small>
+            </div>
+          </div>
+        </div>
+      </div>
+      </div>
+    </div>
+</header>
+
+<script>
+  // dynamic title function
+
+  document.addEventListener("DOMContentLoaded", () => {
+    const headerTitle = document.getElementById("page-title");
+    const currentPage = document.body.getAttribute("data-page");
+
+    if (headerTitle && currentPage) {
+      headerTitle.textContent = `${currentPage}`;
+    }
+  });
+
+</script>
+      <div id="overlay" class="hidden fixed inset-0 backdrop-blur-sm z-50"></div>
+      <!-- Main Content Area -->
+      <main id="main-content" class="mf-page px-3 pt-3 max-xl:mb-20 xl:mb-4">
+        <div class="mf-breadcrumb">
+          <a href="./index.html">Home</a>
+          <span>/</span>
+          <span aria-current="page">My Finances</span>
+          <span id="mf-storage-chip" class="mf-storage-chip" role="status">
+            <span class="mf-storage-dot" aria-hidden="true"></span>
+            <span id="mf-storage-label">Saved locally</span>
+          </span>
+        </div>
+
+        <header class="mf-page-header">
+          <div class="mf-heading">
+            <span class="mf-eyebrow">
+              <i data-lucide="wallet" class="w-3.5 h-3.5"></i>
+              Money overview
+            </span>
+            <h1 class="mf-title">My Finances</h1>
+            <p class="mf-subtitle">
+              Track balances, income, spending and transfers in one clear view.
+            </p>
+          </div>
+          <div class="mf-header-actions">
+            <button type="button" class="mf-btn mf-btn-ghost" data-mf-add-account>
+              <i data-lucide="landmark" class="w-4 h-4"></i>
+              <span>Add account</span>
+            </button>
+            <button type="button" class="mf-btn mf-btn-primary" data-mf-new="expense">
+              <i data-lucide="plus" class="w-4 h-4"></i>
+              <span>Add transaction</span>
+            </button>
+          </div>
+        </header>
+
+        <section class="mf-overview-grid" aria-label="Financial overview">
+          <article class="mf-balance-card">
+            <div class="mf-balance-head">
+              <span class="mf-card-kicker">Total balance</span>
+              <span class="mf-local-pill">
+                <i data-lucide="shield-check" class="w-3 h-3"></i>
+                On this device
+              </span>
+            </div>
+            <h2 id="mf-total-balance" class="mf-balance-value">₦0.00</h2>
+            <p class="mf-balance-note">
+              <span id="mf-account-count">0 accounts</span> · including opening balances
+            </p>
+            <div class="mf-balance-meta">
+              <div>
+                <span>Available after savings</span>
+                <strong id="mf-available-balance">₦0.00</strong>
+              </div>
+              <div>
+                <span>Net flow · <span id="mf-overview-month">This month</span></span>
+                <strong id="mf-net-flow">₦0.00</strong>
+              </div>
+            </div>
+          </article>
+
+          <article class="mf-stat-card">
+            <div class="mf-stat-top">
+              <span class="mf-stat-icon mf-tone-income">
+                <i data-lucide="arrow-down-left" class="w-5 h-5"></i>
+              </span>
+              <span class="mf-stat-badge is-income">This month</span>
+            </div>
+            <p class="mf-stat-label">Income</p>
+            <strong id="mf-month-income" class="mf-stat-value">₦0.00</strong>
+            <p id="mf-month-income-note" class="mf-stat-note">No income recorded this month</p>
+          </article>
+
+          <article class="mf-stat-card">
+            <div class="mf-stat-top">
+              <span class="mf-stat-icon mf-tone-expense">
+                <i data-lucide="arrow-up-right" class="w-5 h-5"></i>
+              </span>
+              <span class="mf-stat-badge is-expense">This month</span>
+            </div>
+            <p class="mf-stat-label">Expenses</p>
+            <strong id="mf-month-expense" class="mf-stat-value">₦0.00</strong>
+            <p id="mf-month-expense-note" class="mf-stat-note">No spending recorded this month</p>
+          </article>
+
+          <article class="mf-stat-card">
+            <div class="mf-stat-top">
+              <span class="mf-stat-icon mf-tone-transfer">
+                <i data-lucide="arrow-right-left" class="w-5 h-5"></i>
+              </span>
+              <span class="mf-stat-badge is-transfer">This month</span>
+            </div>
+            <p class="mf-stat-label">Transfers</p>
+            <strong id="mf-month-transfer" class="mf-stat-value">₦0.00</strong>
+            <p id="mf-month-transfer-note" class="mf-stat-note">No transfers made this month</p>
+          </article>
+        </section>
+
+        <section class="mf-section" aria-labelledby="mf-accounts-title">
+          <div class="mf-section-head">
+            <div>
+              <h2 id="mf-accounts-title">Accounts</h2>
+              <p>Balances reflect opening amounts plus recorded activity.</p>
+            </div>
+            <button type="button" class="mf-btn mf-btn-ghost" data-mf-add-account>
+              <i data-lucide="plus" class="w-4 h-4"></i>
+              <span>Add account</span>
+            </button>
+          </div>
+          <div id="mf-accounts-grid" class="mf-accounts-grid"></div>
+        </section>
+
+        <section class="mf-money-grid" aria-label="Monthly money movement">
+          <article class="mf-money-card">
+            <div class="mf-money-head">
+              <div class="mf-money-title">
+                <span class="mf-money-title-icon mf-tone-income">
+                  <i data-lucide="arrow-down-left" class="w-4 h-4"></i>
+                </span>
+                <div>
+                  <h3>Income</h3>
+                  <p>Money received</p>
+                </div>
+              </div>
+              <div>
+                <p id="mf-income-total" class="mf-money-total">₦0.00</p>
+                <span id="mf-income-count" class="mf-money-count">Nothing recorded yet</span>
+              </div>
+            </div>
+            <div class="mf-money-actions">
+              <button type="button" class="mf-btn mf-btn-soft" data-mf-new="income">
+                <i data-lucide="plus" class="w-3.5 h-3.5"></i>
+                <span>Add income</span>
+              </button>
+            </div>
+            <div id="mf-recent-income" class="mf-mini-list"></div>
+          </article>
+
+          <article class="mf-money-card">
+            <div class="mf-money-head">
+              <div class="mf-money-title">
+                <span class="mf-money-title-icon mf-tone-expense">
+                  <i data-lucide="arrow-up-right" class="w-4 h-4"></i>
+                </span>
+                <div>
+                  <h3>Expenses</h3>
+                  <p>Money spent</p>
+                </div>
+              </div>
+              <div>
+                <p id="mf-expense-total" class="mf-money-total">₦0.00</p>
+                <span id="mf-expense-count" class="mf-money-count">Nothing recorded yet</span>
+              </div>
+            </div>
+            <div class="mf-money-actions">
+              <button type="button" class="mf-btn mf-btn-soft" data-mf-new="expense">
+                <i data-lucide="plus" class="w-3.5 h-3.5"></i>
+                <span>Add expense</span>
+              </button>
+            </div>
+            <div id="mf-recent-expense" class="mf-mini-list"></div>
+          </article>
+
+          <article class="mf-money-card">
+            <div class="mf-money-head">
+              <div class="mf-money-title">
+                <span class="mf-money-title-icon mf-tone-transfer">
+                  <i data-lucide="arrow-right-left" class="w-4 h-4"></i>
+                </span>
+                <div>
+                  <h3>Transfers</h3>
+                  <p>Between accounts</p>
+                </div>
+              </div>
+              <div>
+                <p id="mf-transfer-total" class="mf-money-total">₦0.00</p>
+                <span id="mf-transfer-count" class="mf-money-count">Nothing recorded yet</span>
+              </div>
+            </div>
+            <div class="mf-money-actions">
+              <button type="button" class="mf-btn mf-btn-soft" data-mf-new="transfer">
+                <i data-lucide="arrow-right-left" class="w-3.5 h-3.5"></i>
+                <span>Make transfer</span>
+              </button>
+            </div>
+            <div id="mf-recent-transfer" class="mf-mini-list"></div>
+          </article>
+        </section>
+
+        <section class="mf-section mf-history" aria-labelledby="mf-history-title">
+          <div class="mf-section-head">
+            <div>
+              <h2 id="mf-history-title">Transaction history</h2>
+              <p id="mf-history-summary">Your recorded money movement will appear here.</p>
+            </div>
+            <button type="button" class="mf-btn mf-btn-ghost" id="mf-clear-filters">
+              <i data-lucide="rotate-ccw" class="w-4 h-4"></i>
+              <span>Clear filters</span>
+            </button>
+          </div>
+
+          <div class="mf-history-toolbar">
+            <div class="mf-tabs" role="tablist" aria-label="Filter by transaction type">
+              <button type="button" class="mf-tab active" data-mf-type="all" role="tab" aria-selected="true">All</button>
+              <button type="button" class="mf-tab" data-mf-type="income" role="tab" aria-selected="false">Income</button>
+              <button type="button" class="mf-tab" data-mf-type="expense" role="tab" aria-selected="false">Expenses</button>
+              <button type="button" class="mf-tab" data-mf-type="transfer" role="tab" aria-selected="false">Transfers</button>
+            </div>
+            <div class="mf-filter-grid">
+              <label class="mf-search-field" for="mf-search">
+                <span class="sr-only">Search transactions</span>
+                <i data-lucide="search" class="w-4 h-4"></i>
+                <input id="mf-search" type="search" autocomplete="off" placeholder="Search description, note or account" />
+              </label>
+              <select id="mf-filter-account" class="mf-filter-select" aria-label="Filter by account">
+                <option value="">All accounts</option>
+              </select>
+              <select id="mf-filter-month" class="mf-filter-select" aria-label="Filter by month">
+                <option value="">All months</option>
+              </select>
+              <select id="mf-filter-category" class="mf-filter-select" aria-label="Filter by category">
+                <option value="">All categories</option>
+              </select>
+              <select id="mf-sort" class="mf-filter-select" aria-label="Sort transactions">
+                <option value="date-desc">Newest first</option>
+                <option value="date-asc">Oldest first</option>
+                <option value="amount-desc">Highest amount</option>
+                <option value="amount-asc">Lowest amount</option>
+                <option value="description-asc">Description A–Z</option>
+                <option value="description-desc">Description Z–A</option>
+              </select>
+            </div>
+          </div>
+
+          <div id="mf-history-list"></div>
+          <div id="mf-pagination" class="mf-pagination" aria-label="Transaction pages"></div>
+        </section>
+      </main>
+    </div>
+
+    <!-- Mobile Bottom Navigation -->
+    <nav class="bottom-nav xl:!hidden">
+  <a
+    href="./index.html"
+    class="bottom-nav-item flex-1 flex flex-col items-center gap-1 p-2 text-[var(--muted)] text-[11px] font-semibold no-underline transition-all duration-300 ease-in-out"
+  >
+    <i data-lucide="home" class="w-5 h-5"></i>
+    <span>Dashboard</span>
+  </a>
+  <a
+    href="./settings.html"
+    class="bottom-nav-item flex-1 flex flex-col items-center gap-1 p-2 text-[var(--muted)] text-[11px] font-semibold no-underline transition-all duration-300 ease-in-out"
+  >
+    <i data-lucide="credit-card" class="w-5 h-5"></i>
+    <span>Cards</span>
+  </a>
+  <a
+    href="./goals.html"
+    class="bottom-nav-item flex-1 flex flex-col items-center gap-1 p-2 text-[var(--muted)] text-[11px] font-semibold no-underline transition-all duration-300 ease-in-out"
+  >
+    <i data-lucide="target" class="w-5 h-5"></i>
+    <span>Goals</span>
+  </a>
+  <a
+    href="./insights.html"
+    class="bottom-nav-item flex-1 flex flex-col items-center gap-1 p-2 text-[var(--muted)] text-[11px] font-semibold no-underline transition-all duration-300 ease-in-out"
+  >
+    <i data-lucide="bar-chart-3" class="w-5 h-5"></i>
+    <span>Insights</span>
+  </a>
+  <button
+    id="menu-toggle"
+    class="toggle-btn bottom-nav-item flex-1 flex flex-col items-center gap-1 p-2 text-[var(--muted)] text-[11px] font-semibold no-underline transition-all duration-300 ease-in-out"
+  >
+    <i data-lucide="more-horizontal" class="w-5 h-5"></i>
+    <span>More</span>
+  </button>
+</nav>
+
+
+    <div id="mf-transaction-modal" class="modal mf-overlay-modal">
+      <div class="modal-content mf-modal custom-scrollbar">
+        <div class="mf-modal-header">
+          <div>
+            <h3 id="mf-transaction-title">Add expense</h3>
+            <p id="mf-transaction-subtitle">Record money spent and subtract it from an account balance.</p>
+          </div>
+          <button type="button" class="mf-icon-button" data-mf-close="mf-transaction-modal" aria-label="Close transaction form">
+            <i data-lucide="x" class="w-5 h-5"></i>
+          </button>
+        </div>
+        <form id="mf-transaction-form" class="mf-form" novalidate>
+          <input type="hidden" id="mf-transaction-id" />
+          <div class="mf-field">
+            <label>Transaction type</label>
+            <div class="mf-type-picker" role="radiogroup" aria-label="Transaction type">
+              <label class="mf-type-option">
+                <input type="radio" name="mf-transaction-type" value="income" />
+                <span>Income</span>
+              </label>
+              <label class="mf-type-option">
+                <input type="radio" name="mf-transaction-type" value="expense" checked />
+                <span>Expense</span>
+              </label>
+              <label class="mf-type-option">
+                <input type="radio" name="mf-transaction-type" value="transfer" />
+                <span>Transfer</span>
+              </label>
+            </div>
+          </div>
+
+          <div class="mf-form-grid">
+            <div class="mf-field is-span-2">
+              <label for="mf-tx-description">Description</label>
+              <input id="mf-tx-description" type="text" class="form-input" placeholder="e.g. Salary, groceries, rent" maxlength="120" />
+            </div>
+            <div class="mf-field">
+              <label for="mf-tx-amount">Amount</label>
+              <input id="mf-tx-amount" type="number" class="form-input" placeholder="0.00" min="0" step="0.01" inputmode="decimal" />
+            </div>
+            <div class="mf-field">
+              <label for="mf-tx-date">Date</label>
+              <input id="mf-tx-date" type="date" class="form-input" />
+            </div>
+            <div class="mf-field">
+              <label for="mf-tx-account">Account</label>
+              <select id="mf-tx-account" class="form-select"></select>
+            </div>
+            <div id="mf-destination-field" class="mf-field" hidden>
+              <label for="mf-tx-destination">Destination account</label>
+              <select id="mf-tx-destination" class="form-select"></select>
+            </div>
+            <div id="mf-category-field" class="mf-field is-span-2">
+              <label for="mf-tx-category">Category</label>
+              <input id="mf-tx-category" type="text" class="form-input" list="mf-category-options" placeholder="e.g. Salary, Food, Utilities" maxlength="60" />
+              <datalist id="mf-category-options">
+                <option value="Salary"></option>
+                <option value="Freelance"></option>
+                <option value="Business"></option>
+                <option value="Investment"></option>
+                <option value="Food"></option>
+                <option value="Groceries"></option>
+                <option value="Transport"></option>
+                <option value="Housing"></option>
+                <option value="Utilities"></option>
+                <option value="Shopping"></option>
+                <option value="Health"></option>
+                <option value="Education"></option>
+                <option value="Entertainment"></option>
+                <option value="Family"></option>
+                <option value="Savings"></option>
+                <option value="Other"></option>
+              </datalist>
+            </div>
+            <div class="mf-field">
+              <label for="mf-tx-method">Payment method</label>
+              <select id="mf-tx-method" class="form-select">
+                <option value="">Not specified</option>
+                <option value="Cash">Cash</option>
+                <option value="Bank transfer">Bank transfer</option>
+                <option value="Debit card">Debit card</option>
+                <option value="Mobile money">Mobile money</option>
+                <option value="Other">Other</option>
+              </select>
+            </div>
+            <div class="mf-field is-span-2">
+              <label for="mf-tx-notes">Notes</label>
+              <textarea id="mf-tx-notes" class="form-input" rows="3" placeholder="Optional context for this entry" maxlength="400"></textarea>
+            </div>
+          </div>
+
+          <div id="mf-transaction-error" class="mf-form-error" role="alert"></div>
+          <div class="mf-modal-actions">
+            <button type="button" class="mf-btn mf-btn-ghost" data-mf-close="mf-transaction-modal">Cancel</button>
+            <button type="submit" id="mf-transaction-submit" class="mf-btn mf-btn-primary">Add expense</button>
+          </div>
+        </form>
+      </div>
+    </div>
+
+    <div id="mf-account-modal" class="modal mf-overlay-modal">
+      <div class="modal-content mf-modal custom-scrollbar">
+        <div class="mf-modal-header">
+          <div>
+            <h3 id="mf-account-title">Add an account</h3>
+            <p id="mf-account-subtitle">Track a bank, cash, savings or mobile money balance.</p>
+          </div>
+          <button type="button" class="mf-icon-button" data-mf-close="mf-account-modal" aria-label="Close account form">
+            <i data-lucide="x" class="w-5 h-5"></i>
+          </button>
+        </div>
+        <form id="mf-account-form" class="mf-form" novalidate>
+          <input type="hidden" id="mf-account-id" />
+          <div class="mf-form-grid">
+            <div class="mf-field">
+              <label for="mf-account-name">Account name</label>
+              <input id="mf-account-name" type="text" class="form-input" placeholder="e.g. Main bank account" maxlength="80" />
+            </div>
+            <div class="mf-field">
+              <label for="mf-account-type">Account type</label>
+              <select id="mf-account-type" class="form-select">
+                <option value="bank">Bank account</option>
+                <option value="cash">Cash wallet</option>
+                <option value="savings">Savings account</option>
+                <option value="mobile">Mobile money</option>
+                <option value="investment">Investment</option>
+                <option value="other">Other</option>
+              </select>
+            </div>
+            <div class="mf-field">
+              <label for="mf-account-opening">Opening balance</label>
+              <input id="mf-account-opening" type="number" class="form-input" value="0" min="0" step="0.01" inputmode="decimal" />
+              <span class="mf-field-hint">Existing money in this account. This is not counted as income.</span>
+            </div>
+            <div class="mf-field">
+              <label for="mf-account-date">Opening balance date</label>
+              <input id="mf-account-date" type="date" class="form-input" />
+            </div>
+            <div class="mf-field is-span-2">
+              <label for="mf-account-description">Description</label>
+              <textarea id="mf-account-description" class="form-input" rows="2" placeholder="Optional note about this account" maxlength="240"></textarea>
+            </div>
+          </div>
+          <div id="mf-account-error" class="mf-form-error" role="alert"></div>
+          <div class="mf-modal-actions">
+            <button type="button" class="mf-btn mf-btn-ghost" data-mf-close="mf-account-modal">Cancel</button>
+            <button type="submit" id="mf-account-submit" class="mf-btn mf-btn-primary">Create account</button>
+          </div>
+        </form>
+      </div>
+    </div>
+
+    <div id="mf-details-modal" class="modal mf-overlay-modal">
+      <div class="modal-content mf-modal custom-scrollbar">
+        <div class="mf-modal-header">
+          <div>
+            <h3>Transaction details</h3>
+            <p>Review the full record before editing or deleting it.</p>
+          </div>
+          <button type="button" class="mf-icon-button" data-mf-close="mf-details-modal" aria-label="Close transaction details">
+            <i data-lucide="x" class="w-5 h-5"></i>
+          </button>
+        </div>
+        <div id="mf-details-content"></div>
+      </div>
+    </div>
+
+    <div id="mf-confirm-modal" class="modal mf-overlay-modal">
+      <div class="modal-content mf-modal mf-modal-small">
+        <div class="mf-modal-header">
+          <div>
+            <h3 id="mf-confirm-title">Delete item?</h3>
+          </div>
+          <button type="button" class="mf-icon-button" data-mf-close="mf-confirm-modal" aria-label="Close confirmation">
+            <i data-lucide="x" class="w-5 h-5"></i>
+          </button>
+        </div>
+        <p id="mf-confirm-copy" class="mf-confirm-copy"></p>
+        <div class="mf-modal-actions">
+          <button type="button" class="mf-btn mf-btn-ghost" data-mf-close="mf-confirm-modal">Cancel</button>
+          <button type="button" id="mf-confirm-action" class="mf-btn mf-btn-danger">Delete</button>
+        </div>
+      </div>
+    </div>
+
+    <div id="toast" class="toast" role="status" aria-live="polite">
+      <div class="flex items-center gap-3">
+        <div id="toast-icon" class="mf-toast-icon is-success flex items-center justify-center flex-shrink-0">
+          <i data-lucide="check" class="w-5 h-5"></i>
+        </div>
+        <div class="flex flex-col">
+          <span class="text-[14px] font-semibold text-text" id="toast-title"> Success </span>
+          <span class="text-[12px] text-muted" id="toast-message"> Action completed successfully </span>
+        </div>
+      </div>
+    </div>
+
+    <script src="assets/js/cashflow-data.js"></script>
+    <script src="assets/js/transaction.js"></script>
+  <script defer src="assets/js/index.js"></script><script src="assets/js/notifications.js"></script><script src="assets/js/global-navigation.js"></script></body>
+</html>
+

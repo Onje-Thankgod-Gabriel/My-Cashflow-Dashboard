@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Gabsweb CashFlow - Something Went Wrong</title>
+    <link rel="icon" href="assets/images/fav.png" />
+    <script src="https://unpkg.com/lucide@1.64.0/dist/umd/lucide.js"></script>
+    <link href="assets/css/index.css" rel="stylesheet" />
+    <link href="assets/css/auth.css" rel="stylesheet" />
+    <link href="assets/css/error-pages.css" rel="stylesheet" />
+      <link href="assets/css/typography.css" rel="stylesheet" />
+  </head>
+  <body class="error-page flex items-center justify-center">
+    <button id="theme-toggle" class="auth-theme-toggle" type="button" aria-label="Switch to light mode" aria-pressed="false"><i data-lucide="sun" aria-hidden="true"></i></button>
+    <main class="error-card">
+      <a href="./index.html"><img src="assets/images/gabsweb-cashflow-logo.png" alt="Gabsweb CashFlow Logo" class="brand-logo" /></a>
+      <div class="error-code error-code-danger" aria-label="Error 500">500</div>
+      <div class="error-icon"><i data-lucide="server-crash" aria-hidden="true"></i></div>
+      <h1>Something Went Wrong</h1>
+      <p>We're sorry, but something unexpected happened while processing your request. Please try again later.</p>
+      <div class="error-actions">
+        <a class="error-primary" href="./index.html">Back to Dashboard</a>
+      </div>
+      <p id="error-status" class="error-status" role="status" aria-live="polite"></p>
+    </main>
+    <script src="assets/js/error-pages.js"></script>
+  </body>
+</html>

@@ -1,0 +1,543 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
+    <title>Gabsweb CashFlow · Budget &amp; Money Allocation</title>
+    <link rel="icon" href="assets/images/fav.png" />
+    <script src="https://unpkg.com/lucide@1.64.0/dist/umd/lucide.js"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet" />
+    <script src="assets/js/theme-loader.js"></script>
+    <link href="assets/css/index.css" rel="stylesheet" />
+    <link href="assets/css/budgets.css" rel="stylesheet" />
+    <link href="assets/css/notifications.css" rel="stylesheet" />
+    <link href="assets/css/typography.css" rel="stylesheet" />
+  </head>
+  <body id="root-body" data-page="Budget &amp; Money Allocation" class="bg-bg text-text">
+    <!-- Desktop Sidebar -->
+    <aside id="sidebar" class="sidebar w-64 sm:w-72 h-screen fixed top-0 left-0 z-[110] bg-bg border-r border-border flex flex-col max-xl:left-[-100%] max-xl:invisible max-xl:opacity-0">
+      <div class="p-3 sm:p-6 border-b border-border flex-shrink-0">
+        <div class="flex justify-between">
+          <a href="./index.html" class="flex items-center gap-3 mb-3 sm:mb-6 cursor-pointer">
+            <div class="flex items-center justify-center">
+              <img src="assets/images/gabsweb-cashflow-logo.png" alt="Gabsweb CashFlow Logo" class="brand-logo w-10 h-10 sm:w-12 sm:h-12 rounded-2xl" />
+            </div>
+            <div>
+              <h1 class="text-sm font-bold text-text">Gabsweb CashFlow</h1>
+              <p class="text-xs text-muted font-medium">Smart Finance</p>
+            </div>
+          </a>
+
+          <button id="close-sidebar" class="p-2 rounded-xl hover:bg-bgbg block xl:hidden transition-transform duration-300">
+            <i data-lucide="x" class="w-5 h-5 text-text"></i>
+          </button>
+        </div>
+
+        <div class="content-box glass p-4 border-border border rounded-2xl">
+          <div class="flex items-center justify-between mb-2">
+            <span class="text-[10px] sm:text-xs font-semibold text-muted uppercase tracking-wider">Total Balance</span>
+            <div class="live-dot"></div>
+          </div>
+          <h5 id="sidebar-total-balance" class="text-xl sm:text-2xl font-bold text-gradient mb-1">₦0.00</h5>
+          <p id="sidebar-balance-note" class="text-[10px] sm:text-xs text-muted whitespace-nowrap opacity-80 flex gap-2 mt-1">Loading finances…</p>
+        </div>
+      </div>
+
+        <nav class="flex-1 overflow-y-auto p-2 sm:p-4 custom-scrollbar">
+    <div class="space-y-1">
+      <a href="./index.html" class="nav-item">
+        <i data-lucide="layout-dashboard" class="w-5 h-5"></i>
+        <span>Dashboard</span>
+      </a>
+      <a href="./planner.html" class="nav-item">
+        <i data-lucide="calendar-check" class="w-5 h-5"></i>
+        <span>Planner</span>
+      </a>
+      <a href="./transaction.html" class="nav-item">
+        <i data-lucide="arrow-right-left" class="w-5 h-5"></i>
+        <span>My Finances</span>
+      </a>
+      <a href="./budgets.html" class="nav-item">
+        <i data-lucide="wallet-cards" class="w-5 h-5"></i>
+        <span>Budget &amp; Money Allocation</span>
+      </a>
+      <a href="./savings.html" class="nav-item">
+        <i data-lucide="coins" class="w-5 h-5"></i>
+        <span>Savings</span>
+      </a>
+      <a href="./goals.html" class="nav-item">
+        <i data-lucide="target" class="w-5 h-5"></i>
+        <span>Goals &amp; Planned Purchases</span>
+      </a>
+      <a href="./work-schedule.html" class="nav-item">
+        <i data-lucide="calendar-clock" class="w-5 h-5"></i>
+        <span>Work Schedule</span>
+      </a>
+      <a href="./insights.html" class="nav-item">
+        <i data-lucide="bar-chart-3" class="w-5 h-5"></i>
+        <span>Reports &amp; Insights</span>
+      </a>
+    </div>
+
+    <div class="mt-6 pt-6 border-t border-border space-y-1">
+      <a href="./settings.html" class="nav-item">
+        <i data-lucide="settings" class="w-5 h-5"></i>
+        <span>Settings</span>
+      </a>
+
+    </div>
+  </nav>
+
+      <div class="p-4 border-t border-border flex-shrink-0 relative">
+        <div id="user-button" class="flex items-center gap-3 rounded-2xl hover:bg-opacity-50 cursor-pointer">
+          <div class="w-10 h-10 sm:w-12 sm:h-12 border-2 border-blue-700 rounded-full flex items-center justify-center text-text font-bold">
+            <img class="w-8 h-8 md:w-10 md:h-10 rounded-full flex justify-center items-center object-cover" src="assets/images/profiles/emma.jpg" alt="profile Image" />
+          </div>
+          <div class="flex-1 min-w-0">
+            <h2 class="text-sm font-semibold text-text truncate">Den</h2>
+            <p class="text-xs text-muted truncate">Premium Member</p>
+          </div>
+          <i data-lucide="chevron-down" class="w-4 h-4 text-muted transition-transform duration-200" id="dropdown-arrow"></i>
+        </div>
+
+        <div id="user-dropdown" class="absolute left-2 bottom-full mb-2 w-full max-w-[300px] md:max-w-[200px] bg-bg border border-border rounded-xl shadow-lg hidden z-500">
+          <ul class="py-2">
+            <li>
+              <a href="./settings.html" class="block px-4 py-2 text-sm text-text hover:bg-bg">Profile</a>
+            </li>
+            <li>
+              <a href="./login.html" type="button" id="logOut" class="block px-4 py-2 text-sm cursor-progress text-text hover:bg-bg"> Logout </a>
+            </li>
+          </ul>
+        </div>
+      </div>
+    </aside>
+
+    <script>
+      const currentPage2 = window.location.pathname.split("/").pop() || "index.html";
+      const navItems = document.querySelectorAll(".nav-item");
+
+      navItems.forEach((link) => {
+        const href = link.getAttribute("href");
+        if (!href) return;
+        const fileName = href.split("/").pop();
+        if (fileName === currentPage2) {
+          link.classList.add("active");
+        } else {
+          link.classList.remove("active");
+        }
+      });
+
+      const currentFile = window.location.pathname.split("/").pop();
+      const activeLink = document.querySelector(`.nav-item[href*="${currentFile}"], .bottom-nav-item[href*="${currentFile}"]`);
+      const pageTitleEl = document.getElementById("page-title");
+
+      if (activeLink && pageTitleEl) {
+        const titleText = activeLink.querySelector("span")?.textContent.trim();
+        pageTitleEl.textContent = titleText || "Dashboard";
+      } else {
+        if (pageTitleEl) pageTitleEl.textContent = "Dashboard";
+      }
+
+      const userBtn = document.getElementById("user-button");
+      const userDropdown = document.getElementById("user-dropdown");
+      const dropdownArrow = document.getElementById("dropdown-arrow");
+
+      userBtn.addEventListener("click", (e) => {
+        e.stopPropagation();
+        userDropdown.classList.toggle("hidden");
+        dropdownArrow.classList.toggle("rotate-180");
+      });
+
+      document.addEventListener("click", (e) => {
+        if (!userDropdown.classList.contains("hidden")) {
+          userDropdown.classList.add("hidden");
+          dropdownArrow.classList.remove("rotate-180");
+        }
+      });
+
+      const logOut = document.getElementById("logOut");
+      if (logOut) {
+        logOut.addEventListener("click", function () {
+          localStorage.removeItem("auth");
+          window.location.href = "/login.html";
+        });
+      }
+    </script>
+
+    <!-- Main Content -->
+    <div id="main-div" class="ml-0 xl:ml-72 transition-all duration-300">
+      <div id="overlay" class="hidden fixed inset-0 backdrop-blur-sm z-50"></div>
+
+      <!-- Header -->
+      <header class="sticky top-0 glass border-b border-border px-6 py-4 flex items-center justify-between z-30">
+        <div class="flex items-center gap-4">
+          <div>
+            <h2 id="page-title" class="text-sm md:text-xl font-bold text-text">Budget &amp; Money Allocation</h2>
+            <p class="text-[10px] md:text-sm text-muted">Welcome back, Den!</p>
+          </div>
+        </div>
+
+        <div class="flex items-center gap-2 md:gap-3">
+          <button id="theme-toggle" class="p-1 md:p-2.5 rounded-xl hover:bg-bg transition-colors text-text cursor-pointer">
+            <svg class="moon" xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="currentColor" viewBox="0 0 256 256">
+              <path d="M120,40V16a8,8,0,0,1,16,0V40a8,8,0,0,1-16,0Zm72,88a64,64,0,1,1-64-64A64.07,64.07,0,0,1,192,128Zm-16,0a48,48,0,1,0-48,48A48.05,48.05,0,0,0,176,128ZM58.34,69.66A8,8,0,0,0,69.66,58.34l-16-16A8,8,0,0,0,42.34,53.66Zm0,116.68-16,16a8,8,0,0,0,11.32,11.32l16-16a8,8,0,0,0-11.32-11.32ZM192,72a8,8,0,0,0,5.66-2.34l16-16a8,8,0,0,0-11.32-11.32l-16,16A8,8,0,0,0,192,72Zm5.66,114.34a8,8,0,0,0-11.32,11.32l16,16a8,8,0,0,0,11.32-11.32ZM48,128a8,8,0,0,0-8-8H16a8,8,0,0,0,0,16H40A8,8,0,0,0,48,128Zm80,80a8,8,0,0,0-8,8v24a8,8,0,0,0,16,0V216A8,8,0,0,0,128,208Zm112-88H216a8,8,0,0,0,0,16h24a8,8,0,0,0,0-16Z"></path>
+            </svg>
+            <svg class="sun" xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="currentColor" viewBox="0 0 256 256">
+              <path d="M233.54,142.23a8,8,0,0,0-8-2,88.08,88.08,0,0,1-109.8-109.8,8,8,0,0,0-10-10,104.84,104.84,0,0,0-52.91,37A104,104,0,0,0,136,224a103.09,103.09,0,0,0,62.52-20.88,104.84,104.84,0,0,0,37-52.91A8,8,0,0,0,233.54,142.23ZM188.9,190.34A88,88,0,0,1,65.66,67.11a89,89,0,0,1,31.4-26A106,106,0,0,0,96,56,104.11,104.11,0,0,0,200,160a106,106,0,0,0,14.92-1.06A89,89,0,0,1,188.9,190.34Z"></path>
+            </svg>
+          </button>
+
+          <div>
+            <div class="relative" id="notification-wrapper">
+              <button id="notification-btn" class="relative p-1 md:p-2.5 rounded-xl hover:bg-bg transition-colors cursor-pointer">
+                <i data-lucide="bell" class="w-5 h-5 text-text"></i>
+              </button>
+
+              <div id="notification-dropdown" class="hidden app-notification opacity-0 translate-y-2 transition-all duration-200 ease-out">
+          <div class="app-notification-head">
+            <span class="app-notification-title">Notifications</span>
+          </div>
+          <div id="notification-list" class="app-notification-list custom-scrollbar">
+            <div class="app-notification-empty">
+              <span class="app-notification-empty-icon"><i data-lucide="bell" class="w-4 h-4"></i></span>
+              <p>No new notifications</p>
+              <small>Notifications from your CashFlow activity will appear here.</small>
+            </div>
+          </div>
+        </div>
+            </div>
+          </div>
+        </div>
+      </header>
+
+      <script>
+        document.addEventListener("DOMContentLoaded", () => {
+          const headerTitle = document.getElementById("page-title");
+          const currentPage = document.body.getAttribute("data-page");
+          if (headerTitle && currentPage) {
+            headerTitle.textContent = currentPage;
+          }
+        });
+
+</script>
+
+      <!-- Main Content Area -->
+      <main id="main-content" class="bd-page px-3 pt-3 max-xl:mb-20 xl:mb-4">
+        <div class="bd-breadcrumb">
+          <a href="./index.html">Home</a>
+          <span>/</span>
+          <span aria-current="page">Budget &amp; Money Allocation</span>
+          <span id="bd-storage-chip" class="bd-storage-chip" role="status">
+            <span class="bd-storage-dot" aria-hidden="true"></span>
+            <span id="bd-storage-label">Saved locally</span>
+          </span>
+        </div>
+
+        <header class="bd-page-header">
+          <div class="bd-heading">
+            <span class="bd-eyebrow">
+              <i data-lucide="pie-chart" class="w-4 h-4"></i>
+              Plan before you spend
+            </span>
+            <h1 class="bd-title">Budget &amp; Money Allocation</h1>
+            <p class="bd-subtitle">
+              Divide your income into planned financial purposes, then track each plan
+              against the real expenses you record in My Finances.
+            </p>
+          </div>
+          <div class="bd-header-actions">
+            <label class="bd-month-control" for="bd-month-select">
+              <i data-lucide="calendar" class="w-4 h-4"></i>
+              <span class="bd-month-control-label">Financial month</span>
+              <select id="bd-month-select" aria-label="Select financial month"></select>
+            </label>
+            <button type="button" class="bd-btn bd-btn-primary" id="bd-add-allocation">
+              <i data-lucide="plus" class="w-4 h-4"></i>
+              <span>Add allocation</span>
+            </button>
+          </div>
+        </header>
+
+        <section aria-labelledby="bd-overview-title">
+          <div class="bd-overview-head">
+            <div>
+              <h2 id="bd-overview-title">Monthly financial overview</h2>
+              <p id="bd-overview-month-label">—</p>
+            </div>
+            <span class="bd-overview-note">
+              <i data-lucide="info" class="w-4 h-4"></i>
+              Allocations are plans. Only linked expenses count as spending.
+            </span>
+          </div>
+
+          <div class="bd-overview-grid">
+            <article class="bd-stat-card">
+              <div class="bd-stat-top">
+                <span class="bd-stat-icon is-income">
+                  <i data-lucide="wallet" class="w-4 h-4"></i>
+                </span>
+                <span class="bd-stat-badge is-income">Received</span>
+              </div>
+              <p class="bd-stat-label">Monthly income</p>
+              <strong class="bd-stat-value" id="bd-total-income">₦0.00</strong>
+              <p class="bd-stat-note" id="bd-income-note">No income recorded this month</p>
+            </article>
+
+            <article class="bd-stat-card">
+              <div class="bd-stat-top">
+                <span class="bd-stat-icon is-transfer">
+                  <i data-lucide="layers" class="w-4 h-4"></i>
+                </span>
+                <span class="bd-stat-badge is-transfer" id="bd-allocated-badge">0 allocations</span>
+              </div>
+              <p class="bd-stat-label">Total allocated</p>
+              <strong class="bd-stat-value" id="bd-total-allocated">₦0.00</strong>
+              <p class="bd-stat-note" id="bd-allocated-note">No allocations planned yet</p>
+            </article>
+
+            <article class="bd-stat-card" id="bd-unallocated-card">
+              <div class="bd-stat-top">
+                <span class="bd-stat-icon is-warning">
+                  <i data-lucide="coins" class="w-4 h-4"></i>
+                </span>
+                <span class="bd-stat-badge is-warning" id="bd-unallocated-badge">To assign</span>
+              </div>
+              <p class="bd-stat-label">Unallocated funds</p>
+              <strong class="bd-stat-value" id="bd-unallocated">₦0.00</strong>
+              <p class="bd-stat-note" id="bd-unallocated-note">Income minus total allocated</p>
+            </article>
+
+            <article class="bd-stat-card">
+              <div class="bd-stat-top">
+                <span class="bd-stat-icon is-expense">
+                  <i data-lucide="receipt" class="w-4 h-4"></i>
+                </span>
+                <span class="bd-stat-badge is-expense" id="bd-spending-badge">Linked only</span>
+              </div>
+              <p class="bd-stat-label">Actual spending</p>
+              <strong class="bd-stat-value" id="bd-actual-spending">₦0.00</strong>
+              <p class="bd-stat-note" id="bd-spending-note">No linked expenses yet</p>
+            </article>
+          </div>
+        </section>
+
+        <section class="bd-section" aria-labelledby="bd-allocations-title">
+          <div class="bd-section-head">
+            <div class="bd-section-copy">
+              <span class="bd-section-kicker">Allocation breakdown</span>
+              <h2 id="bd-allocations-title">Your allocations</h2>
+              <p id="bd-allocation-summary-line">No allocations for this month yet.</p>
+            </div>
+            <div class="bd-filters">
+              <div class="bd-search">
+                <i data-lucide="search" class="w-4 h-4"></i>
+                <input type="search" id="bd-search" placeholder="Search allocations" aria-label="Search allocations" />
+              </div>
+              <div class="bd-status-filters" id="bd-status-filters" role="group" aria-label="Filter allocations by status">
+                <button type="button" class="bd-filter-chip active" data-bd-status="all">All</button>
+                <button type="button" class="bd-filter-chip" data-bd-status="active">Active</button>
+                <button type="button" class="bd-filter-chip" data-bd-status="planned">Planned</button>
+                <button type="button" class="bd-filter-chip" data-bd-status="completed">Completed</button>
+                <button type="button" class="bd-filter-chip" data-bd-status="cancelled">Cancelled</button>
+              </div>
+            </div>
+          </div>
+
+          <div id="bd-allocation-grid" class="bd-allocation-grid"></div>
+        </section>
+
+        <section class="bd-lower-grid" aria-label="Allocation history and unlinked expenses">
+          <article class="bd-panel">
+            <div class="bd-panel-head">
+              <div>
+                <span class="bd-section-kicker">History</span>
+                <h2>Allocation history</h2>
+                <p>Review planned and actual spending across financial months.</p>
+              </div>
+              <span class="bd-panel-icon">
+                <i data-lucide="history" class="w-4 h-4"></i>
+              </span>
+            </div>
+            <div id="bd-history-list" class="bd-history-list"></div>
+          </article>
+
+          <article class="bd-panel">
+            <div class="bd-panel-head">
+              <div>
+                <span class="bd-section-kicker">Unassigned</span>
+                <h2>Unlinked expenses</h2>
+                <p id="bd-unlinked-month">—</p>
+              </div>
+              <span class="bd-panel-icon is-warning">
+                <i data-lucide="unlink" class="w-4 h-4"></i>
+              </span>
+            </div>
+            <div id="bd-unlinked-list" class="bd-unlinked-list"></div>
+            <a class="bd-panel-link" href="./transaction.html">
+              <i data-lucide="arrow-up-right" class="w-4 h-4"></i>
+              Record expenses in My Finances
+            </a>
+          </article>
+        </section>
+      </main>
+    </div>
+
+    <!-- Mobile Bottom Navigation -->
+    <nav class="bottom-nav xl:!hidden">
+      <a href="./index.html" class="bottom-nav-item flex-1 flex flex-col items-center gap-1 p-2 text-[var(--muted)] text-[11px] font-semibold no-underline transition-all duration-300 ease-in-out">
+        <i data-lucide="home" class="w-5 h-5"></i>
+        <span>Dashboard</span>
+      </a>
+      <a href="./settings.html" class="bottom-nav-item flex-1 flex flex-col items-center gap-1 p-2 text-[var(--muted)] text-[11px] font-semibold no-underline transition-all duration-300 ease-in-out">
+        <i data-lucide="credit-card" class="w-5 h-5"></i>
+        <span>Cards</span>
+      </a>
+      <a href="./goals.html" class="bottom-nav-item flex-1 flex flex-col items-center gap-1 p-2 text-[var(--muted)] text-[11px] font-semibold no-underline transition-all duration-300 ease-in-out">
+        <i data-lucide="target" class="w-5 h-5"></i>
+        <span>Goals</span>
+      </a>
+      <a href="./insights.html" class="bottom-nav-item flex-1 flex flex-col items-center gap-1 p-2 text-[var(--muted)] text-[11px] font-semibold no-underline transition-all duration-300 ease-in-out">
+        <i data-lucide="bar-chart-3" class="w-5 h-5"></i>
+        <span>Insights</span>
+      </a>
+      <button id="menu-toggle" class="toggle-btn bottom-nav-item flex-1 flex flex-col items-center gap-1 p-2 text-[var(--muted)] text-[11px] font-semibold no-underline transition-all duration-300 ease-in-out">
+        <i data-lucide="more-horizontal" class="w-5 h-5"></i>
+        <span>More</span>
+      </button>
+    </nav>
+
+    <!-- Add / Edit Allocation Modal -->
+    <div id="bd-allocation-modal" class="modal bd-overlay-modal">
+      <div class="modal-content bd-modal-content">
+        <div class="bd-modal-header">
+          <div>
+            <h3 id="bd-modal-title">Add allocation</h3>
+            <p id="bd-modal-subtitle">Create a planned use of income for a financial month.</p>
+          </div>
+          <button type="button" class="bd-icon-button" data-bd-close="bd-allocation-modal" aria-label="Close allocation form">
+            <i data-lucide="x" class="w-5 h-5"></i>
+          </button>
+        </div>
+
+        <form id="bd-allocation-form" class="bd-form" novalidate>
+          <div class="bd-form-grid">
+            <div class="bd-field">
+              <label for="bd-form-month">Financial month</label>
+              <input type="month" id="bd-form-month" class="form-input" required />
+              <span class="bd-field-hint">The month this plan belongs to.</span>
+            </div>
+
+            <div class="bd-field">
+              <label for="bd-form-status">Status</label>
+              <select id="bd-form-status" class="form-select">
+                <option value="planned">Planned</option>
+                <option value="active">Active</option>
+                <option value="completed">Completed</option>
+                <option value="cancelled">Cancelled</option>
+              </select>
+              <span class="bd-field-hint">Cancelled plans are excluded from totals.</span>
+            </div>
+
+            <div class="bd-field is-span-2">
+              <label for="bd-form-name">Allocation name</label>
+              <input type="text" id="bd-form-name" class="form-input" maxlength="80" placeholder="e.g. Feeding" autocomplete="off" required />
+            </div>
+
+            <div class="bd-field">
+              <label for="bd-form-purpose">Purpose</label>
+              <select id="bd-form-purpose" class="form-select">
+                <option value="Feeding">Feeding</option>
+                <option value="Transportation">Transportation</option>
+                <option value="Rent">Rent</option>
+                <option value="Family support">Family support</option>
+                <option value="Personal expenses">Personal expenses</option>
+                <option value="Utilities">Utilities</option>
+                <option value="Emergency fund">Emergency fund</option>
+                <option value="Savings">Savings</option>
+                <option value="Education">Education</option>
+                <option value="Health">Health</option>
+                <option value="Other">Other personal purpose</option>
+              </select>
+            </div>
+
+            <div class="bd-field">
+              <label for="bd-form-amount">Planned amount</label>
+              <input type="number" id="bd-form-amount" class="form-input" min="0.01" step="0.01" inputmode="decimal" placeholder="0.00" required />
+              <span class="bd-field-hint">Must be greater than zero.</span>
+            </div>
+
+            <div class="bd-field is-span-2">
+              <label for="bd-form-description">Description or notes (optional)</label>
+              <textarea id="bd-form-description" class="form-input" rows="3" maxlength="300" placeholder="Add context for this allocation…"></textarea>
+            </div>
+          </div>
+
+          <div id="bd-form-error" class="bd-form-error" role="alert"></div>
+
+          <div class="bd-modal-actions">
+            <button type="button" class="bd-btn bd-btn-ghost" data-bd-close="bd-allocation-modal">Cancel</button>
+            <button type="submit" class="bd-btn bd-btn-primary" id="bd-form-submit">
+              <i data-lucide="check" class="w-4 h-4"></i>
+              <span>Create allocation</span>
+            </button>
+          </div>
+        </form>
+      </div>
+    </div>
+
+    <!-- Allocation Details Modal -->
+    <div id="bd-details-modal" class="modal bd-overlay-modal">
+      <div class="modal-content bd-modal-content">
+        <div class="bd-modal-header">
+          <div>
+            <h3 id="bd-details-title">Allocation details</h3>
+            <p id="bd-details-subtitle">Planned amount, actual spending and linked expenses.</p>
+          </div>
+          <button type="button" class="bd-icon-button" data-bd-close="bd-details-modal" aria-label="Close allocation details">
+            <i data-lucide="x" class="w-5 h-5"></i>
+          </button>
+        </div>
+        <div id="bd-details-body"></div>
+      </div>
+    </div>
+
+    <!-- Confirmation Modal -->
+    <div id="bd-confirm-modal" class="modal bd-overlay-modal">
+      <div class="modal-content bd-modal-content is-small">
+        <div class="bd-modal-header">
+          <div>
+            <h3 id="bd-confirm-title">Confirm action</h3>
+            <p id="bd-confirm-subtitle">This action needs your confirmation.</p>
+          </div>
+          <button type="button" class="bd-icon-button" data-bd-close="bd-confirm-modal" aria-label="Close confirmation">
+            <i data-lucide="x" class="w-5 h-5"></i>
+          </button>
+        </div>
+        <p class="bd-confirm-copy" id="bd-confirm-copy"></p>
+        <div class="bd-modal-actions">
+          <button type="button" class="bd-btn bd-btn-ghost" data-bd-close="bd-confirm-modal">Cancel</button>
+          <button type="button" class="bd-btn bd-btn-danger" id="bd-confirm-action">Delete</button>
+        </div>
+      </div>
+    </div>
+
+    <!-- Toast Notification -->
+    <div id="toast" class="toast bd-toast" role="status" aria-live="polite">
+      <div class="flex items-center gap-3">
+        <div id="toast-icon" class="bd-toast-icon is-success flex items-center justify-center flex-shrink-0">
+          <i data-lucide="check" class="w-5 h-5"></i>
+        </div>
+        <div>
+          <span class="text-[14px] font-semibold text-text" id="toast-title">Success</span>
+          <span class="text-[12px] text-muted" id="toast-message">Action completed successfully</span>
+        </div>
+      </div>
+    </div>
+
+    <script src="assets/js/cashflow-data.js"></script>
+    <script src="assets/js/budgets.js"></script>
+    <script defer src="assets/js/index.js"></script>
+  <script src="assets/js/notifications.js"></script><script src="assets/js/global-navigation.js"></script></body>
+</html>
