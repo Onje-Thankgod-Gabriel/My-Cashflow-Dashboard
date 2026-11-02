@@ -49,71 +49,6 @@
     night: { start: "19:00", end: "07:00" }
   };
   var WEEKDAYS = ["Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"];
-  var PROFILE_ID = "local";
-  /* Initial data for the current local profile only. It is not a fallback
-     configuration for other profiles; those must complete the setup form. */
-  var INITIAL_PROFILE_RECORDS = [
-    {
-      date: "2026-10-31",
-      shiftType: "afternoon",
-      status: "working",
-      startTime: "13:00",
-      endTime: "19:00",
-      notes: "Initial confirmed schedule."
-    },
-    {
-      date: "2026-11-01",
-      shiftType: "afternoon",
-      status: "working",
-      startTime: "13:00",
-      endTime: "19:00",
-      notes: "Initial confirmed schedule."
-    },
-    {
-      date: "2026-11-02",
-      shiftType: "afternoon",
-      status: "working",
-      startTime: "13:00",
-      endTime: "19:00",
-      notes: "Initial confirmed schedule."
-    },
-    {
-      date: "2026-11-03",
-      shiftType: "off",
-      status: "off",
-      startTime: "",
-      endTime: "",
-      notes: "Initial confirmed schedule: day off."
-    },
-    {
-      date: "2026-11-04",
-      shiftType: "off",
-      status: "off",
-      startTime: "",
-      endTime: "",
-      notes: "Initial confirmed schedule: day off."
-    }
-  ];
-  var INITIAL_PROFILE_CONFIG = {
-    rotation: {
-      configured: true,
-      workingDaysPerCycle: 3,
-      offDaysPerCycle: 2,
-      shiftSequence: ["morning", "afternoon", "night"],
-      shiftTimes: {
-        morning: { start: "07:00", end: "13:00" },
-        afternoon: { start: "13:00", end: "19:00" },
-        night: { start: "19:00", end: "07:00" }
-      }
-    },
-    anchor: {
-      date: "2026-10-31",
-      shiftType: "afternoon",
-      cyclePosition: 0,
-      startTime: "13:00",
-      endTime: "19:00"
-    }
-  };
 
   var state = {
     view: "month",
@@ -669,44 +604,6 @@
 
   /* ---------- Initial schedule and configuration ---------- */
 
-  function addInitialRecords(settings) {
-    var map = recordsByDate(getRecords());
-    INITIAL_PROFILE_RECORDS.forEach(function (record) {
-      if (map[record.date]) return;
-      data.addWorkScheduleRecord(
-        Object.assign({}, record, {
-          team: settings.workTeam || ""
-        })
-      );
-    });
-  }
-
-  function applyInitialProfileConfig(settings) {
-    addInitialRecords(settings);
-    data.updateWorkScheduleConfig(INITIAL_PROFILE_CONFIG);
-  }
-
-  function hasLegacyInitialSchedule(records) {
-    var map = recordsByDate(records);
-    function isAfternoonWorking(record) {
-      return (
-        record &&
-        record.status === "working" &&
-        record.shiftType === "afternoon"
-      );
-    }
-    function isOff(record) {
-      return record && isOffRecord(record);
-    }
-    return (
-      !map["2026-10-31"] &&
-      isAfternoonWorking(map["2026-11-01"]) &&
-      isAfternoonWorking(map["2026-11-02"]) &&
-      isOff(map["2026-11-03"]) &&
-      isOff(map["2026-11-04"])
-    );
-  }
-
   function deriveConfigFromRecords(records) {
     var manual = records
       .filter(function (record) {
@@ -779,39 +676,9 @@
   }
 
   function ensureScheduleConfiguration() {
-    var settings = data.getSettings();
-    var preferences = settings.preferences || {};
     var config = data.getWorkScheduleConfig();
-    var records = getRecords();
-    var initialized = Boolean(preferences.workScheduleInitialized);
-
-    if (config.rotation && config.rotation.configured) {
-      if (!initialized) {
-        data.updateSettings({
-          preferences: Object.assign({}, preferences, {
-            workScheduleInitialized: true
-          })
-        });
-      }
-      return;
-    }
-
-    if (!initialized) {
-      applyInitialProfileConfig(settings);
-      data.updateSettings({
-        preferences: Object.assign({}, preferences, {
-          workScheduleInitialized: true
-        })
-      });
-      return;
-    }
-
-    if (hasLegacyInitialSchedule(records)) {
-      applyInitialProfileConfig(settings);
-      return;
-    }
-
-    var derived = deriveConfigFromRecords(records);
+    if (config.rotation && config.rotation.configured) return;
+    var derived = deriveConfigFromRecords(getRecords());
     if (derived) {
       data.updateWorkScheduleConfig(derived);
     }

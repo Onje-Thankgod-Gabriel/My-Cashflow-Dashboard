@@ -11,6 +11,7 @@
     var nextTheme = theme === "light" ? "light" : "dark";
     document.documentElement.classList.remove("light", "dark");
     document.documentElement.classList.add(nextTheme);
+    document.documentElement.style.colorScheme = nextTheme;
     localStorage.setItem(THEME_KEY, nextTheme);
     var toggle = byId("theme-toggle");
     if (!toggle) return;

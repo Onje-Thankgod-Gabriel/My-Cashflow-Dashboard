@@ -9,7 +9,7 @@
     <title>Gabsweb CashFlow · Dashboard</title>
     <link rel="icon" href="assets/images/fav.png" />
     <script src="https://unpkg.com/lucide@1.64.0/dist/umd/lucide.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.7/dist/chart.umd.min.js"></script>
     <link rel="preconnect" href="https://fonts.googleapis.com/" />
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&amp;display=swap" rel="stylesheet" />
     <script src="assets/js/theme-loader.js"></script>
@@ -99,8 +99,8 @@
         <img class="w-8 h-8 md:w-10 md:h-10 rounded-full flex justify-center items-center object-cover" src="assets/images/profiles/emma.jpg" alt="profile Image" />
       </div>
       <div class="flex-1 min-w-0">
-        <h2 class="text-sm font-semibold text-text truncate">Den</h2>
-        <p class="text-xs text-muted truncate">Premium Member</p>
+        <h2 class="text-sm font-semibold text-text truncate">Your profile</h2>
+        <p class="text-xs text-muted truncate">Personal account</p>
       </div>
       <i data-lucide="chevron-down" class="w-4 h-4 text-muted transition-transform duration-200" id="dropdown-arrow"></i>
     </div>
@@ -193,11 +193,6 @@
   </div>
 
   <div class="flex items-center gap-2 md:gap-3">
-    <div class="relative hidden sm:block">
-
-      <input type="text" id="header-search" placeholder="Search..." class="form-input w-64 pt-3 pr-5 pb-3 pl-10" />
-    </div>
-
     <button id="theme-toggle" class="p-1 md:p-2.5 rounded-xl hover:bg-bg transition-colors text-text cursor-pointer">
       <svg class="moon" xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="currentColor"
         viewBox="0 0 256 256">
@@ -1101,9 +1096,9 @@
               <label class="form-label">From Account</label>
               <select id="transfer-from" class="select-custom w-full !bg-panel">
                 <option value="">Select account</option>
-                <option value="checking">Checking Account - $8,750.00</option>
-                <option value="savings">Savings Account - $12,450.00</option>
-                <option value="investment">Investment Account - $25,890.00</option>
+                <option value="checking">Checking Account</option>
+                <option value="savings">Savings Account</option>
+                <option value="investment">Investment Account</option>
               </select>
             </div>
 
@@ -1117,9 +1112,9 @@
               <label class="form-label">To Account</label>
               <select id="transfer-to" class="select-custom w-full !bg-panel">
                 <option value="">Select account</option>
-                <option value="checking">Checking Account - $8,750.00</option>
-                <option value="savings">Savings Account - $12,450.00</option>
-                <option value="investment">Investment Account - $25,890.00</option>
+                <option value="checking">Checking Account</option>
+                <option value="savings">Savings Account</option>
+                <option value="investment">Investment Account</option>
               </select>
             </div>
 

@@ -95,8 +95,8 @@
             <img class="w-8 h-8 md:w-10 md:h-10 rounded-full flex justify-center items-center object-cover" src="assets/images/profiles/emma.jpg" alt="profile Image" />
           </div>
           <div class="flex-1 min-w-0">
-            <h2 class="text-sm font-semibold text-text truncate">Den</h2>
-            <p class="text-xs text-muted truncate">Premium Member</p>
+            <h2 class="text-sm font-semibold text-text truncate">Your profile</h2>
+            <p class="text-xs text-muted truncate">Personal account</p>
           </div>
           <i data-lucide="chevron-down" class="w-4 h-4 text-muted transition-transform duration-200" id="dropdown-arrow"></i>
         </div>
@@ -161,7 +161,7 @@
       if (logOut) {
         logOut.addEventListener("click", function () {
           localStorage.removeItem("auth");
-          window.location.href = "/login.html";
+          window.location.href = "login.html";
         });
       }
     </script>
@@ -175,7 +175,7 @@
         <div class="flex items-center gap-4">
           <div>
             <h2 id="page-title" class="text-sm md:text-xl font-bold text-text">Budget &amp; Money Allocation</h2>
-            <p class="text-[10px] md:text-sm text-muted">Welcome back, Den!</p>
+            <p class="text-[10px] md:text-sm text-muted">Welcome back</p>
           </div>
         </div>
 

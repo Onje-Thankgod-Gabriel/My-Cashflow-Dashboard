@@ -1467,6 +1467,25 @@
   margin-top: 8px;
 }
 
+.bd-expense-row.is-outside-period {
+  border-style: dashed;
+}
+
+.bd-expense-row.is-outside-period .bd-expense-amount {
+  color: var(--bd-warning);
+}
+
+.bd-period-warning {
+  margin: 8px 0 0;
+  padding: 9px 11px;
+  border: 1px solid color-mix(in srgb, var(--bd-warning) 45%, var(--border));
+  border-radius: 10px;
+  background: color-mix(in srgb, var(--bd-warning) 10%, transparent);
+  color: var(--text);
+  font-size: 0.6rem;
+  line-height: 1.5;
+}
+
 .bd-details-delete {
   margin-left: auto;
 }

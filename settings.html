@@ -40,8 +40,8 @@
         <span class="text-[10px] sm:text-xs font-semibold text-muted uppercase tracking-wider">Total Balance</span>
         <div class="live-dot"></div>
       </div>
-      <h5 class="text-xl sm:text-2xl font-bold text-gradient mb-1">$8,750.00</h5>
-      <p class="text-[10px] sm:text-xs text-muted whitespace-nowrap opacity-80 flex gap-2 mt-1">+12.5% this month</p>
+      <h5 id="sidebar-total-balance" class="text-xl sm:text-2xl font-bold text-gradient mb-1">₦0.00</h5>
+      <p id="sidebar-balance-note" class="text-[10px] sm:text-xs text-muted whitespace-nowrap opacity-80 flex gap-2 mt-1">Loading finances…</p>
     </div>
   </div>
 
@@ -95,8 +95,8 @@
         <img class="w-8 h-8 md:w-10 md:h-10 rounded-full flex justify-center items-center object-cover" src="assets/images/profiles/emma.jpg" alt="profile Image" />
       </div>
       <div class="flex-1 min-w-0">
-        <h2 class="text-sm font-semibold text-text truncate">Den</h2>
-        <p class="text-xs text-muted truncate">Premium Member</p>
+        <h2 class="text-sm font-semibold text-text truncate">Your profile</h2>
+        <p class="text-xs text-muted truncate">Personal account</p>
       </div>
       <i data-lucide="chevron-down" class="w-4 h-4 text-muted transition-transform duration-200" id="dropdown-arrow"></i>
     </div>
@@ -170,7 +170,7 @@
     const logOut = document.getElementById("logOut");
     logOut.addEventListener("click", function () {
       localStorage.removeItem("auth");
-      window.location.href = "/login.html";
+      window.location.href = "login.html";
     });
   }
 </script>
@@ -180,7 +180,7 @@
 
     <div id="overlay" class="hidden fixed inset-0 backdrop-blur-sm z-50"></div>
 
-    <div class="ml-0 xl:ml-72 transition-all duration-300">
+    <div id="main-div" class="ml-0 xl:ml-72 transition-all duration-300">
       <!-- Header -->
       <header class="sticky top-0 glass border-b border-border px-6 py-4 flex items-center justify-between z-30">
   <div class="flex items-center gap-4">
@@ -188,16 +188,11 @@
       <h2 id="page-title" class="text-sm md:text-xl font-bold text-text">
         Dashboard
       </h2>
-      <p class="text-[10px] md:text-sm text-muted">Welcome back, Den!</p>
+      <p class="text-[10px] md:text-sm text-muted">Welcome back</p>
     </div>
   </div>
 
   <div class="flex items-center gap-2 md:gap-3">
-    <div class="relative hidden sm:block">
-
-      <input type="text" id="header-search" placeholder="Search..." class="form-input w-64 pt-3 pr-5 pb-3 pl-10" />
-    </div>
-
     <button id="theme-toggle" class="p-1 md:p-2.5 rounded-xl hover:bg-bg transition-colors text-text cursor-pointer">
       <svg class="moon" xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="currentColor"
         viewBox="0 0 256 256">
@@ -237,10 +232,6 @@
         </div>
       </div>
     </div>
-    <button id="open-deposit-btn" class="btn-primary items-center gap-2 flex">
-      <i data-lucide="plus" class="w-4 h-4"></i>
-      <span class="hidden md:block">Deposit</span>
-    </button>
   </div>
 </header>
 
@@ -671,132 +662,7 @@
       </main>
     </div>
 
-    <!-- deposit sidebar -->
     <!-- ============= MODALS ============= -->
-
-<!-- Deposit Drawer Overlay -->
-<div id="deposit-overlay" class="drawer-overlay z-[200]"></div>
-
-<!-- Deposit Drawer -->
-<div id="deposit-drawer" class="deposit-drawer custom-scrollbar">
-  <div class="p-3 sm:p-6">
-    <div class="flex items-center justify-between mb-8">
-      <div>
-        <h3 class="text-2xl font-bold text-text">Deposit Money</h3>
-        <p class="text-sm text-muted mt-1">Add funds to your account</p>
-      </div>
-      <button id="close-drawer-btn" class="p-2.5 rounded-xl hover:bg-bg cursor-pointer transition-colors">
-        <i data-lucide="x" class="w-6 h-6 text-muted"></i>
-      </button>
-    </div>
-    <div class="mb-6">
-      <label class="text-sm font-semibold text-text mb-3 block">Enter Amount</label>
-      <div class="relative">
-        <input type="number" id="deposit-amount" class="input-field pl-12 text-3xl font-bold" placeholder="0.00"
-          value="100" />
-      </div>
-    </div>
-
-    <div class="mb-8">
-      <label class="text-sm font-semibold text-text mb-3 block">Quick Select</label>
-      <div class="grid grid-cols-3 gap-3">
-        <button class="quick-amount" data-amount="100">$100</button>
-        <button class="quick-amount" data-amount="250">$250</button>
-        <button class="quick-amount" data-amount="500">$500</button>
-        <button class="quick-amount" data-amount="1000">$1,000</button>
-        <button class="quick-amount" data-amount="2500">$2,500</button>
-        <button class="quick-amount" data-amount="5000">$5,000</button>
-      </div>
-    </div>
-
-    <div class="mb-8">
-      <label class="text-sm font-semibold text-text mb-3 block">Payment Method</label>
-      <div class="space-y-3">
-       <div class="payment-method " data-method="bank">
-          <div class="w-12 h-12 gradient-secondary rounded-xl flex items-center justify-center flex-shrink-0">
-            <i data-lucide="building-2" class="w-6 h-6 text-white"></i>
-          </div>
-          <div class="flex-1">
-            <h2 class="font-semibold text-xs sm:text-sm text-text">Bank</h2>
-            <p class="text-xs text-muted whitespace-nowrap opacity-80 flex gap-2 mt-1">
-              Visa ••••8765
-            </p>
-          </div>
-        </div>
-        <div class="payment-method" data-method="card">
-          <div class="w-12 h-12 gradient-secondary rounded-xl flex items-center justify-center flex-shrink-0">
-            <i data-lucide="credit-card" class="w-6 h-6 text-white"></i>
-          </div>
-          <div class="flex-1">
-            <h2 class="font-semibold text-xs sm:text-sm text-text">Debit Card</h2>
-            <p class="text-xs text-muted whitespace-nowrap opacity-80 flex gap-2 mt-1">
-              Visa ••••8765
-            </p>
-          </div>
-        </div>
-        <div class="payment-method" data-method="paypal">
-          <div class="w-12 h-12 gradient-orange rounded-xl flex items-center justify-center flex-shrink-0">
-            <i data-lucide="wallet" class="w-6 h-6 text-white"></i>
-          </div>
-          <div class="flex-1">
-            <h2 class="font-semibold text-xs sm:text-sm text-text">PayPal</h2>
-            <p class="text-xs text-muted whitespace-nowrap opacity-80 flex gap-2 mt-1">
-              den@example.com
-            </p>
-          </div>
-        </div>
-      </div>
-    </div>
-
-    <div class="mb-8 p-4 rounded-2xl bg-bg">
-      <h4 class="text-sm font-semibold text-text mb-3">Transaction Details</h4>
-      <div class="space-y-2">
-        <div class="flex justify-between text-sm">
-          <span class="text-sm sm:text-base text-muted">Deposit Amount</span>
-          <span class="font-semibold text-xs sm:text-sm text-text" id="detail-amount">$100.00</span>
-        </div>
-        <div class="flex justify-between text-sm">
-          <span class="text-sm sm:text-base text-muted">Processing Fee</span>
-          <span class="font-semibold text-xs sm:text-sm text-text">$0.00</span>
-        </div>
-        <div class="h-px bg-border my-2"></div>
-        <div class="flex justify-between">
-          <span class="font-semibold text-xs sm:text-sm text-text">Total Amount</span>
-          <span class="font-bold text-xl text-gradient" id="detail-total">$100.00</span>
-        </div>
-      </div>
-    </div>
-
-    <div class="mb-8">
-      <label class="text-sm font-semibold text-text mb-3 block">Add Note (Optional)</label>
-      <textarea class="input-field" rows="3" placeholder="Add a note for this deposit..."></textarea>
-    </div>
-    <div class="flex gap-3">
-      <button id="cancel-deposit-btn" class="btn-secondary flex-1">
-        <span>Cancel</span>
-      </button>
-      <button id="confirm-deposit-btn" class="btn-primary flex-1">
-        <span>Confirm Deposit</span>
-      </button>
-    </div>
-    <div class="mt-6 p-4 rounded-2xl bg-accent/10 border border-accent/20">
-      <div class="flex gap-3">
-        <div class="w-5 h-5 rounded-full bg-accent flex items-center justify-center flex-shrink-0 mt-0.5">
-          <i data-lucide="shield-check" class="w-3 h-3 text-white"></i>
-        </div>
-        <div>
-          <p class="text-sm font-semibold text-green-600 dark:text-green-400 mb-1">
-            Secure Transaction
-          </p>
-          <p class="text-xs text-muted opacity-80 flex gap-2 mt-1">
-            Your payment information is encrypted and secure. We never store
-            your card details.
-          </p>
-        </div>
-      </div>
-    </div>
-  </div>
-</div>
     <!-- Mobile Bottom Navigation -->
     <nav class="bottom-nav xl:!hidden">
   <a
@@ -884,192 +750,6 @@
     </div>
 
     <!-- Change Email Modal -->
-    <div id="change-email-modal" class="modal">
-      <div class="modal-content p-6 rounded-2xl bg-background text-text">
-        <!-- Header -->
-        <div class="flex items-center justify-between mb-6">
-          <h3 class="mb-1">Change Email</h3>
-          <button onclick="closeModal('change-email-modal')" class="p-2 rounded-xl bg-transparent hover:bg-muted/10 transition">
-            <i data-lucide="x" class="w-5 h-5"></i>
-          </button>
-        </div>
-
-        <!-- Form Fields -->
-        <div class="modal-body custom-scrollbar">
-          <div class="flex flex-col gap-4">
-            <div>
-              <label class="form-label block mb-1 text-sm font-medium text-muted">Current Email</label>
-              <input type="email" class="form-input w-full" placeholder="Enter current email" />
-            </div>
-
-            <div>
-              <label class="form-label block mb-1 text-sm font-medium text-muted">New Email</label>
-              <input type="email" class="form-input w-full" placeholder="Enter new email" />
-            </div>
-
-            <div>
-              <label class="form-label block mb-1 text-sm font-medium text-muted">Confirm New Email</label>
-              <input type="email" class="form-input w-full" placeholder="Confirm new email" />
-            </div>
-
-            <!-- Info Box -->
-            <div class="p-2 sm:p-4 rounded-xl bg-blue-500/10 mt-2">
-              <p class="text-xs sm:text-sm font-semibold text-blue-500 mb-2">Email Change Info</p>
-              <ul class="space-y-1 text-[10px] sm:text-sm text-muted">
-                <li class="flex items-center gap-2">
-                  <i data-lucide="info" class="w-4 h-4 text-accent"></i>
-                  <span>We’ll send a verification link to your new email.</span>
-                </li>
-                <li class="flex items-center gap-2">
-                  <i data-lucide="circle" class="w-4 h-4 text-muted"></i>
-                  <span>Make sure you have access to it.</span>
-                </li>
-              </ul>
-            </div>
-
-            <!-- Buttons -->
-            <div class="flex gap-3 mt-6">
-              <button onclick="closeModal('change-email-modal')" class="btn-secondary flex-1">Cancel</button>
-              <button
-                class="btn-primary flex-1"
-                onclick="
-                  showToast('Email Updated', 'Verification link sent to your new email address', 'success');
-                  closeModal('change-email-modal');
-                "
-              >
-                Update Email
-              </button>
-            </div>
-          </div>
-        </div>
-      </div>
-    </div>
-
-    <!-- Change Phone Number Modal -->
-    <div id="change-phone-modal" class="modal">
-      <div class="modal-content p-6 rounded-2xl bg-background text-text">
-        <!-- Header -->
-        <div class="flex items-center justify-between mb-6">
-          <h3 class="mb-1">Change Phone Number</h3>
-          <button onclick="closeModal('change-phone-modal')" class="p-2 rounded-xl bg-transparent hover:bg-muted/10 transition">
-            <i data-lucide="x" class="w-5 h-5"></i>
-          </button>
-        </div>
-
-        <!-- Form Fields -->
-        <div class="flex flex-col gap-4 modal-body custom-scrollbar">
-          <div>
-            <label class="form-label block mb-1 text-sm font-medium text-muted">Current Phone Number</label>
-            <input type="tel" class="form-input w-full" placeholder="Enter current phone number" />
-          </div>
-
-          <div>
-            <label class="form-label block mb-1 text-sm font-medium text-muted">New Phone Number</label>
-            <input type="tel" class="form-input w-full" placeholder="Enter new phone number" />
-          </div>
-
-          <div>
-            <label class="form-label block mb-1 text-sm font-medium text-muted">Confirm New Phone Number</label>
-            <input type="tel" class="form-input w-full" placeholder="Confirm new phone number" />
-          </div>
-
-          <!-- Info Box -->
-          <div class="p-4 rounded-xl bg-blue-500/10 mt-2">
-            <p class="font-semibold text-blue-500 text-xs sm:text-sm mb-2">Phone Number Change Info</p>
-            <ul class="space-y-1 text-[10px] sm:text-xs text-muted">
-              <li class="flex items-center gap-2">
-                <i data-lucide="info" class="w-4 h-4 text-accent"></i>
-                <span>We’ll send an OTP verification code to your new number.</span>
-              </li>
-              <li class="flex items-center gap-2">
-                <i data-lucide="circle" class="w-4 h-4 text-muted"></i>
-                <span>Make sure you have access to receive SMS on it.</span>
-              </li>
-            </ul>
-          </div>
-
-          <!-- Buttons -->
-          <div class="flex gap-3 mt-6">
-            <button onclick="closeModal('change-phone-modal')" class="btn-secondary flex-1">Cancel</button>
-            <button
-              class="btn-primary flex-1"
-              onclick="
-                showToast('Phone Number Updated', 'Verification code sent to your new phone number', 'success');
-                closeModal('change-phone-modal');
-              "
-            >
-              Update Phone
-            </button>
-          </div>
-        </div>
-      </div>
-    </div>
-
-    <!-- Deactivate Account Modal -->
-    <div id="deactivate-account-modal" class="modal">
-      <div class="modal-content p-6 rounded-2xl bg-background text-text">
-        <!-- Header -->
-        <div class="flex items-center justify-between mb-6">
-          <h3 class="mb-1">Deactivate Account</h3>
-          <button onclick="closeModal('deactivate-account-modal')" class="p-2 rounded-xl bg-transparent hover:bg-muted/10 transition">
-            <i data-lucide="x" class="w-5 h-5"></i>
-          </button>
-        </div>
-
-        <div class="modal-body custom-scrollbar">
-          <!-- Warning Section -->
-          <div class="p-4 rounded-xl bg-red-500/10 border border-red-500/20 mb-4">
-            <div class="flex items-start gap-3">
-              <i data-lucide="alert-triangle" class="w-5 h-5 text-red-500 mt-0.5"></i>
-              <div>
-                <p class="text-red-500 font-semibold text-xs sm:text-sm mb-1">This action is irreversible!</p>
-                <p class="text-[10px] sm:text-xs text-muted">Deactivating your account will remove access to all your data, settings, and preferences. You can’t log in again unless reactivated by support.</p>
-              </div>
-            </div>
-          </div>
-
-          <!-- Form Section -->
-          <div class="flex flex-col gap-4">
-            <div>
-              <label class="form-label block mb-1 text-sm font-medium text-muted">Reason for Deactivation</label>
-              <select class="select-custom !bg-panel w-full">
-                <option value="">Select a reason</option>
-                <option value="privacy">Privacy concerns</option>
-                <option value="not-using">Not using the account</option>
-                <option value="technical">Technical issues</option>
-                <option value="other">Other</option>
-              </select>
-            </div>
-
-            <div>
-              <label class="form-label block mb-1 text-sm font-medium text-muted">Confirm Password</label>
-              <input type="password" class="form-input w-full" placeholder="Enter your password to confirm" />
-            </div>
-
-            <!-- Confirmation Checkbox -->
-            <div class="flex items-start gap-2 mt-2">
-              <input id="confirm-deactivate" type="checkbox" class="w-4 h-4 rounded border-muted focus:ring-red-500" />
-              <label for="confirm-deactivate" class="text-[10px] sm:text-sm text-muted">I understand that deactivating my account is permanent.</label>
-            </div>
-
-            <!-- Buttons -->
-            <div class="flex gap-3 mt-6">
-              <button onclick="closeModal('deactivate-account-modal')" class="btn-secondary flex-1">Cancel</button>
-              <button
-                class="btn-primary flex-1 bg-red-500 hover:bg-red-600 border-none"
-                onclick="
-                  showToast('Account Deactivated', 'Your account has been deactivated successfully', 'error');
-                  closeModal('deactivate-account-modal');
-                "
-              >
-                Deactivate
-              </button>
-            </div>
-          </div>
-        </div>
-      </div>
-    </div>
-
     <!-- Add Payment Method Modal -->
     <div id="add-payment-method-modal" class="modal">
       <div class="modal-content custom-scrollbar">
@@ -1169,74 +849,6 @@
           <button onclick="closeModal('generate-token-modal')" class="btn-secendary w-full sm:w-auto px-4 py-2 rounded-lg border border-border text-muted hover:text-text hover:bg-bg-dark transition">Cancel</button>
 
           <button onclick="closeModal('generate-token-modal')" class="w-full sm:w-auto btn-primary px-4 py-2 rounded-lg bg-blue-500 text-text hover:opacity-90 transition">Generate</button>
-        </div>
-      </div>
-    </div>
-
-    <!-- Change Password Modal -->
-    <div id="change-password-modal" class="modal">
-      <div class="modal-content">
-        <div class="flex justify-between mb-4">
-          <h3 class="mb-1">Change Password</h3>
-          <button onclick="closeModal('change-password-modal')" class="p-2 rounded-xl bg-transparent border-none cursor-pointer">
-            <i data-lucide="x" class="w-4 h-4 md:w-5 md:h-5"></i>
-          </button>
-        </div>
-
-        <div class="modal-body custom-scrollbar">
-          <div class="flex flex-col gap-4">
-            <div>
-              <label class="form-label">Current Password</label>
-              <input type="password" class="form-input" placeholder="Enter current password" />
-            </div>
-
-            <div>
-              <label class="form-label">New Password</label>
-              <input type="password" class="form-input" placeholder="Enter new password" />
-            </div>
-
-            <div>
-              <label class="form-label">Confirm New Password</label>
-              <input type="password" class="form-input" placeholder="Confirm new password" />
-            </div>
-
-            <div class="mt-2 p-4 rounded-xl bg-blue-500/10">
-              <p class="text-xs sm:text-sm font-semibold text-blue-500 mb-2">Password Requirements</p>
-              <ul class="list-none p-0 m-0">
-                <li class="flex items-center gap-2 text-xs text-muted mb-1">
-                  <i data-lucide="check" class="w-3.5 h-3.5 text-emerald-500"></i>
-                  <span>At least 8 characters</span>
-                </li>
-                <li class="flex items-center gap-2 text-xs text-muted mb-1">
-                  <i data-lucide="circle" class="w-3.5 h-3.5 text-muted"></i>
-                  <span>Include uppercase & lowercase</span>
-                </li>
-                <li class="flex items-center gap-2 text-xs text-muted mb-1">
-                  <i data-lucide="circle" class="w-3.5 h-3.5 text-muted"></i>
-                  <span>Include numbers</span>
-                </li>
-                <li class="flex items-center gap-2 text-xs text-muted">
-                  <i data-lucide="circle" class="w-3.5 h-3.5 text-muted"></i>
-                  <span>Include special characters</span>
-                </li>
-              </ul>
-            </div>
-
-            <div class="flex gap-3 mt-4">
-              <button onclick="closeModal('change-password-modal')" class="btn-secondary flex-1">
-                <span>Cancel</span>
-              </button>
-              <button
-                class="btn-primary flex-1"
-                onclick="
-                  showToast('Password Changed', 'Your password has been updated successfully', 'success');
-                  closeModal('change-password-modal');
-                "
-              >
-                <span>Update Password</span>
-              </button>
-            </div>
-          </div>
         </div>
       </div>
     </div>

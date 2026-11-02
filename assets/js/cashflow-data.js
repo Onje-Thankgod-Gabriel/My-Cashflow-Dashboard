@@ -7,6 +7,68 @@
   var SCHEMA_VERSION = 1;
   var INITIAL_FINANCIAL_DATE = "2026-11-01";
   var DEFAULT_CURRENCY = "NGN";
+  var INITIAL_LOCAL_PROFILE_RECORDS = [
+    {
+      date: "2026-10-31",
+      shiftType: "afternoon",
+      status: "working",
+      startTime: "13:00",
+      endTime: "19:00",
+      notes: "Initial confirmed schedule."
+    },
+    {
+      date: "2026-11-01",
+      shiftType: "afternoon",
+      status: "working",
+      startTime: "13:00",
+      endTime: "19:00",
+      notes: "Initial confirmed schedule."
+    },
+    {
+      date: "2026-11-02",
+      shiftType: "afternoon",
+      status: "working",
+      startTime: "13:00",
+      endTime: "19:00",
+      notes: "Initial confirmed schedule."
+    },
+    {
+      date: "2026-11-03",
+      shiftType: "off",
+      status: "off",
+      startTime: "",
+      endTime: "",
+      notes: "Initial confirmed schedule: day off."
+    },
+    {
+      date: "2026-11-04",
+      shiftType: "off",
+      status: "off",
+      startTime: "",
+      endTime: "",
+      notes: "Initial confirmed schedule: day off."
+    }
+  ];
+  var INITIAL_LOCAL_PROFILE_CONFIG = {
+    rotation: {
+      configured: true,
+      workingDaysPerCycle: 3,
+      offDaysPerCycle: 2,
+      shiftSequence: ["morning", "afternoon", "night"],
+      shiftTimes: {
+        morning: { start: "07:00", end: "13:00" },
+        afternoon: { start: "13:00", end: "19:00" },
+        night: { start: "19:00", end: "07:00" }
+      }
+    },
+    anchor: {
+      date: "2026-10-31",
+      shiftType: "afternoon",
+      cyclePosition: 0,
+      startTime: "13:00",
+      endTime: "19:00"
+    }
+  };
   var memoryStore = Object.create(null);
   var storageAvailable = true;
   var state = null;
@@ -1095,6 +1157,21 @@
     );
   }
 
+  function assertAllocationPeriodMatches(record, stateObject) {
+    if (!record.allocationId) return;
+    var allocations = stateObject ? stateObject.allocations : state.allocations;
+    var allocation = findById(allocations, record.allocationId);
+    if (!allocation) return;
+    assert(
+      record.type === "expense",
+      "Only expense transactions can be linked to an allocation."
+    );
+    assert(
+      getMonthKey(record.date) === allocation.financialMonth,
+      "Expense date must fall within the allocation's financial month."
+    );
+  }
+
   function getAccounts() {
     return deepClone(state.accounts);
   }
@@ -1192,6 +1269,7 @@
       assertAccountExists(record.toAccountId);
     }
     assertAllocationExists(record.allocationId);
+    assertAllocationPeriodMatches(record);
     return mutate(function (draft) {
       draft.transactions.push(record);
       return deepClone(record);
@@ -1264,6 +1342,7 @@
         assertAccountExists(record.toAccountId, draft);
       }
       assertAllocationExists(record.allocationId, draft);
+      assertAllocationPeriodMatches(record, draft);
       return deepClone(record);
     });
   }
@@ -2107,6 +2186,58 @@
     });
   }
 
+  function ensureWorkScheduleInitialized() {
+    if (readOnly || !state) return false;
+    if (state.workSchedule.profileId !== "local") return false;
+    var preferences = state.settings.preferences || {};
+    if (preferences.workScheduleInitialized) return false;
+    if (state.workSchedule.rotation && state.workSchedule.rotation.configured) {
+      mutate(function (draft) {
+        draft.settings.preferences = Object.assign(
+          {},
+          draft.settings.preferences,
+          { workScheduleInitialized: true }
+        );
+      });
+      return false;
+    }
+    mutate(function (draft) {
+      var existingDates = Object.create(null);
+      draft.workSchedule.records.forEach(function (record) {
+        existingDates[record.date] = true;
+      });
+      INITIAL_LOCAL_PROFILE_RECORDS.forEach(function (record) {
+        if (existingDates[record.date]) return;
+        var timestamp = nowIso();
+        draft.workSchedule.records.push(
+          Object.assign({}, record, {
+            id: generateId("shift"),
+            team: draft.settings.workTeam || "",
+            source: "manual",
+            createdAt: timestamp,
+            updatedAt: timestamp
+          })
+        );
+      });
+      draft.workSchedule.rotation = Object.assign(
+        {},
+        draft.workSchedule.rotation,
+        deepClone(INITIAL_LOCAL_PROFILE_CONFIG.rotation)
+      );
+      draft.workSchedule.anchor = Object.assign(
+        {},
+        draft.workSchedule.anchor,
+        deepClone(INITIAL_LOCAL_PROFILE_CONFIG.anchor)
+      );
+      draft.settings.preferences = Object.assign(
+        {},
+        draft.settings.preferences,
+        { workScheduleInitialized: true }
+      );
+    });
+    return true;
+  }
+
   function getRotationSettings() {
     return deepClone(state.workSchedule.rotation);
   }
@@ -2368,10 +2499,13 @@
   }
 
   function getAllocationActualSpending(allocationId) {
+    var allocation = findById(state.allocations, allocationId);
+    if (!allocation) return 0;
     var total = state.transactions.reduce(function (sum, transaction) {
       if (
         transaction.type === "expense" &&
-        transaction.allocationId === allocationId
+        transaction.allocationId === allocationId &&
+        getMonthKey(transaction.date) === allocation.financialMonth
       ) {
         return sum + Number(transaction.amount || 0);
       }
@@ -2650,6 +2784,8 @@
     return JSON.stringify(state);
   }
 
+  ensureWorkScheduleInitialized();
+
   var api = {
     STORAGE_KEY: STORAGE_KEY,
     SCHEMA_VERSION: SCHEMA_VERSION,
@@ -2729,6 +2865,7 @@
     addMilestone: addMilestone,
     updateMilestone: updateMilestone,
     deleteMilestone: deleteMilestone,
+    ensureWorkScheduleInitialized: ensureWorkScheduleInitialized,
     getWorkScheduleConfig: getWorkScheduleConfig,
     updateWorkScheduleConfig: updateWorkScheduleConfig,
     getRotationSettings: getRotationSettings,

@@ -6,7 +6,7 @@
     <title>Gabsweb CashFlow · Reports &amp; Insights</title>
     <link rel="icon" href="assets/images/fav.png" />
     <script src="https://unpkg.com/lucide@1.64.0/dist/umd/lucide.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.7/dist/chart.umd.min.js"></script>
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet" />
     <script src="assets/js/theme-loader.js"></script>
@@ -162,7 +162,7 @@
       if (logOut) {
         logOut.addEventListener("click", function () {
           localStorage.removeItem("auth");
-          window.location.href = "/login.html";
+          window.location.href = "login.html";
         });
       }
     </script>

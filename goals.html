@@ -6,7 +6,7 @@
     <title>Gabsweb CashFlow · Goals &amp; Planned Purchases</title>
     <link rel="icon" href="assets/images/fav.png" />
     <script src="https://unpkg.com/lucide@1.64.0/dist/umd/lucide.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.7/dist/chart.umd.min.js"></script>
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet" />
     <script src="assets/js/theme-loader.js"></script>
@@ -95,8 +95,8 @@
             <img class="w-8 h-8 md:w-10 md:h-10 rounded-full flex justify-center items-center object-cover" src="assets/images/profiles/emma.jpg" alt="profile Image" />
           </div>
           <div class="flex-1 min-w-0">
-            <h2 class="text-sm font-semibold text-text truncate">Den</h2>
-            <p class="text-xs text-muted truncate">Premium Member</p>
+            <h2 class="text-sm font-semibold text-text truncate">Your profile</h2>
+            <p class="text-xs text-muted truncate">Personal account</p>
           </div>
           <i data-lucide="chevron-down" class="w-4 h-4 text-muted transition-transform duration-200" id="dropdown-arrow"></i>
         </div>
@@ -150,7 +150,7 @@
       if (logOut) {
         logOut.addEventListener("click", function () {
           localStorage.removeItem("auth");
-          window.location.href = "/login.html";
+          window.location.href = "login.html";
         });
       }
     </script>
@@ -162,7 +162,7 @@
         <div class="flex items-center gap-4">
           <div>
             <h2 id="page-title" class="text-sm md:text-xl font-bold text-text">Goals &amp; Planned Purchases</h2>
-            <p class="text-[10px] md:text-sm text-muted">Welcome back, Den!</p>
+            <p class="text-[10px] md:text-sm text-muted">Welcome back</p>
           </div>
         </div>
 

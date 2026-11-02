@@ -61,15 +61,54 @@
     });
   }
 
-  function updateWelcomeName() {
-    if (!window.GabswebCashFlowData || typeof window.GabswebCashFlowData.getProfile !== "function") return;
-    var profile = window.GabswebCashFlowData.getProfile() || {};
-    var fullName = String(profile.name || "").trim();
+  function getProfileName() {
+    if (!window.GabswebCashFlowData || typeof window.GabswebCashFlowData.getProfile !== "function") return "";
+    try {
+      var profile = window.GabswebCashFlowData.getProfile() || {};
+      return String(profile.name || "").trim();
+    } catch (error) {
+      return "";
+    }
+  }
+
+  function updateIdentity() {
+    var fullName = getProfileName();
+    var displayName = fullName || "Your profile";
+    document.querySelectorAll("#user-button h2, #sidebar-user-name").forEach(function (element) {
+      element.textContent = displayName;
+    });
+    document.querySelectorAll("#user-button p").forEach(function (element) {
+      element.textContent = "Personal account";
+    });
     var shortName = fullName ? fullName.split(/\s+/)[0] : "";
     document.querySelectorAll("header.sticky p").forEach(function (element) {
       if (!/^Welcome back(?:, .*)?!?$/.test(element.textContent.trim())) return;
       element.textContent = "Welcome back" + (shortName ? ", " + shortName : "") + "!";
     });
+  }
+
+  function handleLogout(event) {
+    if (event) {
+      event.preventDefault();
+      event.stopImmediatePropagation();
+    }
+    localStorage.removeItem("auth");
+    window.location.href = "login.html";
+  }
+
+  function setupLogout() {
+    document.querySelectorAll("#logOut").forEach(function (link) {
+      link.setAttribute("href", "login.html");
+    });
+    document.addEventListener(
+      "click",
+      function (event) {
+        var target = event.target;
+        var link = target && target.closest ? target.closest("#logOut") : null;
+        if (link) handleLogout(event);
+      },
+      true
+    );
   }
 
   function closeProfileMenu() {
@@ -130,6 +169,62 @@
     renderIcons();
   }
 
+  function setupDesktopSidebar() {
+    var sidebar = document.getElementById("sidebar");
+    if (!sidebar || document.getElementById("desktop-sidebar-toggle")) return;
+    var headerRow = sidebar.firstElementChild && sidebar.firstElementChild.firstElementChild;
+    if (!headerRow) return;
+
+    var toggle = document.createElement("button");
+    toggle.type = "button";
+    toggle.id = "desktop-sidebar-toggle";
+    toggle.className = "desktop-sidebar-toggle";
+    toggle.setAttribute("aria-controls", "sidebar");
+    toggle.innerHTML = icon("chevron-left");
+    headerRow.insertBefore(toggle, document.getElementById("close-sidebar"));
+
+    sidebar.querySelectorAll(".nav-item").forEach(function (link) {
+      var label = link.querySelector("span");
+      if (!label) return;
+      var text = label.textContent.trim();
+      link.setAttribute("title", text);
+      link.setAttribute("aria-label", text);
+      link.setAttribute("data-tooltip", text);
+    });
+
+    var transitionTimer = null;
+
+    function applyCollapsed(collapsed, animate) {
+      var root = document.documentElement;
+      if (transitionTimer) {
+        clearTimeout(transitionTimer);
+        transitionTimer = null;
+      }
+      if (animate) {
+        root.classList.add("sidebar-transitioning");
+        transitionTimer = setTimeout(function () {
+          root.classList.remove("sidebar-transitioning");
+          transitionTimer = null;
+        }, 300);
+      }
+      root.classList.toggle("sidebar-collapsed", collapsed);
+      toggle.setAttribute("aria-expanded", collapsed ? "false" : "true");
+      toggle.setAttribute("aria-label", collapsed ? "Expand navigation sidebar" : "Collapse navigation sidebar");
+      toggle.setAttribute("title", collapsed ? "Expand sidebar" : "Collapse sidebar");
+      toggle.innerHTML = icon(collapsed ? "chevron-right" : "chevron-left");
+      renderIcons();
+    }
+
+    var collapsed = localStorage.getItem("gabsweb-sidebar-collapsed") === "1";
+    applyCollapsed(collapsed, false);
+
+    toggle.addEventListener("click", function () {
+      collapsed = !collapsed;
+      localStorage.setItem("gabsweb-sidebar-collapsed", collapsed ? "1" : "0");
+      applyCollapsed(collapsed, true);
+    });
+  }
+
   function setupProfile(header) {
     if (!header || document.getElementById("global-profile")) return;
     var controls = header.querySelector(":scope > div:last-child");
@@ -155,10 +250,7 @@
       button.setAttribute("aria-expanded", isOpen ? "true" : "false");
     });
 
-    wrapper.querySelector("#global-profile-logout").addEventListener("click", function () {
-      localStorage.removeItem("auth");
-      window.location.href = "login.html";
-    });
+    wrapper.querySelector("#global-profile-logout").addEventListener("click", handleLogout);
 
     renderIcons();
     updateProfileImages();
@@ -187,11 +279,14 @@
     var header = document.querySelector("header.sticky");
     var bottomNav = document.querySelector("nav.bottom-nav");
     setupMobileSidebar(header);
+    setupDesktopSidebar();
     setupProfile(header);
-    updateWelcomeName();
+    updateIdentity();
+    setupLogout();
     setupBottomNavigation(bottomNav);
     updateProfileImages();
     window.addEventListener("gabsweb:profile-image-updated", updateProfileImages);
+    window.addEventListener("gabsweb:profile-updated", updateIdentity);
 
     document.addEventListener("click", function (event) {
       var wrapper = document.getElementById("global-profile");

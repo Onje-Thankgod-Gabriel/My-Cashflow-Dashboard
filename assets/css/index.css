@@ -197,6 +197,121 @@
   height: 18px;
 }
 
+.desktop-sidebar-toggle {
+  display: none;
+  flex: 0 0 auto;
+  width: 34px;
+  height: 34px;
+  align-items: center;
+  justify-content: center;
+  border: 1px solid var(--border);
+  border-radius: 11px;
+  background: var(--panel);
+  color: var(--text);
+  cursor: pointer;
+  transition: background 160ms ease, border-color 160ms ease, color 160ms ease;
+}
+
+.desktop-sidebar-toggle:hover,
+.desktop-sidebar-toggle:focus-visible {
+  border-color: rgba(99, 102, 241, 0.45);
+  background: var(--bg);
+  color: var(--primary);
+}
+
+.desktop-sidebar-toggle:focus-visible {
+  outline: 2px solid #6366f1;
+  outline-offset: 2px;
+}
+
+.desktop-sidebar-toggle svg {
+  width: 17px;
+  height: 17px;
+}
+
+@media (min-width: 1280px) {
+  .desktop-sidebar-toggle {
+    display: inline-flex;
+  }
+
+  .sidebar {
+    transition: width 280ms cubic-bezier(0.22, 1, 0.36, 1);
+  }
+
+  .sidebar > * {
+    transition: opacity 140ms ease;
+  }
+
+  .sidebar-transitioning .sidebar > * {
+    opacity: 0;
+    visibility: hidden;
+  }
+
+  .sidebar-collapsed .sidebar {
+    width: 5rem !important;
+  }
+
+  .sidebar-collapsed #main-div {
+    margin-left: 5rem !important;
+  }
+
+  .sidebar-collapsed .sidebar > div:first-child {
+    padding-left: 0.75rem;
+    padding-right: 0.75rem;
+  }
+
+  .sidebar-collapsed .sidebar > div:first-child > .flex {
+    flex-direction: column;
+    align-items: center;
+    gap: 0.75rem;
+  }
+
+  .sidebar-collapsed .sidebar > div:first-child > .flex > a {
+    margin-bottom: 0 !important;
+  }
+
+  .sidebar-collapsed .sidebar > div:first-child a > div:last-child,
+  .sidebar-collapsed .sidebar > div:first-child .content-box,
+  .sidebar-collapsed .sidebar .nav-item > span,
+  .sidebar-collapsed .sidebar #user-button > .flex-1,
+  .sidebar-collapsed .sidebar #dropdown-arrow {
+    display: none !important;
+  }
+
+  .sidebar-collapsed .sidebar > nav {
+    padding-left: 0.75rem;
+    padding-right: 0.75rem;
+  }
+
+  .sidebar-collapsed .sidebar .nav-item {
+    position: relative;
+    justify-content: center;
+    gap: 0;
+    padding-left: 0;
+    padding-right: 0;
+  }
+
+  .sidebar-collapsed .sidebar .nav-item:hover {
+    transform: none;
+  }
+
+  .sidebar-collapsed .sidebar > div:last-child {
+    padding-left: 0.75rem;
+    padding-right: 0.75rem;
+  }
+
+  .sidebar-collapsed .sidebar #user-button {
+    justify-content: center;
+    gap: 0;
+  }
+
+  .sidebar-collapsed .sidebar #user-dropdown {
+    left: 0.5rem;
+    width: 12rem;
+    max-width: 12rem;
+  }
+}
+
 .mobile-sidebar-overlay-visible {
   display: block !important;
   animation: mobile-sidebar-overlay-in 220ms ease-out both;

@@ -11,6 +11,7 @@
     var nextTheme = theme === "light" ? "light" : "dark";
     document.documentElement.classList.remove("light", "dark");
     document.documentElement.classList.add(nextTheme);
+    document.documentElement.style.colorScheme = nextTheme;
     localStorage.setItem(THEME_KEY, nextTheme);
     var toggle = byId("theme-toggle");
     if (toggle) {
@@ -146,6 +147,31 @@
       setStatus("Google sign-in will be available with the authentication service.", true);
     });
   });
+
+  function guardResetComplete() {
+    var card = document.querySelector("[data-reset-complete]");
+    if (!card) return;
+    var confirmed = false;
+    try {
+      confirmed =
+        window.sessionStorage.getItem("gabsweb:password-reset-complete") === "1";
+      if (confirmed) {
+        window.sessionStorage.removeItem("gabsweb:password-reset-complete");
+      }
+    } catch (error) {
+      confirmed = false;
+    }
+    if (!confirmed) return;
+    var title = card.querySelector("[data-reset-complete-title]");
+    var message = card.querySelector("[data-reset-complete-message]");
+    if (title) title.textContent = "Password Reset Successful";
+    if (message) {
+      message.textContent =
+        "Your Gabsweb CashFlow password has been updated successfully. You can now sign in using your new password.";
+    }
+  }
+
+  guardResetComplete();
 
   var savedTheme = localStorage.getItem(THEME_KEY);
   applyTheme(savedTheme === "light" ? "light" : "dark");

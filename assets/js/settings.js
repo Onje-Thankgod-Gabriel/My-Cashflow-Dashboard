@@ -421,6 +421,8 @@
       }
       loadProfileFields();
       setProfileEditMode(false);
+      renderSidebarBalance();
+      window.dispatchEvent(new CustomEvent("gabsweb:profile-updated"));
       window.dispatchEvent(new CustomEvent("gabsweb:profile-image-updated"));
       notify("Profile Updated", "Your profile information has been saved.", "success");
     } catch (error) {
@@ -568,7 +570,9 @@
 
   function applyTheme(theme, announce) {
     var normalized = VALID_THEMES.indexOf(theme) === -1 ? "dark" : theme;
-    document.documentElement.className = normalized;
+    document.documentElement.classList.remove("light", "dark");
+    document.documentElement.classList.add(normalized);
+    document.documentElement.style.colorScheme = normalized;
     try {
       localStorage.setItem(THEME_KEY, normalized);
     } catch (error) {
@@ -719,6 +723,25 @@
     if (workForm) workForm.addEventListener("submit", saveWorkPreferences);
   }
 
+  function renderSidebarBalance() {
+    var data = getCashflowData();
+    if (!data) return;
+    var balanceElement = byId("sidebar-total-balance");
+    var noteElement = byId("sidebar-balance-note");
+    var total = data.getTotalBalance();
+    var month = data.getMonthKey(data.todayKey());
+    var income = data.getTotalIncome({ month: month });
+    var expenses = data.getTotalExpenses({ month: month });
+    var net = Math.round((income - expenses + Number.EPSILON) * 100) / 100;
+    if (balanceElement) balanceElement.textContent = data.formatNaira(total);
+    if (noteElement) {
+      noteElement.textContent =
+        income === 0 && expenses === 0
+          ? "No activity this month"
+          : (net > 0 ? "+" : "") + data.formatNaira(net) + " net this month";
+    }
+  }
+
   function initSettings() {
     var data = getCashflowData();
     updateStorageStatus();
@@ -739,6 +762,7 @@
     loadProfileFields();
     loadFinancialFields();
     loadWorkFields();
+    renderSidebarBalance();
     if (window.lucide && typeof window.lucide.createIcons === "function") {
       window.lucide.createIcons();
     }

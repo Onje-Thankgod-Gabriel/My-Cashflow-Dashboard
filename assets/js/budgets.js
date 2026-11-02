@@ -285,6 +285,14 @@
       });
   }
 
+  function isExpenseInAllocationPeriod(transaction, allocation) {
+    return Boolean(
+      transaction &&
+        allocation &&
+        getMonthKey(transaction.date) === allocation.financialMonth
+    );
+  }
+
   /* ---------- Month selector ---------- */
 
   function buildMonthOptions() {
@@ -758,12 +766,18 @@
     var status = statusDetails(allocation.status);
     var purpose = purposeDetails(allocation);
     var linked = linkedExpenses(allocation.id);
-    var linkedTotal = linked.reduce(function (sum, transaction) {
+    var eligibleLinked = linked.filter(function (transaction) {
+      return isExpenseInAllocationPeriod(transaction, allocation);
+    });
+    var linkedTotal = eligibleLinked.reduce(function (sum, transaction) {
       return sum + Number(transaction.amount || 0);
     }, 0);
+    var incompatibleCount = linked.length - eligibleLinked.length;
     var width = percentage === null ? 0 : Math.min(percentage, 100);
     var availableToLink =
-      allocation.status === "cancelled" ? [] : unlinkedExpenses("");
+      allocation.status === "cancelled"
+        ? []
+        : unlinkedExpenses(allocation.financialMonth);
 
     var description =
       String(allocation.description || "").trim() ||
@@ -774,8 +788,14 @@
       ? '<div class="bd-expense-list">' +
         linked
           .map(function (transaction) {
+            var compatible = isExpenseInAllocationPeriod(
+              transaction,
+              allocation
+            );
             return (
-              '<div class="bd-expense-row">' +
+              '<div class="bd-expense-row' +
+              (compatible ? "" : " is-outside-period") +
+              '">' +
               '<span class="bd-expense-icon">' +
               iconMarkup("arrow-up-right", "w-4 h-4") +
               "</span>" +
@@ -789,6 +809,11 @@
               escapeHtml(formatDate(transaction.date)) +
               " · " +
               escapeHtml(accountName(transaction.accountId)) +
+              (compatible
+                ? ""
+                : " · Outside " +
+                  escapeHtml(formatMonth(allocation.financialMonth)) +
+                  " — not counted") +
               "</small></div>" +
               '<span class="bd-expense-amount">-' +
               escapeHtml(formatMoney(transaction.amount)) +
@@ -841,7 +866,9 @@
           '<p class="bd-details-note is-spaced">Linking does not move money. The expense already affected your account balance when it was recorded in My Finances.</p>';
       } else {
         linkMarkup =
-          '<p class="bd-details-note">There are no unlinked expenses available. Record an expense in My Finances first, then link it here.</p>';
+          '<p class="bd-details-note">There are no unlinked expenses available for ' +
+          escapeHtml(formatMonth(allocation.financialMonth)) +
+          '. Record an expense in that month in My Finances first, then link it here.</p>';
       }
     }
 
@@ -922,13 +949,27 @@
       "</dl>" +
       '<div class="bd-details-section"><div class="bd-details-section-head"><h4>Linked expenses</h4><span>' +
       escapeHtml(
-        linked.length +
+        eligibleLinked.length +
           " " +
-          pluralize(linked.length, "expense", "expenses") +
+          pluralize(eligibleLinked.length, "expense", "expenses") +
           " · " +
           formatMoney(linkedTotal)
       ) +
       "</span></div>" +
+      (incompatibleCount
+        ? '<p class="bd-period-warning">' +
+          escapeHtml(
+            incompatibleCount +
+              " linked " +
+              pluralize(incompatibleCount, "expense", "expenses") +
+              " outside " +
+              formatMonth(allocation.financialMonth) +
+              " " +
+              (incompatibleCount === 1 ? "is" : "are") +
+              " not counted. Unlink or move the expense to this allocation's month."
+          ) +
+          "</p>"
+        : "") +
       linkedMarkup +
       linkMarkup +
       "</div>" +
@@ -1289,6 +1330,27 @@
     }
     var allocation = data.getAllocation(allocationId);
     if (!allocation) return;
+    var transaction = data.getTransaction(transactionId);
+    if (!transaction || transaction.type !== "expense") {
+      showToast(
+        "Select an expense",
+        "Only expense transactions can be linked to an allocation.",
+        "error"
+      );
+      return;
+    }
+    if (!isExpenseInAllocationPeriod(transaction, allocation)) {
+      showToast(
+        "Expense is outside this period",
+        "An expense dated " +
+          formatDate(transaction.date) +
+          " cannot fund the " +
+          formatMonth(allocation.financialMonth) +
+          " allocation.",
+        "error"
+      );
+      return;
+    }
     try {
       data.updateTransaction(transactionId, { allocationId: allocationId });
       renderAll();
